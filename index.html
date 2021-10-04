@@ -95,7 +95,7 @@
 
     #attackButton {
         position: relative;
-        bottom: 200px;
+        bottom: 170px;
     }
 
     #hitsplats p{
@@ -131,15 +131,14 @@
     }
 
     #player {
-        background-image: url("still.png");
-        background-size: auto;
-        border: 5px solid red;
-        height: 250px;
+        background-image: url("scythehits/0002.png");
+        background-size: 100%;
+        height: 350px;
         width: 300px;
         background-repeat: no-repeat;
         position: relative;
-        right: 350px;
-        top: 30px;
+        right: 260px;
+        top: 15px;
         z-index: -2;
     }
     </style>
@@ -203,6 +202,12 @@
         var attackElement = document.getElementById("attackButton");
         attackElement.addEventListener("click", attackFunction);
 
+        function myTimeout(timeSleep, frameNumber, playerElement){
+        setTimeout(function(){
+            playerElement.style.backgroundImage = "url('scythehits/00" + frameNumber + ".png')";
+            }, timeSleep);
+        }
+
         function attackFunction(){
 
             if (cd){
@@ -240,7 +245,20 @@
             hitsplatsElement.innerHTML = "<p>" + hit1 + "</p>" + "<p>" + hit2 + "</p>" + "<p>" + hit3 + "</p>";
             
             console.log("change attack");
-            document.getElementById("player").style.backgroundImage = 'url("attack.gif")';
+            var playerElement = document.getElementById("player");
+            for (i=1; i<=11; i++){
+                var frameNumber = i*2;
+                if (frameNumber < 10){
+                    frameNumber = "0" + frameNumber;
+                }
+                //console.log("url('scythehits/00" + frameNumber + ".png')")
+                myTimeout(150*i, frameNumber, playerElement);
+
+
+
+
+            }
+            //document.getElementById("player").style.backgroundImage = 'url("attack.gif")';
             
             setTimeout(function(){
             document.getElementById("hitsplats").style.visibility = "visible";
@@ -250,7 +268,7 @@
             
 
             setTimeout(function(){
-                document.getElementById("player").style.backgroundImage = 'url("still.png")';
+                document.getElementById("player").style.backgroundImage = 'url("scythehits/0002.png")';
             },1500);
             
             setTimeout(function(){cd = false;}, 3000);
