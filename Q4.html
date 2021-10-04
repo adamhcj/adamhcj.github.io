@@ -47,6 +47,9 @@
       }
 
       function removeItems() {
+
+         var removalList = [];
+
          var inputElements = document.getElementsByTagName("input");
          for (inputElement of inputElements){
             if (inputElement.type !== "checkbox"){
@@ -56,9 +59,15 @@
             console.log(inputElement.checked);
             if (inputElement.checked){
                console.log("should remove");
-               inputElement.parentElement.remove();
+               removalList.push(inputElement); 
+               //inputElement.parentElement.remove();
             }
             
+         }
+
+         console.log(removalList);
+         for (removalElement of removalList){
+            removalElement.parentElement.remove();
          }
       }
 
