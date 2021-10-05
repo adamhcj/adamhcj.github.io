@@ -1,3 +1,2 @@
 # piplupOwo.github.io
-#my website?
-idk it is a calculator now
+<a href="https://piplupowo.github.io/">piplupOwo.github.io</a>
