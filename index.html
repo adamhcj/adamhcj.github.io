@@ -141,6 +141,14 @@
         top: 15px;
         z-index: -2;
     }
+
+    #hiddenImages{
+        visibility: hidden;
+        size:0px;
+        height: 0px;
+        width: 0px;
+    };
+
     </style>
 
 </head>
@@ -153,6 +161,8 @@
     <p>calculator right below</p><br>
     
     <div id="myDiv" class="container-fluid">
+        <div id="hiddenImages">
+        </div>
         <p>There is 5t cooldown between each attack</p>
         <div class="row">
             <div class="col-2"></div>
@@ -192,6 +202,19 @@
 
 
     <script>
+
+
+    var hiddenImagesElement = document.getElementById("hiddenImages"); 
+    for (i=1; i<=11; i++){
+        var frameNumber = i*2;
+        if (frameNumber < 10){
+            frameNumber = "0" + frameNumber;
+        }
+        var imgString = "<img src='scythehits/00" + frameNumber + ".png'>";
+        hiddenImagesElement.innerHTML += imgString;
+
+
+    }
 
         var cd = false;
 
