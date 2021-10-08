@@ -1,13 +1,5 @@
 var sendButton = document.getElementById("telegramSendButton");
-            sendButton.addEventListener("click", sendMessage);
-
-
-
-            
-
-
-
-
+sendButton.addEventListener("click", sendMessage);
 
 
 
