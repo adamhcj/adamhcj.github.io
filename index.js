@@ -3,40 +3,7 @@ var sendButton = document.getElementById("telegramSendButton");
 
 
 
-            function sendMessage(){
-                var telegramMessageElement = document.getElementById("telegramMessage");
-
-                var sendString = telegramMessageElement.value;
-                var sendURL = "https://api.telegram.org/bot2062650826:AAFYO8AnpEVy23ma1N84wpefkNoS-jctqRU/sendMessage?chat_id=237977665&text=";
-
-                sendURL += sendString;
-
-
-                axios.get(sendURL, {
-                    params: {
-                        
-                    }
-                })
-
-
-                .then(response =>  {
-                    //console.log(response.data);
-                    document.getElementById("telegramStatus").innerHTML = "sent: " + sendString;
-
-                
-                })
-                .catch(error => {
-                    //console.log(error.message)
-                    document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString;
-
-
-                });
-
-
-
-                
-                
-            }
+            
 
 
 
@@ -69,6 +36,42 @@ for (i=1; i<=11; i++){
     setTimeout(function(){
         playerElement.style.backgroundImage = "url('scythehits/00" + frameNumber + ".png')";
         }, timeSleep);
+    }
+
+
+    function sendMessage(){
+        var telegramMessageElement = document.getElementById("telegramMessage");
+
+        var sendString = telegramMessageElement.value;
+        var sendURL = "https://api.telegram.org/bot2062650826:AAFYO8AnpEVy23ma1N84wpefkNoS-jctqRU/sendMessage?chat_id=237977665&text=";
+
+        sendURL += sendString;
+
+
+        axios.get(sendURL, {
+            params: {
+                
+            }
+        })
+
+
+        .then(response =>  {
+            //console.log(response.data);
+            document.getElementById("telegramStatus").innerHTML = "sent: " + sendString;
+
+        
+        })
+        .catch(error => {
+            //console.log(error.message)
+            document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString;
+
+
+        });
+
+
+
+        
+        
     }
 
     function attackFunction(){
