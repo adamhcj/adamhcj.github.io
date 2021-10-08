@@ -82,7 +82,7 @@ for (i=1; i<=11; i++){
         document.getElementById("hitsplats").style.visibility = "visible";
         ehpBarElement.style.width = eHPPercent + "%";
         eHPElement.innerHTML = currentEHP + "/" + maxEHP;
-    }, 800);
+    }, 950);
         
 
         setTimeout(function(){
@@ -92,6 +92,6 @@ for (i=1; i<=11; i++){
         setTimeout(function(){cd = false;}, 3000);
         
         setTimeout(function(){
-        document.getElementById("hitsplats").style.visibility = "hidden";}, 2000);
+        document.getElementById("hitsplats").style.visibility = "hidden";}, 2500);
         
     }
