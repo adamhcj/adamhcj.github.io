@@ -217,13 +217,13 @@
 
 
                 .then(response =>  {
-                    console.log(response.data);
+                    //console.log(response.data);
                     document.getElementById("telegramStatus").innerHTML = "sent: " + sendString;
 
                 
                 })
                 .catch(error => {
-                    console.log(error.message)
+                    //console.log(error.message)
                     document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString;
 
 
