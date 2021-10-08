@@ -1,6 +1,8 @@
 var sendButton = document.getElementById("telegramSendButton");
 sendButton.addEventListener("click", sendMessage);
 
+var sendCooldown = false;
+
 
 
 var hiddenImagesElement = document.getElementById("hiddenImages"); 
@@ -30,8 +32,45 @@ for (i=1; i<=11; i++){
         }, timeSleep);
     }
 
+    function helperCount(timeLeft, sendString, i) {
+        setTimeout(function(){
+            document.getElementById("telegramStatus").innerHTML = "sent: " + sendString + "<br> Cooldown left in seconds: " + timeLeft;
+            console.log(timeLeft);
+        }, i*100);
+
+    }
+
+
+    function countDown2second(sendString){
+        
+
+        var timeLeft = 2.1;
+
+        for (i=0; i<=20; i++){
+            
+            timeLeft = timeLeft - 0.1;
+            timeLeft = timeLeft.toFixed(1);
+
+            helperCount(timeLeft, sendString, i);
+
+            
+        }
+    }
+
+    function setCooldown(){
+        setTimeout(function(){sendCooldown = false;}, 2000);
+    }
 
     function sendMessage(){
+        
+
+        if (sendCooldown) {
+            console.log("cooldown la");
+
+            return;
+        }
+        else {sendCooldown = true;}
+
         var telegramMessageElement = document.getElementById("telegramMessage");
 
         var sendString = telegramMessageElement.value;
@@ -50,8 +89,9 @@ for (i=1; i<=11; i++){
         .then(response =>  {
             //console.log(response.data);
             document.getElementById("telegramStatus").innerHTML = "sent: " + sendString;
+            setCooldown();
+            countDown2second(sendString);
 
-        
         })
         .catch(error => {
             //console.log(error.message)
