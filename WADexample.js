@@ -44,7 +44,7 @@ function sendMessage(){
     var telegramMessageElement = document.getElementById("telegramMessage");
 
     var sendString = telegramMessageElement.value;
-    var sendURL = "https://api.telegram.org/bot2062650826:AAFYO8AnpEVy23ma1N84wpefkNoS-jctqRU/sendMessage?chat_id=237977665&text=";
+    var sendURL = "https://api.telegram.org/bot2062650826:AAFYO8AnpEVy23ma1N84wpefkNoS-jctqRU/sendMessage?chat_id=-597092607&text=";
 
     sendURL += sendString;
 
