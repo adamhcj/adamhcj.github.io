@@ -37,19 +37,17 @@ function sendMessage(){
 
     if (sendCooldown) {
         console.log("cooldown la");
-
         return;
     }
     else {
-        var sendString = telegramMessageElement.value;
         sendCooldown = true;
-        setCooldown();
-        countDown5second(sendString);
     }
 
 
     var telegramMessageElement = document.getElementById("telegramMessage");
-    var chatID = document.getElementById("telegramChatId").value;
+    var sendString = telegramMessageElement.value;
+    var chatIDElement = document.getElementById("telegramChatId");
+    var chatID = chatIDElement.value;
 
     
     var sendURL = "https://api.telegram.org/bot" + BOTTOKEN + "/sendMessage?chat_id=" + chatID + "&text=" + sendString;
@@ -64,15 +62,26 @@ function sendMessage(){
 
 
     .then(response =>  {
-        //console.log(response.data);
+        console.log(response.data);
         document.getElementById("telegramStatus").innerHTML = "sent: " + sendString;
+
+        setCooldown();
+        countDown5second(sendString);
         
     
     })
     .catch(error => {
-        console.log(error)
-        document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString +"<br>" + error.data.description;
+        sendCooldown = false;
+        //console.log(error);
+        var errorMessage = ""
 
+        if (sendString.length === 0){
+            errorMessage = "Empty message"
+        }
+        else { errorMessage = "Invalid Chat ID<br>Please ensure you have started the bot and entered correct chat id." }
+
+        document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString +"<br><br>"+errorMessage;
+        
 
 
     });

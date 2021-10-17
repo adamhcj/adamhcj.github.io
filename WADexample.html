@@ -27,13 +27,21 @@
     <title>wad2 telegram api thingy</title>
 </head>
 <body>
-    <p>version 3</p>
+    <p>version 6</p>
     <div id="telegramSend">
         <p>Chat id: <input id="telegramChatId" type="text" placeholder="chat id"></p>
+        <br><br>
         <p>Message you want to send</p>
         <input id="telegramMessage" type="text" placeholder="text message">
         <div id="telegramSendButton" class="btn btn-danger" style="margin-left:10px;">send</div>
         <div id="telegramStatus"></div>
+        <br>
+        <div id="telegramHelp">
+            <br><br>
+            <p>How to get your chat id:</p>
+            <p>1.) Start conversation with bot at <a href="https://t.me/WAD2bot">https://t.me/WAD2bot</a> OR search @WAD2bot on Telegram App</p>
+            <p>2.) get your chat id through the command /getid</p>
+        </div>
     </div>
 
     <script src="WADexample.js"></script>
