@@ -40,13 +40,18 @@ function sendMessage(){
 
         return;
     }
-    else {sendCooldown = true;}
+    else {
+        var sendString = telegramMessageElement.value;
+        sendCooldown = true;
+        setCooldown();
+        countDown5second(sendString);
+    }
 
 
     var telegramMessageElement = document.getElementById("telegramMessage");
     var chatID = document.getElementById("telegramChatId").value;
 
-    var sendString = telegramMessageElement.value;
+    
     var sendURL = "https://api.telegram.org/bot" + BOTTOKEN + "/sendMessage?chat_id=" + chatID + "&text=" + sendString;
 
 
@@ -62,16 +67,12 @@ function sendMessage(){
         //console.log(response.data);
         document.getElementById("telegramStatus").innerHTML = "sent: " + sendString;
         
-        setCooldown();
-        countDown5second(sendString);
     
     })
     .catch(error => {
-        console.log(error.message)
+        console.log(error)
         document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString +"<br>" + error.data.description;
 
-        setCooldown();
-        countDown5second(sendString);
 
 
     });
