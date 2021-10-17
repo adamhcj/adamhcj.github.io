@@ -70,7 +70,8 @@ function sendMessage(){
         console.log(error.message)
         document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString +"<br>" + error.data.description;
 
-        
+        setCooldown();
+        countDown5second(sendString);
 
 
     });
