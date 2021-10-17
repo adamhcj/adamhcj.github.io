@@ -68,7 +68,9 @@ function sendMessage(){
     })
     .catch(error => {
         console.log(error.message)
-        document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString;
+        document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString +"<br>" + error.data.description;
+
+        
 
 
     });
