@@ -1,6 +1,8 @@
 var sendButton = document.getElementById("telegramSendButton");
 sendButton.addEventListener("click", sendMessage);
 
+var BOTTOKEN = "2001239054:AAHGMkcRfNvPzfV3dl98IPSNti9E56Cp4GU"
+
 var sendCooldown = false;
 
 function helperCount(timeLeft, sendString, i) {
@@ -42,11 +44,11 @@ function sendMessage(){
 
 
     var telegramMessageElement = document.getElementById("telegramMessage");
+    var chatID = document.getElementById("telegramChatId").value;
 
     var sendString = telegramMessageElement.value;
-    var sendURL = "https://api.telegram.org/bot2062650826:AAFYO8AnpEVy23ma1N84wpefkNoS-jctqRU/sendMessage?chat_id=237977665&text=";
+    var sendURL = "https://api.telegram.org/bot" + BOTTOKEN + "/sendMessage?chat_id=" + chatID + "&text=" + sendString;
 
-    sendURL += sendString;
 
 
     axios.get(sendURL, {
