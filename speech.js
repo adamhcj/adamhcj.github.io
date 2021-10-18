@@ -54,6 +54,7 @@ function testSpeech() {
       testBtn.textContent = 'speech recognition';
       testBtn.className = "btn btn-success"
       ready = true;
+      diagnosticPara.textContent = '';
     }
   
     recognition.onerror = function(event) {
