@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gim bank</title>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
+        type = "image/x-icon">
+
+</head>
+<body>
+
+    <p>gim bank, if you do not want to update your bank just click refresh the group bank.</p>
+    <p>Please try not to spam, my database has limit.</p>
+
+    <input type="text" id="user" placeholder="rubiak">
+    <input type="password" id="pw" placeholder="password1">
+    <input type="text" id="bankInput" placeholder="json file">
+    <button id="updateButton">update bank</button>
+    <br> <br>
+    <button id="refreshBank">refresh the group bank</button>
+
+    <div id="status"></div>
+    <div id="result"></div>
+
+
+
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCkYoOvPp2LDG06cfzQm-E3sLhYhmFUk68",
+        authDomain: "mygithubpage-593a3.firebaseapp.com",
+        databaseURL: "https://mygithubpage-593a3-default-rtdb.firebaseio.com",
+        projectId: "mygithubpage-593a3",
+        storageBucket: "mygithubpage-593a3.appspot.com",
+        messagingSenderId: "876181149776",
+        appId: "1:876181149776:web:9b49e50d7ca839c395d955"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    var database = firebase.database();
+        function writeUserData(userId, pw, bank) {
+            firebase.database().ref('users/' + userId).set({
+            username: userId,
+            pw: pw,
+            bank : bank
+        });
+        }
+
+
+    //writeUserData("rubiak", "piplup", []);
+    //writeUserData("alpoopi", "pikachu", []);
+    //writeUserData("versix", "torchic", []);
+    //writeUserData("zacster", "eevee", []);
+    //writeUserData("cheshire", "cubone", []);
+    document.getElementById("updateButton").addEventListener("click", updateBank);
+    document.getElementById("refreshBank").addEventListener("click", refreshBank);
+
+    var itemList = [];
+    var itemInfoList = [];
+
+    function checkBank(userId){
+
+        const dbRef = firebase.database().ref();
+        dbRef.child("users").child(userId).get().then((snapshot) => {
+        if (snapshot.exists()) {
+            //console.log(snapshot.val());
+
+            var bankArray = snapshot.val().bank
+            //console.log(bankArray);
+            for (var bankitem of bankArray){
+                //console.log(bankitem);
+                if (itemList.includes(bankitem.name)) {
+                    var itemIndex = itemList.indexOf(bankitem.name);
+                    itemInfoList[itemIndex] += bankitem.quantity;
+                }
+                else {
+                    itemList.push(bankitem.name);
+                    itemInfoList.push(bankitem.quantity);
+                }
+            }
+
+            //console.log(itemList);
+            //console.log(itemInfoList);
+            getResult();
+
+        } else {
+            //console.log("No data available");
+            document.getElementById("status").innerHTML = "Error occurred";
+        }
+        }).catch((error) => {
+        console.error(error);
+        });
+    }
+
+    
+
+    function updateBank(){
+        var user = document.getElementById("user").value;
+        var pw = document.getElementById("pw").value;
+        var userId = user;
+        
+
+        const dbRef = firebase.database().ref();
+        dbRef.child("users").child(userId).get().then((snapshot) => {
+        if (snapshot.exists()) {
+
+            //console.log(snapshot.val());
+            if (snapshot.val().pw !== pw){
+                //console.log("different password!");
+                document.getElementById("status").innerHTML = "password not matched";
+                return;
+            }
+
+            var bankInput = document.getElementById("bankInput").value;
+            var bankInputJson = JSON.parse(bankInput);
+
+            writeUserData(user, pw, bankInputJson);
+
+            document.getElementById("status").innerHTML = "updated your bank! ^w^";
+
+
+        //getResult();
+
+    } else {
+        console.log("No data available");
+        document.getElementById("status").innerHTML = "Error occurred";
+    }
+    }).catch((error) => {
+    console.error(error);
+    document.getElementById("status").innerHTML = "not a valid JSON file!";
+    });
+
+
+    }
+
+
+    function getResult(){
+        //console.log(itemList);
+        //console.log(itemInfoList);
+
+        var output_string = "<ul>";
+
+
+        for (var i = 0; i<itemList.length; i++) {
+            //console.log(i);
+            var itemName = itemList[i];
+            var itemQuantity = itemInfoList[i];
+
+            output_string += `<li>${itemName} : ${itemQuantity}</li>`;
+
+        }
+
+
+        output_string += "</ul>";
+
+        console.log(output_string);
+        document.getElementById("result").innerHTML = output_string;
+        document.getElementById("status").innerHTML = "refreshed bank. This is what the rubiak has: ";
+    }
+
+    function refreshBank(){
+
+        itemList = [];
+        itemInfoList = [];
+
+        //checkBank("rubiak");
+        //checkBank("alpoopi");
+        //checkBank("versix");
+        checkBank("zacster");
+        //checkBank("cheshire");
+
+        document.getElementById("status").innerHTML = "refreshing bank... Please standby";
+        
+        getResult();
+        
+
+    }
+    
+    
+
+
+
+
+    console.log("hello");
+    </script>
+
+
+</body>
+</html>
