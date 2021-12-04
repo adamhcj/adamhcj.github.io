@@ -13,6 +13,8 @@
     <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
         type = "image/x-icon">
 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -152,7 +154,7 @@
         //console.log(itemList);
         //console.log(itemInfoList);
 
-        var output_string = "<ul>";
+        var output_string = "<ul class='list-group'>";
 
 
         for (var i = 0; i<itemList.length; i++) {
@@ -160,7 +162,7 @@
             var itemName = itemList[i];
             var itemQuantity = itemInfoList[i];
 
-            output_string += `<li>${itemName} : ${itemQuantity}</li>`;
+            output_string += `<li class='list-group-item list-group-item-primary'>${itemName} : ${itemQuantity}</li>`;
 
         }
 
