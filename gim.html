@@ -73,6 +73,7 @@
 
     var itemList = [];
     var itemInfoList = [];
+    var item_idList = [];
 
     function checkBank(userId){
 
@@ -92,6 +93,7 @@
                 else {
                     itemList.push(bankitem.name);
                     itemInfoList.push(bankitem.quantity);
+                    item_idList.push(bankitem.id);
                 }
             }
 
@@ -161,8 +163,9 @@
             //console.log(i);
             var itemName = itemList[i];
             var itemQuantity = itemInfoList[i];
+            let item_id = item_idList[i]
 
-            output_string += `<li class='list-group-item'>${itemName} : ${itemQuantity}</li>`;
+            output_string += `<li class='list-group-item'>${itemName} : ${itemQuantity} <img src='https://raw.githubusercontent.com/osrsbox/osrsbox-db/master/docs/items-icons/${item_id}.png'</li>`;
 
         }
 
