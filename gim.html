@@ -10,30 +10,88 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
+    <!-- website icon-->
     <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
         type = "image/x-icon">
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- vue 3 cdn-->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 <body>
+    <div id="app">
 
-    <p>gim bank, if you do not want to update your bank just click refresh the group bank.</p>
-    <p>Please try not to spam, my database has limit.</p>
+        <p>gim bank, if you do not want to update your bank just click refresh the group bank.</p>
+        <p>Please try not to spam, my database has limit.</p>
 
-    <input type="text" id="user" placeholder="rubiak">
-    <input type="password" id="pw" placeholder="password1">
-    <input type="text" id="bankInput" placeholder="json file">
-    <button id="updateButton">update bank</button>
-    <br> <br>
-    <button id="refreshBank">refresh the group bank</button>
+        <input type="text" id="user" placeholder="rubiak">
+        <input type="password" id="pw" placeholder="pokemon">
+        <input type="text" id="bankInput" placeholder="json file">
+        <button id="updateButton">update bank</button>
+        <br> <br>
+        <button id="refreshBank">refresh the group bank</button>
+        
+        <div id="status"></div><br><br>
 
-    <div id="status"></div>
-    <div id="result"></div>
+        <div id="searchbox" hidden=true>
+        filter:
+        <input type="text" id="search" placeholder="search" v-model="search" v-on:change="updateSearch" style="margin-left: 50px;">
+    
+        </div>
+
+        <div id="result"></div>
+
+    </div>
 
 
 
     <script type="module">
+
+
+    //vue
+    const app = {
+        data() {
+            return {
+            search: ''
+            }
+        },
+        methods: {
+            reverseMessage() {
+            this.message = this.message
+                .split('')
+                .reverse()
+                .join('')
+            }
+
+
+        },
+        computed: {
+            updateSearch() {
+                console.log(this.search)
+
+                try{
+                    for (let i = 0; i<itemList.length; i++) {
+                        if (itemList[i].toLowerCase().includes(this.search.toLowerCase())){
+                            itemInSearch[i] = true;
+
+                        }
+                        else{
+                            itemInSearch[i] = false;
+
+                        }
+                    }
+
+                    getResult();
+                    //console.log("updatesearch end")
+                }catch{}
+            }
+        }
+        }
+
+        Vue.createApp(app).mount('#app')
+
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
@@ -74,6 +132,7 @@
     var itemList = [];
     var itemInfoList = [];
     var item_idList = [];
+    var itemInSearch = [];
 
     console.log("version 1")
 
@@ -96,6 +155,7 @@
                     itemList.push(bankitem.name);
                     itemInfoList.push(bankitem.quantity);
                     item_idList.push(bankitem.id);
+                    itemInSearch.push(true);
                 }
             }
 
@@ -161,11 +221,15 @@
         var output_string = "<ul class='list-group-flush'>";
 
 
-        for (var i = 0; i<itemList.length; i++) {
+        for (let i = 0; i<itemList.length; i++) {
             //console.log(i);
             var itemName = itemList[i];
             var itemQuantity = itemInfoList[i];
             let item_id = item_idList[i]
+
+            if (!itemInSearch[i]){
+                continue;
+            }
 
             output_string += `<li class='list-group-item'>${itemName} : ${itemQuantity} <img src='https://raw.githubusercontent.com/osrsbox/osrsbox-db/master/docs/items-icons/${item_id}.png'></li>`;
 
@@ -174,7 +238,7 @@
 
         output_string += "</ul>";
 
-        console.log(output_string);
+        //console.log(output_string);
         document.getElementById("result").innerHTML = output_string;
         document.getElementById("status").innerHTML = "refreshed bank. This is what the group has: ";
     }
@@ -193,6 +257,8 @@
         document.getElementById("status").innerHTML = "refreshing bank... Please standby";
         
         getResult();
+
+        document.getElementById("searchbox").hidden = false;
         
 
     }
