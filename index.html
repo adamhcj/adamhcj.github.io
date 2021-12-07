@@ -29,10 +29,12 @@
         width: 100%;
         opacity: 1;
         height: 100%;
-        position: absolute;
+        position: fixed;
         z-index: -4;
         transition: opacity 1s linear;
         object-fit: cover;
+        
+
         
     }
 
@@ -40,10 +42,19 @@
         width: 100%;
         opacity: 1;
         height: 100%;
-        position: absolute;
+        position: fixed;
         z-index: -5;
         transition: opacity 1s linear;
         object-fit: cover;
+
+    }
+
+    .imageExample {
+        display: block;
+        object-fit: cover;
+        width: 50%;
+        height: 50%;
+        margin-right: auto;
     }
 
     </style>
@@ -52,7 +63,7 @@
 <body>
     <!-- nav bar-->
 
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #e3f2fd; padding: 5px;">
+    <nav class="navbar fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd; padding: 5px;">
         <a class="navbar-brand" style="margin-left: 10px;"><img src="https://cdn.discordapp.com/attachments/818102115058450474/887315665273368596/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -65,17 +76,6 @@
             </li>
             <li class="nav-item">
             <a class="nav-link" href="gim.html">GIM bank</a>
-            </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
             </li>
         </ul>
 
@@ -107,52 +107,26 @@
 
                 </section>
 
-                <div id="accordion">
-                    <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Collapsible Group Item #1
-                        </button>
-                        </h5>
-                    </div>
-                
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
+                <section id="middle" style="background-color: rgb(209, 237, 255); padding-top:10px;">
+                    <h1 class="display-1" style="position: relative;">Some things I did for fun!</h1>
+                    <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Python:</p>
+                        <li class="list-group-item">Scribblio draw using python<img src="resources/bg1.png" class="imageExample"></li>
+                        <li class="list-group-item">piplupOwo discord bot<img src="resources/discordb.png" class="imageExample"></li>
+                        <li class="list-group-item">telegram bot to send me message<img src="resources/teleb.png" class="imageExample"></li>
+                    </ul>
+                    <br><br>
+                    <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Java:</p>
+                        
+                        <li class="list-group-item">OPRS plugin<img src="https://github.com/piplupOwo/piplup/raw/master/resources/smallerdiscophosani.gif?raw=true" class="imageExample"><br><br><br>TOB hardmode pools<img src="resources/bg2.png" class="imageExample"></li>
 
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                    </div>
-                    <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Collapsible Group Item #2
-                        </button>
-                        </h5>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                    </div>
-                    <div class="card">
-                    <div class="card-header" id="headingThree">
-                        <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Collapsible Group Item #3
-                        </button>
-                        </h5>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                        <div class="card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                    </div>
-                </div>
+
+                    </ul>
+                    
+                    <p class="text-center" style="height: 80px; margin: 0px; position: static;">
+                        and more!!<br>
+                        OSRS GIM Bank, with database support and dynamic search filtering. Try it out by clicking the second page on the navigation bar at the top!
+                    </p>
+                </section>
 
             </div>
         </div>
