@@ -6,197 +6,203 @@
 
     <script src="axios/axios.min.js"></script>
 
+    <!-- website icon-->
+    <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
+        type = "image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" 
     crossorigin="anonymous">
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     
 
     <style>
-        
+    
     body {
-        background-image: linear-gradient(to right,rgb(9, 255, 255), blue);
-        background-repeat: no-repeat;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #introBG1 {
+        width: 100%;
+        opacity: 1;
+        height: 100%;
+        position: absolute;
+        z-index: -4;
+        transition: opacity 1s linear;
+        object-fit: cover;
         
     }
 
-
-    #enemyHP{
+    #introBG2 {
         width: 100%;
-        background-color: lightgreen;
+        opacity: 1;
+        height: 100%;
+        position: absolute;
+        z-index: -5;
+        transition: opacity 1s linear;
+        object-fit: cover;
     }
-
-    #myHP{
-        width: 100%;
-        background-color: lightgreen;
-    }
-
-    .progress{
-        background-color: red;
-    }
-
-
-
-    #attackButton {
-        position: relative;
-        bottom: 170px;
-    }
-
-    #hitsplats p{
-        margin: auto;
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        background-image: url("hitsplat.png");
-        background-repeat: no-repeat;
-        background-size: 100%;
-        position: relative;
-        z-index: 1;
-
-    }
-    #hitsplats {
-        visibility: hidden;
-    }
-    #EHP {
-        font-size: 40px;
-    }
-
-    .hit1{
-        position: relative;
-        top: 70px;
-        left: 2px;
-
-    }
-    .hit2{
-        position: relative;
-        right: 25px;
-        top: 47px;
-
-
-    }
-    .hit3{
-        position: relative;
-        top: 25px;
-        left: 2px;
-    }
-
-    #monster {
-        height: 340px;
-        width: 230px;
-        background-image: url("verzik.png");
-        background-repeat: no-repeat;
-        background-size: 80%;
-        position: relative;
-        bottom: 260px;
-        left: 30px;
-        margin: auto;
-        z-index: -1;
-    }
-
-    #player {
-        background-image: url("scythehits/0002.png");
-        background-size: 100%;
-        height: 350px;
-        width: 300px;
-        background-repeat: no-repeat;
-        position: relative;
-        right: 260px;
-        top: 15px;
-        z-index: 3;
-    }
-
-    #hiddenImages{
-        visibility: hidden;
-        height: 0px;
-    }
-
-    #telegramSend {
-        text-align: center;
-        width: 50%;
-        height: 40px;
-        margin: auto;
-
-    }
-
 
     </style>
 
 </head>
 <body>
+    <!-- nav bar-->
 
-    <p></p>
-    <div id="telegramSend">
-        <p>Message you want to send to my telegram</p>
-        <div id="speechbutton" class="btn btn-success">speech recognition</div>
-        <div id="output"></div>
-        <input id="telegramMessage" type="text" placeholder="text message">
-        <div id="telegramSendButton" class="btn btn-danger" style="margin-left:10px;">send</div>
-        <div id="telegramStatus"></div>
-    </div>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color: #e3f2fd; padding: 5px;">
+        <a class="navbar-brand" href="#" style="margin-left: 10px;"><img src="https://cdn.discordapp.com/attachments/818102115058450474/887315665273368596/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+            </li>
+        </ul>
 
-    <p style="margin:100px"></p>
-
-
-    <div id="myDiv" class="container-fluid">
-        <div id="hiddenImages">
         </div>
-        <p style="text-align: center; font-size:50px; z-index: 1; margin-bottom: 50px;" class="text-danger">There is 5t cooldown between each attack</p>
-        <div class="row">
-            <div class="col-4"></div>
+    </nav>
+    <!-- end of nav bar -->
 
-            <div class="col-4">
-                <div class="text-danger text-center" id="EHP">3250/3250</div>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-success" id="enemyHP"></div>
+
+    <div class="container-fluid" style="margin-top: 53px;">
+        <div class="row">
+            <div class="col" style="padding: 0px;">
+
+        
+                <section id="intro" style="height: 100vh;" class="text-light">
+
+
+                    <div id="introJumbo" class="jumbotron jumbotron-fluid" style="height: 100%">
+                        <img id="introBG1" src="resources/bg1.png">
+                        <img id="introBG2" src="resources/bg2.png">
+                        <div style="height: 20%;"></div>
+
+                        <div style="padding: 50px;">
+                            <h1 class="display-4">Hello, welcome! ^w^</h1>
+                            <p class="lead">I am a boy.</p>
+                            <hr class="my-4">
+                            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                            <p class="lead">
+                            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                            </p>
+                        </div>
+                    </div>
+
+                </section>
+
+                <div id="accordion">
+                    <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Collapsible Group Item #1
+                        </button>
+                        </h5>
+                    </div>
+                
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Collapsible Group Item #2
+                        </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Collapsible Group Item #3
+                        </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                    </div>
                 </div>
 
-                <div id="hitsplats" class="text-info"><p>0</p><p>0</p><p>0</p></div>
-                <div id="monster"></div>
             </div>
-
-
-
-
-            <div class="col-4">
-                <div id="player"></div>
-            </div>
-
-            <div class="col-1"></div>
         </div>
-
-        <br>
-
-        <div class="row">
-            <div class="btn btn-danger w-50 mx-auto" id="attackButton">attack</div>
-        </div>
-
-
     </div>
-    <br>
 
     
-    <p style="height: 500px;"></p>
 
-    <div>
-        <a href="Q4.html" style="font-size: large;">shopping list la</a>
-        <br>
-        <a href="Q2.html" style="font-size: large;">carousel example</a>
-        <br>
-        <a href="q3.html" style="font-size: large;">axios example</a>
-        <br>
-        <a href="calculator.html" style="font-size: large;">calculator javascript example</a>
- 
-    </div>
+<script>
 
-    <div style="overflow: hidden;">
-        <script src="index.js"></script>
-        <script src="speech.js"></script>
+    var bgList = [1,2,3,4,5];
 
-    </div>
+
+    function changeintroBG(targetBG){
+        document.getElementById("introBG2").src = `resources/${targetBG}.png`;
+
+        document.getElementById("introBG1").style.opacity = 0;
+        setTimeout(function(){
+            document.getElementById("introBG1").src = `resources/${targetBG}.png`;
+            document.getElementById("introBG1").style.opacity = 1;}, 1000);
+            
+    }
+
+    function nextIntroBG(){
+        var slashIndex = document.getElementById("introBG1").src.lastIndexOf("/");
+        var dotIndex = document.getElementById("introBG1").src.indexOf(".png");
+        var currentBG = document.getElementById("introBG1").src.slice(slashIndex + 1, dotIndex);
+        var nextBG = 1 + parseInt(currentBG.slice(2));
+        console.log(currentBG)
+        
+
+        if (nextBG > bgList.length) {
+            nextBG = bgList[0];
+        }
+        console.log(nextBG);
+        changeintroBG(`bg${nextBG}`);
+    }
+
+    setInterval(nextIntroBG, 5000);
+
+    
+</script>
+    
+
+
     
     
 </body>
