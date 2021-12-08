@@ -165,6 +165,7 @@
     var itemInfoList = [];
     var item_idList = [];
     var itemInSearch = [];
+    var qtyList = [];
     var bankStatus = false;
 
 
@@ -183,12 +184,49 @@
                 if (itemList.includes(bankitem.name)) {
                     var itemIndex = itemList.indexOf(bankitem.name);
                     itemInfoList[itemIndex] += bankitem.quantity;
+                    switch(userId) {
+                        case "rubiak":
+                            qtyList[itemIndex][0] += bankitem.quantity;
+                            break;
+                        case "alpoopi":
+                            qtyList[itemIndex][1] += bankitem.quantity;
+                            break;
+                        case "versix":
+                            qtyList[itemIndex][2] += bankitem.quantity;
+                            break;
+                        case "zacster":
+                            qtyList[itemIndex][3] += bankitem.quantity;
+                            break;
+                        case "cheshire":
+                            qtyList[itemIndex][4] += bankitem.quantity;
+                            break;
+                    }
                 }
                 else {
                     itemList.push(bankitem.name);
                     itemInfoList.push(bankitem.quantity);
                     item_idList.push(bankitem.id);
                     itemInSearch.push(true);
+
+                    switch(userId) {
+                        case "rubiak":
+                            qtyList.push([bankitem.quantity,0,0,0,0])
+                            break;
+                        case "alpoopi":
+                            qtyList.push([0,bankitem.quantity,0,0,0])
+                            break;
+                        case "versix":
+                            qtyList.push([0,0,bankitem.quantity,0,0])
+                            break;
+                        case "zacster":
+                            qtyList.push([0,0,0,bankitem.quantity,0])
+                            break;
+                        case "cheshire":
+                            qtyList.push([0,0,0,0,bankitem.quantity])
+                            break;
+                        
+                    }
+                    
                 }
             }
 
@@ -261,13 +299,32 @@
             //console.log(i);
             var itemName = itemList[i];
             var itemQuantity = itemInfoList[i];
-            let item_id = item_idList[i]
+            let item_id = item_idList[i];
+            let qtys = qtyList[i];
 
             if (!itemInSearch[i]){
                 continue;
             }
 
-            output_string += `<li class='list-group-item'>${itemName} : ${itemQuantity} <img src='https://raw.githubusercontent.com/osrsbox/osrsbox-db/master/docs/items-icons/${item_id}.png'></li>`;
+            output_string += `<li class='list-group-item'>${itemName} : ${itemQuantity} <img src='https://raw.githubusercontent.com/osrsbox/osrsbox-db/master/docs/items-icons/${item_id}.png'>
+                <table class="table">
+                    <tr>
+                        <th>rubiak</th>
+                        <th>alpoopi</th>
+                        <th>versix</th>
+                        <th>zacster</th>
+                        <th>cheshire</th>
+                    </tr>
+                    <tr>
+                        <td>${qtys[0]}</td>
+                        <td>${qtys[1]}</td>
+                        <td>${qtys[2]}</td>
+                        <td>${qtys[3]}</td>
+                        <td>${qtys[4]}</td>
+                    </tr>
+                    
+                </table>
+                </li>`;
 
         }
 
