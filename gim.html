@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gim bank</title>
+    <title>GIM bank</title>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Shippori+Antique&display=swap');
+        </style> 
 
     <!-- website icon-->
     <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
@@ -25,6 +28,9 @@
 
 
     <style>
+        body{
+            font-family: 'Press Start 2P', cursive;
+        }
         img:hover {
             transform: scale(1.2);
         }
@@ -56,7 +62,7 @@
     <div id="app" style="margin-top: 53px;">
 
         <div class="collapse" id="collapseExample" style="margin-left:25%;"><br><br><br>
-            <p>gim bank, if you do not want to update your bank just click refresh the group bank.</p>
+            <p>GIM bank, if you do not want to update your bank just click refresh the group bank.</p>
             <p>Please try not to spam, my database has limit.</p>
     
             <input type="text" id="user" placeholder="rubiak">
@@ -78,13 +84,13 @@
 
         
         <br> <br>
-        <button id="refreshBank">refresh the group bank</button>
+        <button class="btn btn-success" style="margin-left:50px;" id="refreshBank">Refresh the group bank</button>
         
-        <div id="status"></div><br><br>
+        <div id="status" style="margin-left: 50px;"></div><br><br>
 
-        <div id="searchbox" hidden=true>
-        filter:
-        <input type="text" id="search" placeholder="search" v-model="search" v-on:change="updateSearch" style="margin-left: 50px;">
+        <div id="searchbox" hidden=true style="padding-left:50px;">
+        <h5 class="text-primary" style="display:inline;">Filter:</h5>
+        <input type="text" id="search" placeholder="Search" v-model="search" v-on:change="updateSearch" style="margin-left: 50px;">
     
         </div>
 
@@ -353,7 +359,7 @@
 
         //console.log(output_string);
         document.getElementById("result").innerHTML = output_string;
-        document.getElementById("status").innerHTML = "refreshed bank. This is what the group has: ";
+        document.getElementById("status").innerHTML = "Refreshed bank. This is what the group has: ";
     }
 
     function checkStatus(){
@@ -389,7 +395,7 @@
         checkBank("cheshire");
 
         document.getElementById("refreshBank").disabled = true;
-        document.getElementById("status").innerHTML = "refreshing bank... Please standby";
+        document.getElementById("status").innerHTML = "Refreshing bank... Please standby";
         checkStatus();
         
 
