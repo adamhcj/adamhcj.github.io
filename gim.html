@@ -387,6 +387,8 @@
         itemInfoList = [];
         item_idList = [];
         itemInSearch = [];
+        qtyList = [];
+        bankStatus = false;
 
 
         checkBank("rubiak");
@@ -395,6 +397,7 @@
         checkBank("zacster");
         checkBank("cheshire");
 
+        document.getElementById("searchbox").hidden = true;
         document.getElementById("refreshBank").disabled = true;
         document.getElementById("status").innerHTML = "Refreshing bank... Please standby";
         checkStatus();
