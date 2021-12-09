@@ -28,6 +28,7 @@
         img:hover {
             transform: scale(1.2);
         }
+
     </style>
 </head>
 <body>
@@ -54,13 +55,28 @@
         <!-- end of nav bar -->
     <div id="app" style="margin-top: 53px;">
 
-        <p>gim bank, if you do not want to update your bank just click refresh the group bank.</p>
-        <p>Please try not to spam, my database has limit.</p>
+        <div class="collapse" id="collapseExample" style="margin-left:25%;"><br><br><br>
+            <p>gim bank, if you do not want to update your bank just click refresh the group bank.</p>
+            <p>Please try not to spam, my database has limit.</p>
+    
+            <input type="text" id="user" placeholder="rubiak">
+            <input type="password" id="pw" placeholder="pokemon">
+            <input type="text" id="bankInput" placeholder="json file">
+            <button id="updateButton">update bank</button>
+        </div>
 
-        <input type="text" id="user" placeholder="rubiak">
-        <input type="password" id="pw" placeholder="pokemon">
-        <input type="text" id="bankInput" placeholder="json file">
-        <button id="updateButton">update bank</button>
+
+        <p> <br><br><br>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-left:25%;">
+              Click to open update bank menu
+            </button>
+        </p>
+
+
+
+
+
+        
         <br> <br>
         <button id="refreshBank">refresh the group bank</button>
         
@@ -306,9 +322,11 @@
                 continue;
             }
 
-            output_string += `<li class='list-group-item'>${itemName} : ${itemQuantity} <img src='https://raw.githubusercontent.com/osrsbox/osrsbox-db/master/docs/items-icons/${item_id}.png'>
-                <table class="table">
+            output_string += `<li class='list-group-item'>
+                <table class="table table-bordered" style="table-layout: fixed; text-align: center;">
                     <tr>
+                        <th>${itemName}</th>
+                        <th>total</th>
                         <th>rubiak</th>
                         <th>alpoopi</th>
                         <th>versix</th>
@@ -316,6 +334,8 @@
                         <th>cheshire</th>
                     </tr>
                     <tr>
+                        <td><img src='https://raw.githubusercontent.com/osrsbox/osrsbox-db/master/docs/items-icons/${item_id}.png'>
+                        <td>${itemQuantity}</td>
                         <td>${qtys[0]}</td>
                         <td>${qtys[1]}</td>
                         <td>${qtys[2]}</td>
