@@ -96,7 +96,8 @@ for (i=1; i<=11; i++){
         .catch(error => {
             //console.log(error.message)
             document.getElementById("telegramStatus").innerHTML = "error in trying to send: " + sendString;
-
+            setCooldown();
+            countDown2second("nothing, please retry"+sendString);
 
         });
 
