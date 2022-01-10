@@ -150,7 +150,13 @@
 
         document.getElementById("introBG1").style.opacity = 0;
         setTimeout(function(){
-            document.getElementById("introBG1").src = `resources/${targetBG}.png`;
+            if (targetBG == "bg5") { //gif
+                document.getElementById("introBG1").src = `resources/${targetBG}.gif`;
+            }
+            else { //png
+                document.getElementById("introBG1").src = `resources/${targetBG}.png`;
+            }
+            
             document.getElementById("introBG1").style.opacity = 1;}, 1000);
             
     }
