@@ -50,11 +50,22 @@
     }
 
     .imageExample {
-        display: block;
+        display: inline-block;
         object-fit: cover;
-        width: 50%;
-        height: 50%;
+        width: 40%;
+        height: 40%;
         margin-right: auto;
+        margin-left: auto;
+    }
+
+    .protoimage {
+        display: inline-block;
+        object-fit: cover;
+        width: 70%;
+        height: 70%;
+        margin-right: auto;
+        margin-left: auto;
+        border: black solid 1px;
     }
 
     </style>
@@ -116,19 +127,50 @@
                 <section id="middle" style="background-color: rgb(209, 237, 255); padding-top:10px;">
                     <h1 class="display-1" style="position: relative;">Some things I did for fun!</h1>
                     <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Python:</p>
-                        <li class="list-group-item">Scribblio draw using python<img src="resources/bg2.png" class="imageExample"></li>
-                        <li class="list-group-item">piplupOwo discord bot<img src="resources/discordb.png" class="imageExample"><br><br></li>
-                        <li class="list-group-item"><h1>telegram bot to send me message</h1><img src="resources/teleb.png" class="imageExample"><br><br><br>monitoring uptime of services with telegram! how convenient<img src="resources/uptime.png" class="imageExample"> </li>
+                        <li class="list-group-item"><h1 class="text-danger">Scribblio draw using python</h1>
+                            <ul>
+                                <li>my very first programming script (before lessons, i still dk how i managed to do it during the holidays must be by luck haha)</li>
+                                <li>two parts:<ol>
+                                    <li>scanning pixels for colours into array</li>
+                                    <li>iterate the array to click on spots</li>
+                                </ol></li>
+                                <li>very early phase testing of script on paint: <br><img src="resources/proto.png" class="protoimage"></li> <h1>into this:</h1>
+                            </ul>
+                            <img src="resources/bg2.png" class="imageExample"><img src="resources/skribblpenguin.png" class="imageExample"></li>
+                        <li class="list-group-item"><h1 class="text-danger">piplupOwo discord bot</h1>
+                            <ul>
+                                <li>google text to speech for shy / people in the library / spoilt mic people in discord channels (bot will speak)</li>
+                                <li>play some music / sound clips (like memes)</li>
+                            </ul>
+                            <img src="resources/discordb.png" class="imageExample"><br><br></li>
+                        <li class="list-group-item"><h1 class="text-danger">telegram bot to send me message</h1>
+                            <ul>
+                                <li>website telegram bot is using javascript</li>
+                                <li>experimented with telegram bot on python to perform various tasks (like notification coupled with monitoring of website response)</li>
+                            </ul>
+                            <img src="resources/teleb.png" class="imageExample"><br><br><br><h1 class="text-danger">monitoring uptime of services with telegram! how convenient</h1><br><img src="resources/uptime.png" class="imageExample"> </li>
                     </ul>
                     <br><br>
                     <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Java:</p>
                         
-                        <li class="list-group-item">OPRS plugin<img src="https://github.com/piplupOwo/piplup/raw/master/resources/smallerdiscophosani.gif?raw=true" class="imageExample"><br><br><br>TOB hardmode pools<img src="resources/bg3.png" class="imageExample"></li>
+                        <li class="list-group-item"><h1 class="text-danger">OPRS plugin</h1>
+                            
+                            <ul>
+                                <li>makes game more fun with stuff like disco mode (dangerous tiles are litted up)</li>
+                            </ul>
 
+                            <br><img src="https://github.com/piplupOwo/piplup/raw/master/resources/smallerdiscophosani.gif?raw=true" class="imageExample"><br><br><br>TOB hardmode pools
+                            
+                            <ul>
+                                <li>draws colourful lines to demarcate groups of spots designated for each player</li>
+                            </ul>
+
+                            <br><img src="resources/bg3.png" class="imageExample"></li>
+                            
 
                     </ul>
                     
-                    <p class="text-center" style="height: 80px; margin: 0px; position: static;">
+                    <p class="text-center text-success" style="height: 80px; margin: 0px; position: static;">
                         and more!!<br>
                         OSRS GIM Bank, with database support and dynamic search filtering. Try it out by clicking the second page on the navigation bar at the top!
                     </p>
