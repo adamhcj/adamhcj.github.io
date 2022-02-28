@@ -62,14 +62,15 @@
 
     <div id="app" style="margin-top: 53px;">
 
+
         <h1 class="text-info">Description: </h1>
         <ul class="ul">
             <h2 class="text-danger">Oldschool Runescape Group Ironman (GIM) bank, piplupOwo's group</h2>
             <ol>
                 <li>Runelite (runescape client) Export bank data as JSON</li>
-                <li>Update to my firebase through the collapsible update menu</li>
+                <li>Update to my firebase through the collapsible update menu with the JSON generated</li>
                 <li>Website to parse all the data of 5 team members and consolidate</li>
-                <li>now we can all see what we collectively have :)</li>
+                <li>now we can all see what we collectively have nicely (with in game icons) :)</li>
                 <li class="text-danger">Try out the filter function (after loading the bank), it mimics the bank search function in game. (try searching stuff like "fire" or "cape")</li>
             </ol>
 
@@ -78,11 +79,16 @@
         <div class="collapse" id="collapseExample" style="margin-left:25%;"><br><br><br>
             <p>GIM bank, if you do not want to update your bank just click refresh the group bank.</p>
             <p>Please try not to spam, my database has limit.</p>
+
     
             <input type="text" id="user" placeholder="rubiak">
             <input type="password" id="pw" placeholder="pokemon">
             <input type="text" id="bankInput" placeholder="json file">
             <button id="updateButton">update bank</button>
+
+            <br> <br>
+            <button class="btn btn-success" style="margin-left:50px;" id="refreshBank">Refresh the group bank</button>
+            
         </div>
 
 
@@ -97,14 +103,12 @@
 
 
         
-        <br> <br>
-        <button class="btn btn-success" style="margin-left:50px;" id="refreshBank">Refresh the group bank</button>
-        
+
         <div id="status" style="margin-left: 50px;"></div><br><br>
 
         <div id="searchbox" hidden=true style="padding-left:50px;">
         <h5 class="text-primary" style="display:inline;">Filter:</h5>
-        <input type="text" id="search" placeholder="Search" v-model="search" v-on:change="updateSearch" style="margin-left: 50px;">
+        <input type="text" id="search" placeholder="Search" v-model="search" v-on:change="updateSearch" style="margin-left: 50px;"> <span class="text-info" style="margin-left:30px;">try searching "cape" or "fire"</span>
     
         </div>
 
