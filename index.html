@@ -49,6 +49,17 @@
 
     }
 
+    .hiddengif {
+        width: 100%;
+        opacity: 0;
+        height: 100%;
+        position: fixed;
+        z-index: -9;
+        object-fit: cover;
+        visibility: hidden;
+        
+    }
+
     .imageExample {
         display: inline-block;
         object-fit: cover;
@@ -105,7 +116,11 @@
 
                     <div id="introJumbo" class="jumbotron jumbotron-fluid" style="height: 100%">
                         <img id="introBG1" src="resources/bg2.png">
-                        <img id="introBG2" src="resources/bg3.png">
+                        <img id="introBG2" src="resources/bg3.gif">
+                        <!-- hidden gif images-->
+                        <img class="hiddengif" src="resources/bg3.gif">
+                        <img class="hiddengif" src="resources/bg4.gif">
+                        
                         <div style="height: 20%;"></div>
 
                         <div style="padding: 50px;">
@@ -196,13 +211,8 @@
 
 
     function changeintroBG(targetBG){
-        // document.getElementById("introBG2").src = `resources/${targetBG}.png`;
-        if (gifList.includes(targetBG)) { //gif
-                document.getElementById("introBG2").src = `resources/${targetBG}.gif`;
-            }
-            else { //png
-                document.getElementById("introBG2").src = `resources/${targetBG}.png`;
-            }
+        document.getElementById("introBG2").src = `resources/blank.png`;
+
 
 
         document.getElementById("introBG1").style.opacity = 0;
@@ -234,7 +244,7 @@
     }
     nextIntroBG();
 
-    setInterval(nextIntroBG, 5000);
+    setInterval(nextIntroBG, 8000);
 
     
 </script>
