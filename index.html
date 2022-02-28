@@ -104,17 +104,17 @@
 
 
                     <div id="introJumbo" class="jumbotron jumbotron-fluid" style="height: 100%">
-                        <img id="introBG1" src="resources/bg1.png">
-                        <img id="introBG2" src="resources/bg2.png">
+                        <img id="introBG1" src="resources/bg2.png">
+                        <img id="introBG2" src="resources/bg3.png">
                         <div style="height: 20%;"></div>
 
                         <div style="padding: 50px;">
-                            <h1 class="display-4">Hello, welcome! ^w^</h1>
-                            <p class="lead">I am a boy. I like computers :)</p>
+                            <h1 class="display-4 text-success">Hello, welcome! ^w^</h1>
+                            <p class="lead text-success">I am a boy. I like computers :)</p>
                             <p class="text-info">this is just a fun casual website, i am still learning and improving. :)</p>
                             <hr class="my-4">
                             <div id="telegramSend">
-                                <p>Message you want to send to my telegram (anonymous). <br><h2 class="text-success">Say Hello! :)</h2></p>
+                                <p class="text-info">Message you want to send to my telegram (anonymous). <br><h2 class="text-success">Say Hello! :)</h2></p>
                                 <div id="output"></div>
                                 <input id="telegramMessage" type="text" placeholder="text message">
                                 <div id="telegramSendButton" class="btn btn-danger" style="margin-left:10px;">send</div>
@@ -171,13 +171,14 @@
                                 <li>draws colourful lines to demarcate groups of spots designated for each player</li>
                             </ul>
 
-                            <br><img src="resources/bg3.png" class="imageExample"></li>
+                            <br><img src="resources/tobpools.png" class="imageExample"></li>
                             
 
                     </ul>
                     
                     <p class="text-center text-success" style="height: 80px; margin: 0px; position: static;">
-                        and more!! (like JavaScript)<br>
+                        <br>
+                        and more things!! (like JavaScript)<br>
                         OSRS GIM Bank, with database support and dynamic search filtering and beautiful item images. Try it out by clicking the second page on the navigation bar at the top!
                     </p>
                 </section>
@@ -190,15 +191,23 @@
 
 <script>
 
-    var bgList = [1,2,3,4,5];
+    const bgList = [2,3,4,5];
+    const gifList = ["bg3", "bg4"]
 
 
     function changeintroBG(targetBG){
-        document.getElementById("introBG2").src = `resources/${targetBG}.png`;
+        // document.getElementById("introBG2").src = `resources/${targetBG}.png`;
+        if (gifList.includes(targetBG)) { //gif
+                document.getElementById("introBG2").src = `resources/${targetBG}.gif`;
+            }
+            else { //png
+                document.getElementById("introBG2").src = `resources/${targetBG}.png`;
+            }
+
 
         document.getElementById("introBG1").style.opacity = 0;
         setTimeout(function(){
-            if (targetBG == "bg5") { //gif
+            if (gifList.includes(targetBG)) { //gif
                 document.getElementById("introBG1").src = `resources/${targetBG}.gif`;
             }
             else { //png
