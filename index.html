@@ -116,7 +116,7 @@
 <body>
     <!-- loading -->
     <div id="loading">
-        <h1 class="loadingtext text-danger">loading... please wait</h1>
+        <h1 id="mainloadingtext" class="loadingtext text-danger">loading... please wait</h1>
         <h2 class="loadingtext text-dark" style="margin-top: 200px;">you may want to check out while waiting:<br>
             <a href="http://linkedin.com/in/piplup" target="_blank">linkedin</a></h2>
 
@@ -293,10 +293,21 @@
     
 <!-- loading website jquery -->
 <script>
+    //scroll to top
+    window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+    }
+
+    
+
+
     $("body").css("overflow", "hidden");
     $(window).on('load', function () {
-      $('#loading').hide();
-      $("body").css("overflow", "auto");
+    $("#mainloadingtext").text("almost done loading... :)");
+    setTimeout(function() {
+        $('#loading').hide();
+        $("body").css("overflow", "auto");
+    }, 3000);
     }) 
 </script>
 
