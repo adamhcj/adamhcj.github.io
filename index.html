@@ -41,6 +41,15 @@
   height: 100%;
 }
 
+.loadingtext {
+    margin: 0;
+    z-index: 101;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 
     body {
         margin: 0px;
@@ -107,7 +116,8 @@
 <body>
     <!-- loading -->
     <div id="loading">
-        <img id="loading-image" src="resources/loadingimage.png" alt="Loading..." />
+        <h1 class="loadingtext text-danger">loading... please wait</h1>
+        <img id="loading-image" src="resources/bg3.gif" alt="Loading..." />
     </div>
 
     <!-- nav bar-->
@@ -151,8 +161,9 @@
                         <div style="height: 20%;"></div>
 
                         <div style="padding: 50px;">
-                            <h1 class="display-4 text-success">Hello, welcome! ^w^</h1>
-                            <p class="lead text-success">I am a boy. I like computers :)</p>
+
+                            <h1 class="display-4 text-primary">Hello, welcome! ^w^</h1>
+                            <p class="lead text-info">I am a boy. I like computers :)</p>
                             <p class="text-info">this is just a fun casual website, i am still learning and improving. :)</p>
                             <hr class="my-4">
                             <div id="telegramSend">
@@ -161,6 +172,7 @@
                                 <input id="telegramMessage" type="text" placeholder="text message">
                                 <div id="telegramSendButton" class="btn btn-danger" style="margin-left:10px;">send</div>
                                 <div id="telegramStatus"></div>
+
 
                         </div>
                     </div>
@@ -276,10 +288,12 @@
     
 </script>
     
-<!-- loading website -->
+<!-- loading website jquery -->
 <script>
+    $("body").css("overflow", "hidden");
     $(window).on('load', function () {
       $('#loading').hide();
+      $("body").css("overflow", "auto");
     }) 
 </script>
 
