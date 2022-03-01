@@ -31,13 +31,51 @@
             font-family: 'Press Start 2P', cursive;
         }
 
-        img:hover {
+        td img:hover {
             transform: scale(1.2);
         }
+
+#loading {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    opacity: 1;
+    background-color: #fff;
+    z-index: 99;
+}
+
+#loading-image {
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+
+.loadingtext {
+    margin: 0;
+    z-index: 101;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
     </style>
 </head>
 <body>
+    <!-- loading -->
+    <div id="loading">
+        <span class="loadingtext text-info" style="top: 150px;">best viewed on computer with Google Chrome</span>
+        <h1 id="mainloadingtext" class="loadingtext text-danger">GIM Bank page<br>loading... please wait</h1>
+        <h2 class="loadingtext text-primary" style="margin-top: 200px;">you may want to check out while waiting:<br>
+            <a href="http://linkedin.com/in/piplup" target="_blank">linkedin</a></h2>
+
+        <img id="loading-image" src="resources/bg3.gif" alt="Loading..." />
+    </div>
+    
     <!-- nav bar-->
 
     <nav class="navbar fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd; padding: 5px;">
@@ -71,7 +109,7 @@
                 <li>Update to my firebase through the collapsible update menu with the JSON generated</li>
                 <li>Website to parse all the data of 5 team members and consolidate</li>
                 <li>now we can all see what we collectively have nicely (with in game icons) :)</li>
-                <li class="text-danger">Try out the filter function (after loading the bank), it mimics the bank search function in game. (try searching stuff like "fire" or "cape")</li>
+                <li class="text-danger">Try out the filter function, it mimics the bank search function in game. (try searching stuff like "fire" or "cape")</li>
             </ol>
 
         </ul>
@@ -94,7 +132,7 @@
 
         <p> <br><br><br>
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-left:25%;">
-              Click to open update bank menu
+              Click to open / hide update bank menu
             </button>
         </p>
 
@@ -378,6 +416,11 @@
         //console.log(output_string);
         document.getElementById("result").innerHTML = output_string;
         document.getElementById("status").innerHTML = "Refreshed bank. This is what the group has: ";
+        $("#mainloadingtext").text("almost done loading... :)");
+        setTimeout(function() {
+            $('#loading').hide();
+            $("body").css("overflow", "auto");
+        }, 3000);
     }
 
     function checkStatus(){
@@ -417,12 +460,12 @@
         document.getElementById("searchbox").hidden = true;
         document.getElementById("refreshBank").disabled = true;
         document.getElementById("status").innerHTML = "Refreshing bank... Please standby";
+        window.scrollTo(0, 0);
+
+        $("body").css("overflow", "hidden");
+        $('#loading').show();
         checkStatus();
         
-
-
-        
-
     }
     
     
@@ -430,10 +473,22 @@
 
 
 
-    console.log("hello v1");
     refreshBank();
-    console.log("Owo")
     </script>
+
+<!-- loading website jquery -->
+<script>
+    //scroll to top
+    window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+    }
+
+    
+
+
+    $("body").css("overflow", "hidden");
+
+</script>
 
 
 </body>
