@@ -19,7 +19,29 @@
     
 
     <style>
-    
+    <!--loading style-->
+
+#loading {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    opacity: 0.7;
+    background-color: #fff;
+    z-index: 99;
+}
+
+#loading-image {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+
+
     body {
         margin: 0px;
         padding: 0px;
@@ -83,6 +105,11 @@
 
 </head>
 <body>
+    <!-- loading -->
+    <div id="loading">
+        <img id="loading-image" src="resources/loadingimage.png" alt="Loading..." />
+    </div>
+
     <!-- nav bar-->
 
     <nav class="navbar fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd; padding: 5px;">
@@ -249,7 +276,12 @@
     
 </script>
     
-
+<!-- loading website -->
+<script>
+    $(window).on('load', function () {
+      $('#loading').hide();
+    }) 
+</script>
 
     
     
