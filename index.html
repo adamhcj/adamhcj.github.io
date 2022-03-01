@@ -302,9 +302,10 @@
 
     
 
-
+    window.scrollTo(0, 0);
     $("body").css("overflow", "hidden");
     $(window).on('load', function () {
+    window.scrollTo(0, 0);
     $("#mainloadingtext").text("almost done loading... :)");
     setTimeout(function() {
         $('#loading').hide();

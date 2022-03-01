@@ -419,6 +419,7 @@
         document.getElementById("result").innerHTML = output_string;
         document.getElementById("status").innerHTML = "Refreshed bank. This is what the group has: ";
         $("#mainloadingtext").text("almost done loading... :)");
+        window.scrollTo(0, 0);
         setTimeout(function() {
             $('#loading').hide();
             $("body").css("overflow", "auto");
@@ -465,6 +466,7 @@
         window.scrollTo(0, 0);
 
         $("body").css("overflow", "hidden");
+        window.scrollTo(0, 0);
         $('#loading').show();
         checkStatus();
         
@@ -487,8 +489,9 @@
 
     
 
-
+    window.scrollTo(0, 0);
     $("body").css("overflow", "hidden");
+    window.scrollTo(0, 0);
 
 </script>
 
