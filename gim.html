@@ -35,6 +35,8 @@
             transform: scale(1.2);
         }
 
+
+
 #loading {
     position: fixed;
     display: block;
@@ -64,6 +66,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
 
     </style>
 </head>
@@ -114,7 +118,7 @@
                 <li>Update to my firebase through the collapsible update menu with the JSON generated</li>
                 <li>Website to parse all the data of 5 team members and consolidate</li>
                 <li>now we can all see what we collectively have nicely (with in game icons) :)</li>
-                <li class="text-danger">Try out the filter function, it mimics the bank search function in game. (try searching stuff like "fire" or "cape")</li>
+                <li class="text-danger">Try out the <a href="#search">filter function</a>, it mimics the bank search function in game. (try searching stuff like "fire" or "cape")</li>
             </ol>
 
         </ul>
@@ -146,12 +150,12 @@
 
 
         
-
+        <p style="margin-left: 50px;">Status message: </p>
         <div id="status" style="margin-left: 50px;"></div><br><br>
 
         <div id="searchbox" hidden=true style="padding-left:50px;">
-        <h5 class="text-primary" style="display:inline;">Filter:</h5>
-        <input type="text" id="search" placeholder="Search" v-model="search" v-on:change="updateSearch" style="margin-left: 50px;"> <span class="text-info" style="margin-left:30px;">try searching "cape" or "fire"</span>
+        <h2 class="text-primary" style="display:inline;">Filter:</h2>
+        <input type="text" id="search" placeholder="Search" v-model="search" v-on:change="updateSearch" style="margin-left: 20px; scroll-margin-top: 60px;"> <span class="text-primary" style="margin-left:10px;">try searching "cape" or "fire"</span>
     
         </div>
 
@@ -198,7 +202,10 @@
                         }
                     }
 
+                    
                     getResult();
+                    
+                    
                     //console.log("updatesearch end")
                 }catch{}
             }
@@ -420,13 +427,7 @@
 
         //console.log(output_string);
         document.getElementById("result").innerHTML = output_string;
-        document.getElementById("status").innerHTML = "Refreshed bank. This is what the group has: ";
-        $("#mainloadingtext").text("almost done loading... :)");
-        window.scrollTo(0, 0);
-        setTimeout(function() {
-            $('#loading').hide();
-            $("body").css("overflow", "auto");
-        }, 3000);
+
     }
 
     function checkStatus(){
@@ -442,6 +443,14 @@
             document.getElementById("searchbox").hidden = false;
             console.log(document.getElementById("hiddenprogress").innerHTML);
             document.getElementById("refreshBank").disabled = false;
+
+            document.getElementById("status").innerHTML = "Refreshed bank. This is what the group has: ";
+            $("#mainloadingtext").text("almost done loading... :)");
+            window.scrollTo(0, 0);
+            setTimeout(function() {
+                $('#loading').hide();
+                $("body").css("overflow", "auto");
+            }, 3000);
         }
     }
 
