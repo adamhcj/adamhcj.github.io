@@ -1,7 +1,3 @@
-const express = require('express')
-const app = express()
-app.use(cors())
-
 const CLIENTID = 'e4c21e05-7741-4dec-a4e3-9d428f7fa5f2'
 const CLIENTSECRET = 'd419717c-c40a-4796-850f-bb921e4ca3af'
 
@@ -19,18 +15,19 @@ const authcode = url.searchParams.get("code");
 console.log(authcode);
 
 
+const myHeaders = new Headers();
+myHeaders.append('Authorization', `Basic ${base64encoded}`);
 
-const headers= {
-    'Authorization': `Basic ${base64encoded}`,
-    'Access-Control-Allow-Origin': '*'
-}
-axios.post(`https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens?code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`, {
-    headers: headers
-  })
-  .then((response) => {
+const myInit = {
+method: 'POST',
+headers: myHeaders,
+mode: 'cors',
+cache: 'default',
+};
+
+const myRequest = new Request('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens?code=${authcode}&redirect_uri=${redirecturi}&grant_type=token');
+
+fetch(myRequest, myInit)
+.then((response) => {
     console.log(response);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
+});
