@@ -22,7 +22,7 @@ myHeaders.append('Access-Control-Allow-Origin', `*`);
 const myInit = {
 method: 'POST',
 headers: myHeaders,
-mode: 'cors',
+mode: 'no-cors',
 cache: 'default',
 };
 
