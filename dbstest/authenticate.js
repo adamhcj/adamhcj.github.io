@@ -1,3 +1,7 @@
+const express = require('express')
+const app = express()
+app.use(cors())
+
 const CLIENTID = 'e4c21e05-7741-4dec-a4e3-9d428f7fa5f2'
 const CLIENTSECRET = 'd419717c-c40a-4796-850f-bb921e4ca3af'
 
