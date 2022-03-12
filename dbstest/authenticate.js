@@ -25,7 +25,8 @@ mode: 'no-cors',
 cache: 'default',
 };
 
-const myRequest = new Request(`https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens?code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`);
+var requrl = `https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens?code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`
+const myRequest = new Request(requrl);
 
 fetch(myRequest, myInit)
 .then((response) => {
