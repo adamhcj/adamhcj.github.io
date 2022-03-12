@@ -7,7 +7,7 @@ const authurl = `https://www.dbs.com/sandbox/api/sg/v1/oauth/authorize?client_id
 
 const conjoinedstr = `${CLIENTID}:${CLIENTSECRET}`
 const base64encoded = btoa(conjoinedstr)
-
+console.log(base64encoded);
 
 var url_string = window.location.href
 var url = new URL(url_string);
@@ -17,7 +17,7 @@ console.log(authcode);
 
 
 //get access token
-fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
+const response = await fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
     method: 'POST',
     mode: 'no-cors',
     headers: {
