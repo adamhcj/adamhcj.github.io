@@ -21,11 +21,11 @@ myHeaders.append('Authorization', `Basic ${base64encoded}`);
 const myInit = {
 method: 'POST',
 headers: myHeaders,
-mode: 'cors',
+mode: 'no-cors',
 cache: 'default',
 };
 
-const myRequest = new Request('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens?code=${authcode}&redirect_uri=${redirecturi}&grant_type=token');
+const myRequest = new Request(`https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens?code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`);
 
 fetch(myRequest, myInit)
 .then((response) => {
