@@ -17,6 +17,7 @@ console.log(authcode);
 
 let myHeaders = new Headers();
 myHeaders.append('Authorization', `Basic ${base64encoded}`);
+myHeaders.append('Access-Control-Allow-Origin', `*`);
 
 const myInit = {
 method: 'POST',
