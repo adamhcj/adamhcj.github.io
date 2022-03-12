@@ -19,6 +19,7 @@ console.log(authcode);
 //get access token
 fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
     method: 'POST',
+    mode: 'no-cors',
     headers: {
         'Authorization': `Basic ${base64encoded}`,
     },
