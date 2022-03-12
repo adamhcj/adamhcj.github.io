@@ -18,6 +18,7 @@ console.log(authcode);
 
 const headers= {
     'Authorization': `Basic ${base64encoded}`,
+    'Access-Control-Allow-Origin': '*'
 }
 axios.post(`code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`, {
     headers: headers
