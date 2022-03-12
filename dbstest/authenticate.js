@@ -9,12 +9,15 @@ const conjoinedstr = `${CLIENTID}:${CLIENTSECRET}`
 const base64encoded = btoa(conjoinedstr)
 
 //get access token
-response = fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
+fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
     method: 'POST',
     headers: {
         'Authorization': `Basic ${base64encoded}`,
     },
     body: `code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`
+})
+.then(response => response.json())
+.then(data => {
+    console.log(data);
 });
 
-console.log(response);
