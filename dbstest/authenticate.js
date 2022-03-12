@@ -16,19 +16,16 @@ console.log(authcode);
 
 
 
-//get access token
-fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
-    method: 'POST',
-    headers: {
-        'Authorization': `Basic ${base64encoded}`,
-    },
-    body: `code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-})
-.catch((error) => {
-    console.log('Error', error);
-});
+const headers= {
+    'Authorization': `Basic ${base64encoded}`,
+}
+axios.post(`code=${authcode}&redirect_uri=${redirecturi}&grant_type=token`, {
+    headers: headers
+  })
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
