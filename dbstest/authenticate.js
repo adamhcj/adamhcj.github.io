@@ -17,9 +17,8 @@ console.log(authcode);
 
 
 //get access token
-const response = await fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
+fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens', {
     method: 'POST',
-    mode: 'no-cors',
     headers: {
         'Authorization': `Basic ${base64encoded}`,
     },
@@ -28,5 +27,8 @@ const response = await fetch('https://www.dbs.com/sandbox/api/sg/v1/oauth/tokens
 .then(response => response.json())
 .then(data => {
     console.log(data);
+})
+.catch((error) => {
+    console.log('Error', error);
 });
 
