@@ -21,7 +21,7 @@ myHeaders.append('Authorization', `Basic ${base64encoded}`);
 const myInit = {
 method: 'POST',
 headers: myHeaders,
-mode: 'no-cors',
+mode: 'cors',
 cache: 'default',
 };
 
