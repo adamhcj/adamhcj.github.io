@@ -5,7 +5,7 @@ function random(min,max){
 
 function dropBox(){
     var length = random(50, ($(".game").width() - 50));
-    var velocity = random(50000, 100000);
+    var velocity = random(10000, 50000);
     var size = random(50, 150);
     var thisBox = $("<div/>", {
       class: "box",
@@ -40,5 +40,5 @@ function dropBox(){
 
 setInterval(() => {
     dropBox();
-}, 200);
+}, 2000);
 
