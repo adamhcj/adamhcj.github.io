@@ -10,7 +10,7 @@
   }
   
 .move{
-    transform:rotate(3000deg) translateY(500vh) translateX(500vh);  
+    transform: translateY(500vh);  
 }
 
 .game {
