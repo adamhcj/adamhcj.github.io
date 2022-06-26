@@ -1,0 +1,18 @@
+.box{
+  
+    width: 50px;
+    height:100px;
+    position:absolute;
+    top: -150px;
+    transition: transform 1.5s linear;
+    cursor: pointer;
+    z-index:100;
+  }
+  
+.move{
+    transform:rotate(3000deg) translateY(500vh) translateX(500vh);  
+}
+
+.game {
+    overflow-x: hidden;
+}

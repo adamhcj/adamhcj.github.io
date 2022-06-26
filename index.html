@@ -113,8 +113,11 @@
 
     </style>
 
+    <!-- falling objects-->
+    <link href="fallingobjects.css" rel="stylesheet">
+
 </head>
-<body>
+<body class="game">
     <!-- loading -->
     <div id="loading">
         <img id="loading-image" src="resources/blank.png" alt="Loading..." style="z-index: 99;"/>
@@ -317,10 +320,12 @@
     $("#mainloadingtext").text("Home Page almost done loading... :)");
     setTimeout(function() {
         $('#loading').hide();
-        $("body").css("overflow", "auto");
+        $("body").css("overflow-y", "auto");
     }, 3000);
     }) 
 </script>
+
+<script src="fallingobjects.js"></script>
 
     
     

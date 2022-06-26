@@ -19,6 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <!-- falling objects-->
+    <link href="fallingobjects.css" rel="stylesheet">
+
     <style>
         <!--loading style-->
     
@@ -114,6 +117,7 @@
 
         .semester {
             text-align: center;
+            border: 3px solid red;
         }
 
         .modList {
@@ -145,13 +149,16 @@
             font-size: small;
 
         }
+
+
         
 
     </style>
 
 
 </head>
-<body>
+<body class="game">
+    
     <!-- loading -->
     <div id="loading">
         <img id="loading-image" src="resources/blank.png" alt="Loading..." style="z-index: 99;"/>
@@ -196,9 +203,9 @@
     <div style="margin-top: 53px;"></div>
 
     <br>
+
+
     <h3 class="text-primary">Year 2 Information Systems Major Student at SMU School of Computing and Information Systems</h3>
-    <h1>Hello, I am still actively working on this page aiming to reflect upon my journey and things I have learned.</h1>
-    <p>there will be huge works in progress as I reflect.. intending to add some images and descriptions and <span class='text-info'>styling</span> as I do my school work too :/</p>
 
     <br><br>
 
@@ -434,9 +441,11 @@
     $("#mainloadingtext").text("SMU Journey almost done loading... :)");
     setTimeout(function() {
         $('#loading').hide();
-        $("body").css("overflow", "auto");
+        $("body").css("overflow-y", "auto");
     }, 3000);
     }) 
 </script>
+
+<script src="fallingobjects.js"></script>
 </body>
 </html>
