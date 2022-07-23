@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>piplup ^w^</title>
+
+
+    <script src="axios/axios.min.js"></script>
+
+    <!-- website icon-->
+    <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
+        type = "image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    
+
+    <style>
+    <!--loading style-->
+
+#loading {
+    position: fixed;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    opacity: 0.7;
+    background-color: #fff;
+    z-index: 99;
+}
+
+#loading-image {
+  position: absolute;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+
+.loadingtext {
+    text-align: center;
+    margin: 0;
+    z-index: 101;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #introBG1 {
+        width: 100%;
+        opacity: 1;
+        height: 100%;
+        position: fixed;
+        z-index: -4;
+        transition: opacity 1s linear;
+        object-fit: cover;
+        
+
+        
+    }
+
+    #introBG2 {
+        width: 100%;
+        opacity: 1;
+        height: 100%;
+        position: fixed;
+        z-index: -5;
+        transition: opacity 1s linear;
+        object-fit: cover;
+
+    }
+
+    .hiddengif {
+        width: 100%;
+        opacity: 0;
+        height: 100%;
+        position: fixed;
+        z-index: -9;
+        object-fit: cover;
+        
+    }
+
+    .imageExample {
+        display: inline-block;
+        object-fit: cover;
+        width: 40%;
+        height: 40%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .protoimage {
+        display: inline-block;
+        object-fit: cover;
+        width: 60%;
+        height: 40%;
+        margin-right: auto;
+        margin-left: auto;
+        border: black solid 1px;
+    }
+
+    </style>
+
+    <!-- falling objects-->
+    <link href="../css/fallingobjects.css" rel="stylesheet">
+
+</head>
+<body class="game">
+    <!-- loading -->
+    <div id="loading">
+        <img id="loading-image" src="../resources/blank.png" alt="Loading..." style="z-index: 99;"/>
+        <img id="loading-image" src="../resources/bg3.gif" alt="Loading..." />
+        <span class="loadingtext text-info" style="top: 150px;">best viewed on computer with Google Chrome</span>
+        <h1 id="mainloadingtext" class="loadingtext text-danger">Home Page<br>loading... please wait</h1>
+        <h2 class="loadingtext text-primary" style="margin-top: 200px;">you may want to check out while waiting:<br>
+            <a href="http://linkedin.com/in/piplup" target="_blank">linkedin</a></h2>
+
+        
+    </div>
+
+    <!-- nav bar-->
+
+    <nav class="navbar fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd; padding: 5px;">
+        <a class="navbar-brand" style="margin-left: 10px;"><img src="https://cdn.discordapp.com/attachments/818102115058450474/887315665273368596/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+            <a class="nav-link active" href="">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="gim.html">GIM bank</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="mapPage.html">Leaflet map</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="schoolWorks.html">SMU journey</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">SingStat intern (coming soon)</a>
+            </li>
+        </ul>
+
+        </div>
+    </nav>
+    <!-- end of nav bar -->
+
+
+    <div class="container-fluid" style="margin-top: 53px;">
+        <div class="row">
+            <div class="col" style="padding: 0px;">
+
+        
+                <section id="intro" style="height: 100vh;" class="text-light">
+
+
+                    <div id="introJumbo" class="jumbotron jumbotron-fluid" style="height: 100%">
+                        <img id="introBG1" src="../resources/bg2.png">
+                        <img id="introBG2" src="../resources/bg3.gif">
+                        <!-- hidden gif images-->
+                        <img class="hiddengif" src="../resources/bg3.gif">
+                        <img class="hiddengif" src="../resources/bg4.gif">
+                        
+                        <div style="height: 20%;"></div>
+
+                        <div style="padding: 50px;">
+
+                            <h1 class="display-4 text-primary">Hello, welcome! ^w^</h1>
+                            <p class="lead text-info">I am a boy. I like computers :)</p>
+                            <p class="text-info">this is just a fun casual website using pure html (static webpage limitation hosted using github-pages), i am still learning and improving. :)</p>
+                            <hr class="my-4">
+                            <div id="telegramSend">
+                                <p class="text-info">Message you want to send to my telegram (anonymous). <br><h2 class="text-success">Say Hello! :)</h2></p>
+                                <div id="output"></div>
+                                <input id="telegramMessage" type="text" placeholder="text message">
+                                <div id="telegramSendButton" class="btn btn-danger" style="margin-left:10px;">send</div>
+                                <div id="telegramStatus" class="text-primary"></div>
+
+
+                        </div>
+                    </div>
+
+                </section>
+
+                <section id="middle" style="background-color: rgb(209, 237, 255); padding-top:10px;">
+                    <h1 class="display-2" style="position: relative;">Some things I did for fun!</h1>
+                    <h4>i like to learn computers :)</h4>
+                    <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Python:</p>
+                        <li class="list-group-item"><h1 class="text-danger">Scribblio (drawing game) draw using python</h1>
+                            <ul>
+                                <li>my very first programming script (before lessons, i still dk how i managed to do it during the holidays must be by luck haha)</li>
+                                <li>two parts:<ol>
+                                    <li>scanning pixels for colours into array</li>
+                                    <li>iterate the array to click on spots</li>
+                                </ol></li>
+                            </ul>
+                            <img src="../resources/bg2.png" class="imageExample"><img src="../resources/skribblpenguin.png" class="imageExample"></li>
+                        <li class="list-group-item"><h1 class="text-danger">piplupOwo Discord (voice chatting platform) bot</h1>
+                            <ul>
+                                <li>one of my happiest development, with actual users using it in a server :)</li>
+                                <li>google text to speech for shy / people in the library / spoilt mic people in discord channels (bot will speak)</li>
+                                <li>play some music / sound clips (like memes)</li>
+                            </ul>
+                            <img src="../resources/discordb.png" class="imageExample"><br><br></li>
+                        <li class="list-group-item"><h1 class="text-danger">Telegram (messaging platform) bot to send me message</h1>
+                            <ul>
+                                <li>this website's telegram bot is using javascript</li>
+                            </ul>
+                            <img src="../resources/teleb.png" class="imageExample"><br><br><br><h1 class="text-danger">monitoring uptime of services with telegram! how convenient</h1>
+                            <ul>
+                                <li>experimented with telegram bot on python to perform various tasks (like notification coupled with monitoring of website response)</li>
+                            </ul>
+
+                            <br><img src="../resources/uptime.png" class="imageExample"> </li>
+                    </ul>
+                    <br><br>
+                    <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Java:</p>
+                        
+                        <li class="list-group-item"><h1 class="text-danger">Oldschool Runescape (20 year old Java game) client (OPRS) plugin</h1>
+                            
+                            <ul>
+                                <li>makes game more fun with stuff like disco mode (dangerous tiles are lit up)</li>
+                            </ul>
+
+                            <br><img src="https://github.com/piplupOwo/piplup/raw/master/resources/smallerdiscophosani.gif?raw=true" class="imageExample"><br><br><br>TOB hardmode pools
+                            
+                            <ul>
+                                <li>draws colourful lines to demarcate groups of spots designated for each player</li>
+                            </ul>
+
+                            <br><img src="../resources/tobpools.png" class="imageExample"></li>
+                            
+
+                    </ul>
+                    
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+<script src="../js/index.js"></script>
+
+<script>
+
+    const bgList = [2,3,4,5];
+    const gifList = ["bg3", "bg4"]
+
+
+    function changeintroBG(targetBG){
+        document.getElementById("introBG2").src = `../resources/blank.png`;
+
+
+
+        document.getElementById("introBG1").style.opacity = 0;
+        setTimeout(function(){
+            if (gifList.includes(targetBG)) { //gif
+                document.getElementById("introBG1").src = `../resources/${targetBG}.gif`;
+            }
+            else { //png
+                document.getElementById("introBG1").src = `../resources/${targetBG}.png`;
+            }
+            
+            document.getElementById("introBG1").style.opacity = 1;}, 1000);
+            
+    }
+
+    function nextIntroBG(){
+        var slashIndex = document.getElementById("introBG1").src.lastIndexOf("/");
+        var dotIndex = document.getElementById("introBG1").src.indexOf(".png");
+        var currentBG = document.getElementById("introBG1").src.slice(slashIndex + 1, dotIndex);
+        var nextBG = 1 + parseInt(currentBG.slice(2));
+        console.log(currentBG)
+        
+
+        if (nextBG > bgList.length) {
+            nextBG = bgList[0];
+        }
+        console.log(nextBG);
+        changeintroBG(`bg${nextBG}`);
+    }
+    nextIntroBG();
+
+    setInterval(nextIntroBG, 8000);
+
+    
+</script>
+    
+<!-- loading website jquery -->
+<script>
+    //scroll to top
+    window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+    }
+
+    
+
+    window.scrollTo(0, 0);
+    $("body").css("overflow", "hidden");
+    $(window).on('load', function () {
+    window.scrollTo(0, 0);
+    $("#mainloadingtext").text("Home Page almost done loading... :)");
+    setTimeout(function() {
+        $('#loading').hide();
+        $("body").css("overflow-y", "auto");
+    }, 3000);
+    }) 
+</script>
+
+<script src="../js/fallingobjects.js"></script>
+
+    
+    
+</body>
+</html>

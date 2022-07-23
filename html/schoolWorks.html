@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>piplup ^w^</title>
+
+    <script src="axios/axios.min.js"></script>
+
+    <!-- website icon-->
+    <link
+      rel="icon"
+      href="https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg"
+      type="image/x-icon"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- falling objects-->
+    <link href="../css/fallingobjects.css" rel="stylesheet" />
+
+    <style>
+      <!--loading style-- > #loading {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+      }
+
+      #loading-image {
+        position: absolute;
+        left: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+      }
+
+      .loadingtext {
+        text-align: center;
+        margin: 0;
+        z-index: 101;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+
+      #introBG1 {
+        width: 100%;
+        opacity: 1;
+        height: 100%;
+        position: fixed;
+        z-index: -4;
+        transition: opacity 1s linear;
+        object-fit: cover;
+      }
+
+      #introBG2 {
+        width: 100%;
+        opacity: 1;
+        height: 100%;
+        position: fixed;
+        z-index: -5;
+        transition: opacity 1s linear;
+        object-fit: cover;
+      }
+
+      .hiddengif {
+        width: 100%;
+        opacity: 0;
+        height: 100%;
+        position: fixed;
+        z-index: -9;
+        object-fit: cover;
+      }
+
+      .imageExample {
+        display: inline-block;
+        object-fit: cover;
+        width: 40%;
+        height: 40%;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .protoimage {
+        display: inline-block;
+        object-fit: cover;
+        width: 60%;
+        height: 40%;
+        margin-right: auto;
+        margin-left: auto;
+        border: black solid 1px;
+      }
+
+      .semester {
+        text-align: center;
+        border: 3px solid red;
+      }
+
+      .modList {
+        padding: 0;
+        display: table;
+        width: 100%;
+      }
+
+      .modList li ul {
+        padding: 0;
+        display: table;
+        width: 100%;
+      }
+
+      .modList li {
+        margin-bottom: 50px;
+        list-style-type: none;
+        margin-left: 0px;
+        font-size: 35px;
+      }
+
+      .modList li ul li {
+        margin-bottom: 0px;
+        list-style-type: none;
+        margin-left: 0px;
+        width: 100%;
+        font-size: small;
+      }
+    </style>
+  </head>
+  <body class="game">
+    <!-- loading -->
+    <div id="loading">
+      <img
+        id="loading-image"
+        src="../resources/blank.png"
+        alt="Loading..."
+        style="z-index: 99"
+      />
+      <img id="loading-image" src="../resources/bg3.gif" alt="Loading..." />
+      <span class="loadingtext text-info" style="top: 150px"
+        >best viewed on computer with Google Chrome</span
+      >
+      <h1 id="mainloadingtext" class="loadingtext text-danger">
+        SMU Journey<br />loading... please wait
+      </h1>
+      <h2 class="loadingtext text-primary" style="margin-top: 200px">
+        you may want to check out while waiting:<br />
+        <a href="http://linkedin.com/in/piplup" target="_blank">linkedin</a>
+      </h2>
+    </div>
+
+    <!-- nav bar-->
+
+    <nav
+      class="navbar fixed-top navbar-expand-sm navbar-light"
+      style="background-color: #e3f2fd; padding: 5px"
+    >
+      <a class="navbar-brand" style="margin-left: 10px"
+        ><img
+          src="https://cdn.discordapp.com/attachments/818102115058450474/887315665273368596/pipbw.gif"
+          style="opacity: 0.8; height: 30px"
+      /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gim.html">GIM bank</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="mapPage.html">Leaflet map</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="schoolWorks.html">SMU journey</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- end of nav bar -->
+
+    <!-- margin for top nav bar -->
+    <div style="margin-top: 53px"></div>
+
+    <br />
+
+    <h3 class="text-primary">
+      Year 2 Information Systems Major Student at SMU School of Computing and
+      Information Systems
+    </h3>
+
+    <br /><br />
+
+    <div class="semester">
+      <h1 class="text-primary">
+        Year 1 Semester 1 (Aug 2020 - Dec 2020) (fully online)
+      </h1>
+      <h2 class="text-info">5 mods, all preassigned :')</h2>
+      <ul class="modList">
+        <li>
+          Big Questions
+          <ul>
+            <li>
+              Philosophical mod, wondering about questions pertaining Local vs
+              Global ( Cosmopolitanism :) )
+            </li>
+            <li>Nationalism vs Cosmopolitanism</li>
+            <li>
+              Socrates; Diogenes (Cynic philosopher believing in true carefree
+              "cosmopolitan" society without any obligations and rules)
+            </li>
+            <li>
+              Many interesting thought-provoking beliefs; Stoics like Roman
+              Emperor Marcus Aurelius believe in cosmopolitanism whereby one
+              should be critical and focus on self rather than critical of
+              others;
+            </li>
+            <li>
+              Altruism; Americanisation (influence of American culture and
+              business on other countries outside America); Multi-racialism;
+              Macdonaldization (worldwide homogenization of cultures due to
+              globalization)
+            </li>
+            <li>
+              Local sense of belonging may be threatened like erosion of less
+              popular languages (like Dialects) as our society becomes more
+              global
+            </li>
+            <li>
+              Overall many interesting thoughts which I thoroughly enjoyed
+              pondering, though not really IT / Business related hehe :')
+            </li>
+          </ul>
+        </li>
+        <li>
+          Economics and Society
+          <ul>
+            <li>Understanding certain fundamental economics in the Society</li>
+            <li>
+              Types of market; Perfect Competition; Monopolistic Competition;
+              Oligopoly; Monopoly
+            </li>
+            <li>
+              Price elasticity; Positive / Negative Externalities; Deadweight
+              Losses; Government Intervention; Opportunity Cost; Economic vs
+              Accounting Profit
+            </li>
+          </ul>
+        </li>
+        <li>
+          Information Systems and Innovation
+          <ul>
+            <li>Wide overview of Information Systems with many case studies</li>
+            <li>
+              Facilitate a class on assigned case study (mine was about DDOS
+              attack and how to prevent, prepare and handle)
+            </li>
+            <li>Disaster Recovery Plan, People, Process, Technology</li>
+            <li>
+              Information Systems terms like Cloud Computing; SaaS, PaaS, IaaS;
+              Business workflows; Net Present Value (NPV) of system investment
+              calculation
+            </li>
+            <li>
+              ERP systems and how it has empowered businesses like healthcare
+              providers, better storage compared to many physical files; Big
+              Bang approach vs phased approach in implementing Information
+              Systems;
+            </li>
+          </ul>
+        </li>
+        <li>
+          Introduction to Programming
+          <ul>
+            <li>Python coding! :))</li>
+            <li>Jupyter Notebook; Visual Studio Code</li>
+            <li>
+              Programming concepts like output, variables, functions, Boolean
+              Evaluation, For/While loops, Dictionaries, File I/O; programmatic
+              approach to problems;
+            </li>
+            <li>Challenging coding lab tests and paper Final Exam</li>
+          </ul>
+        </li>
+        <li>
+          Writing and Reasoning
+          <ul>
+            <li>Formal report writing :')</li>
+            <li>
+              CAPS: Context, Audience, Purpose (persuade / inform / entertain)
+            </li>
+            <li>
+              Business Proposal; Executive summary; Opinion piece; Emails;
+              Comparative Essay
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="semester">
+      <h1 class="text-primary">
+        Year 1 Semester 2 (Jan 2021 - Apr 2021) (physical classes)
+      </h1>
+      <h2 class="text-info">4 mods</h2>
+      <ul class="modList">
+        <li>
+          Computational Thinking
+          <ul>
+            <li>
+              Algorithms like Insertion Sorting vs Merge Sorting, Iterative vs
+              Sorted Array Binary Search; Time Complexity, Computational
+              Thinking :))
+            </li>
+            <li>
+              Travelling Salesman Optimisation; Greedy Algorithm; Brute-Force
+              approach
+            </li>
+            <li>Recursion</li>
+            <li>
+              Data Structures; Binary Search Trees; Graphs; Traversals
+              (Depth-First Search, Breadth-First Search ...)
+            </li>
+            <li>
+              Python Coding Projects graded based on run time, quality of
+              solution (best solution or optimal one), and correctness
+            </li>
+            <li>
+              Weigh the trade-offs between run time and quality of solution,
+              BEST solution may be the optimal one under certain time limit
+            </li>
+          </ul>
+        </li>
+        <li>
+          Data Management
+          <ul>
+            <li>
+              Database Management System(DBMS); specifically Relational DBMS
+            </li>
+            <li>Microsoft Visio to draw relational DBMS models</li>
+            <li>
+              Structured Query Language (SQL), Entity-Relational Models, mySQL
+            </li>
+            <li>
+              Entity-Relational Database; Entities; Primary Keys and more...;
+              Transitive Dependency...
+            </li>
+          </ul>
+        </li>
+        <li>
+          Leadership and Team Building (SMU-X)
+          <ul>
+            <li>
+              Collaborated with LDR Pte Ltd to promote local tourism app
+              Locomole
+            </li>
+            <li>
+              Many Leadership theories; Self-Managed Teams; Leadership
+              Contingency Theory;
+            </li>
+            <li>
+              Many types of leaders; Adapt to many different situations (People;
+              Leader; Situation); Digital Leadership;
+            </li>
+          </ul>
+        </li>
+        <li>
+          Web Application Development 1
+          <ul>
+            <li>PHP</li>
+            <li>WAMP server: Windows Apache MySQL PHP;</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="semester">
+      <h1 class="text-primary">
+        Year 2 Semester 1 (Aug 2021 - Dec 2021) (fully online)
+      </h1>
+      <h2 class="text-info">
+        5 mods, 5 projects, 5 finals, + TA commitments :'(
+      </h2>
+      <ul class="modList">
+        <li>
+          Business Process Analysis & Solutioning
+          <ul>
+            <li>
+              Business Process Analysis including: Resource model, Collaboration
+              model, Workflow Model, Root Cause Impact Model, Root Cause
+              Recommendation Model, Application Model, Function Model, Use Case
+              Models, Solution Overview Model, ...
+            </li>
+            <li>Signavio Academic Business Process Management Tools</li>
+          </ul>
+        </li>
+        <li>
+          Interaction Design and Prototyping
+          <ul>
+            <li>User Interface / User Experience Design Module</li>
+            <li>User Empathy Notes</li>
+            <li>Nielson's 10 Usability Heuristics</li>
+            <li>Figma Prototyping Tool</li>
+            <li>"Maze" Prototype Testing Site</li>
+            <li>AB Testing</li>
+            <li>
+              Evaluating test results; Wilcoxen-signed ranked test, paired
+              sample t-test
+            </li>
+          </ul>
+        </li>
+        <li>
+          Introductory Statistics
+          <ul>
+            <li>Statistics</li>
+            <li>Binomial, Normal, Poisson, Exponential Distribution</li>
+            <li>Evaluating Normality, Kurtosis, Skewness</li>
+            <li>Hypothesis testings</li>
+          </ul>
+        </li>
+        <li>
+          Spreadsheet Modeling and Analytics
+          <ul>
+            <li>Excel, Excel Macro</li>
+            <li>Monte Carlo Simulations</li>
+            <li>Index Match, Conditional Formatting, Queue simulations</li>
+            <li>Data Visualization</li>
+            <li>PivotTables, PivotCharts</li>
+            <li>Cell Fixing</li>
+          </ul>
+        </li>
+        <li>
+          Web Application Development 2
+          <ul>
+            <li>JavaScript</li>
+            <li>
+              Website Team Project "Boredttles", a web application aiming to
+              connect people globally in this pandemic, like penpal with people
+              writing messages in a bottle.
+            </li>
+            <li>
+              made me explore Leaflet.js, Google Firebase, Google Reverse
+              Geo-coding API, Telegram Bot API invoked with HTTP Get request
+            </li>
+            <li>
+              JavaScript; Vue.JS; DOM Manipulation; Bootstrap; CSS; GitHub
+              collaboration;
+            </li>
+          </ul>
+        </li>
+        <li>
+          (TA) Introduction to Programming
+          <ul>
+            <li>
+              Lab Submissions review; Lab Test Invigilation; Listen to students
+              and give advice and explanation on why code is wrong.
+            </li>
+            <li>made some python scripts to check Padlet submission</li>
+            <li>
+              also made python script to key in test inputs as I test students'
+              codes
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="semester">
+      <h1 class="text-primary">
+        (ONGOING) Year 2 Semester 2 (Jan 2022 - Apr 2022) (physical classes)
+      </h1>
+      <h2 class="text-info">
+        4 mods, still recovering from previous Semester :')
+      </h2>
+      <ul class="modList">
+        <li>
+          Analytics Foundation
+          <ul>
+            <li>
+              Fundamentals of Analytics; what insights / business answers do we
+              want to gain out of analytics?
+            </li>
+            <li>Tableau</li>
+            <li>
+              Python Data Analytics; Pandas Series and Dataframes; Schi-kit
+              learn;
+            </li>
+            <li>
+              Selection, Transformation, Standardising, Weighting of data for
+              analysis of Correlation
+            </li>
+            <li>Clustering; K-Means clustering, unsupervised learning</li>
+            <li>
+              Linear Regression; Multi-collinearity; predict car prices based on
+              multiple independent variables like Origin, ManufacturingYear,
+              HorsePower, CarType...
+            </li>
+          </ul>
+        </li>
+        <li>
+          Digital Business - Technologies and Transformation
+          <ul>
+            <li>Digitisation, Digitalisation, Digital Transformation</li>
+            <li>
+              Study modern digital transformations case studies, like Swee Choon
+              using GeoSpatial Data Analytics to derive business insights like
+              where to set up store
+            </li>
+            <li>
+              Omnichannel experiences, fusion of digital and physical
+              experiences in a digital business; Case Study Alibaba's new retail
+              concept: Hema Fresh
+            </li>
+            <li>
+              Failed digital transformation case study: Nike+ SportsBand; failed
+              partnerships and failure to understand wearable accessories market
+            </li>
+            <li>
+              Understand digitalisation's potential benefits and risks, and not
+              just simply applying digitalisation for the sake of being
+              tech-savy at the cost of tarnishing business value; For example
+              expensive IoT-enabled fruit blender which only works with
+              expensive fruit packets and internet-access, incurring redundant
+              hassle and costs.
+            </li>
+            <li>
+              Class facilitation as a group on assigned topic of Digital Nation:
+              Sweden
+            </li>
+            <li>
+              Michael Porter's five forces analysis of market attractiveness
+            </li>
+          </ul>
+        </li>
+        <li>
+          Enterprise Solution Development
+          <ul>
+            <li>Monolithic vs Microservices architecture</li>
+            <li>
+              Complex Microservices to orchestrate communication with multiple
+              microservices
+            </li>
+            <li>Python Flask</li>
+            <li>
+              Docker Containerisation; Docker Compose for automation of multiple
+              container running
+            </li>
+            <li>RESTful APIs</li>
+
+            <li>
+              Advanced Message Queuing Protocol with RabbitMQ as broker to allow
+              for Asynchronous communication between microservices; Direct,
+              Topic, Fanout exchanges
+            </li>
+            <li>
+              Load balancing; understainding Invocation-based and
+              Messaging-based communication and which to use
+            </li>
+            <li>API Gateway: KONG</li>
+          </ul>
+        </li>
+        <li>
+          Enterprise Solution Management
+          <ul>
+            <li>Management; IT Support team</li>
+            <li>
+              Managing is important, it is said that for every year of IT
+              solution development, 10 years of IT support is needed.
+            </li>
+            <li>JIRA ticketing</li>
+            <li>Monitoring of IT services</li>
+            <li>Incident management</li>
+            <li>
+              Communication with stakeholders; Reports like monitoring report
+              and incident report;
+            </li>
+            <li>
+              Service Level Agreements (SLAs); have to be SMART (Specific,
+              Measurable, Achievable, Relevant, Timely)
+            </li>
+          </ul>
+        </li>
+        <li>
+          (TA) Introduction to Programming
+          <ul>
+            <li>Second Semester of IS111 TA</li>
+            <li>
+              Improved Padlet checking script to better integrate with
+              spreadsheet; just copy and paste output
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- loading website jquery -->
+    <script>
+      //scroll to top
+      window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+      };
+
+      window.scrollTo(0, 0);
+      $("body").css("overflow", "hidden");
+      $(window).on("load", function () {
+        window.scrollTo(0, 0);
+        $("#mainloadingtext").text("SMU Journey almost done loading... :)");
+        setTimeout(function () {
+          $("#loading").hide();
+          $("body").css("overflow-y", "auto");
+        }, 3000);
+      });
+    </script>
+
+    <script src="../js/fallingobjects.js"></script>
+  </body>
+</html>
