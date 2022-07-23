@@ -114,14 +114,14 @@
     </style>
 
     <!-- falling objects-->
-    <link href="../css/fallingobjects.css" rel="stylesheet">
+    <link href="css/fallingobjects.css" rel="stylesheet">
 
 </head>
 <body class="game">
     <!-- loading -->
     <div id="loading">
-        <img id="loading-image" src="../resources/blank.png" alt="Loading..." style="z-index: 99;"/>
-        <img id="loading-image" src="../resources/bg3.gif" alt="Loading..." />
+        <img id="loading-image" src="resources/blank.png" alt="Loading..." style="z-index: 99;"/>
+        <img id="loading-image" src="resources/bg3.gif" alt="Loading..." />
         <span class="loadingtext text-info" style="top: 150px;">best viewed on computer with Google Chrome</span>
         <h1 id="mainloadingtext" class="loadingtext text-danger">Home Page<br>loading... please wait</h1>
         <h2 class="loadingtext text-primary" style="margin-top: 200px;">you may want to check out while waiting:<br>
@@ -144,13 +144,13 @@
             <a class="nav-link active" href="">Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="gim.html">GIM bank</a>
+            <a class="nav-link" href="html/gim.html">GIM bank</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="mapPage.html">Leaflet map</a>
+                <a class="nav-link" href="html/mapPage.html">Leaflet map</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="schoolWorks.html">SMU journey</a>
+                <a class="nav-link" href="html/schoolWorks.html">SMU journey</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="">SingStat intern (coming soon)</a>
@@ -171,11 +171,11 @@
 
 
                     <div id="introJumbo" class="jumbotron jumbotron-fluid" style="height: 100%">
-                        <img id="introBG1" src="../resources/bg2.png">
-                        <img id="introBG2" src="../resources/bg3.gif">
+                        <img id="introBG1" src="resources/bg2.png">
+                        <img id="introBG2" src="resources/bg3.gif">
                         <!-- hidden gif images-->
-                        <img class="hiddengif" src="../resources/bg3.gif">
-                        <img class="hiddengif" src="../resources/bg4.gif">
+                        <img class="hiddengif" src="resources/bg3.gif">
+                        <img class="hiddengif" src="resources/bg4.gif">
                         
                         <div style="height: 20%;"></div>
 
@@ -210,24 +210,24 @@
                                     <li>iterate the array to click on spots</li>
                                 </ol></li>
                             </ul>
-                            <img src="../resources/bg2.png" class="imageExample"><img src="../resources/skribblpenguin.png" class="imageExample"></li>
+                            <img src="resources/bg2.png" class="imageExample"><img src="resources/skribblpenguin.png" class="imageExample"></li>
                         <li class="list-group-item"><h1 class="text-danger">piplupOwo Discord (voice chatting platform) bot</h1>
                             <ul>
                                 <li>one of my happiest development, with actual users using it in a server :)</li>
                                 <li>google text to speech for shy / people in the library / spoilt mic people in discord channels (bot will speak)</li>
                                 <li>play some music / sound clips (like memes)</li>
                             </ul>
-                            <img src="../resources/discordb.png" class="imageExample"><br><br></li>
+                            <img src="resources/discordb.png" class="imageExample"><br><br></li>
                         <li class="list-group-item"><h1 class="text-danger">Telegram (messaging platform) bot to send me message</h1>
                             <ul>
                                 <li>this website's telegram bot is using javascript</li>
                             </ul>
-                            <img src="../resources/teleb.png" class="imageExample"><br><br><br><h1 class="text-danger">monitoring uptime of services with telegram! how convenient</h1>
+                            <img src="resources/teleb.png" class="imageExample"><br><br><br><h1 class="text-danger">monitoring uptime of services with telegram! how convenient</h1>
                             <ul>
                                 <li>experimented with telegram bot on python to perform various tasks (like notification coupled with monitoring of website response)</li>
                             </ul>
 
-                            <br><img src="../resources/uptime.png" class="imageExample"> </li>
+                            <br><img src="resources/uptime.png" class="imageExample"> </li>
                     </ul>
                     <br><br>
                     <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Java:</p>
@@ -244,7 +244,7 @@
                                 <li>draws colourful lines to demarcate groups of spots designated for each player</li>
                             </ul>
 
-                            <br><img src="../resources/tobpools.png" class="imageExample"></li>
+                            <br><img src="resources/tobpools.png" class="imageExample"></li>
                             
 
                     </ul>
@@ -255,7 +255,7 @@
         </div>
     </div>
 
-<script src="../js/index.js"></script>
+<script src="js/index.js"></script>
 
 <script>
 
@@ -264,17 +264,17 @@
 
 
     function changeintroBG(targetBG){
-        document.getElementById("introBG2").src = `../resources/blank.png`;
+        document.getElementById("introBG2").src = `resources/blank.png`;
 
 
 
         document.getElementById("introBG1").style.opacity = 0;
         setTimeout(function(){
             if (gifList.includes(targetBG)) { //gif
-                document.getElementById("introBG1").src = `../resources/${targetBG}.gif`;
+                document.getElementById("introBG1").src = `resources/${targetBG}.gif`;
             }
             else { //png
-                document.getElementById("introBG1").src = `../resources/${targetBG}.png`;
+                document.getElementById("introBG1").src = `resources/${targetBG}.png`;
             }
             
             document.getElementById("introBG1").style.opacity = 1;}, 1000);
@@ -323,7 +323,7 @@
     }) 
 </script>
 
-<script src="../js/fallingobjects.js"></script>
+<script src="js/fallingobjects.js"></script>
 
     
     
