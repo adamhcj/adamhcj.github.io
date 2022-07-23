@@ -35,7 +35,7 @@ L.tileLayer(
 ).addTo(mymap);
 
 var BottleIcon = L.icon({
-  iconUrl: "resources/pip.gif",
+  iconUrl: "../resources/pip.gif",
   shadowUrl: "",
 
   iconSize: [70, 45], // size of the icon
