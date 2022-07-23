@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>idk calculator</title>
+
+    <style>
+        /* DO NOT MODIFY THE BELOW CSS STYLING */
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* YOU MAY MODIFY THIS */
+#grid {
+    border: 1px solid grey;
+    margin: auto;
+    width: 400px;
+    height: 400px;
+
+}
+
+
+/* YOU MAY MODIFY THIS */
+#message {
+    font-size: 15px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    text-align: right;
+}
+
+
+/* YOU MAY MODIFY THIS */
+#current-equation {
+    font-size: 20px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    text-align: right;
+}
+
+
+/* YOU MAY MODIFY THIS */
+.key {
+    display: flex;
+    border: 2px solid pink;
+    font-size: 26px;
+    background-color: yellow;
+    width: 100px;
+    text-align: center;
+    height: 64px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+/* YOU MAY ADD MORE CSS STYLING ANYWHERE IN THIS FILE */
+body {
+    background-image: linear-gradient(to right,rgb(9, 255, 255), blue);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+}
+
+.row {
+    display: flex;
+}
+    </style>
+
+</head>
+<body>
+    <a href="Q4.html" style="font-size: large;">shopping list la</a>
+    <br>
+
+    <!-- Header 
+         DO NOT REMOVE THIS ELEMENT
+         YOU MAY ADD MORE CODE
+    -->
+    <h1 style="text-align: center;">
+        Calculator noobs dont know how to calculate ah
+    </h1>
+
+
+    <!-- [START] Calculator Grid 
+         DO NOT REMOVE THIS ELEMENT
+         YOU MAY ADD MORE CODE
+    -->
+    <div id="grid">
+
+        <!-- Output Boxes -->
+        <div id="output">
+
+            <!-- 1st message box -->
+            <div id="message">
+                Welcome to Calculator!
+            </div>
+
+            <!-- 2nd message box 
+                 Display the current equation
+            -->
+            <div id="current-equation">
+            </div>
+        </div>
+
+        
+        <!-- 1st row of key options -->
+        <div class="row">
+            <div class="key" style="width: 200px;">
+                AC
+            </div>
+            <div class="key">
+                DEL
+            </div>
+            <div class="key">
+                /
+            </div>
+        </div>
+
+
+        <!-- 2nd row of key options -->
+        <div class="row">
+            <div class="key">
+                1
+            </div>
+            <div class="key">
+                2
+            </div>
+            <div class="key">
+                3
+            </div>
+            <div class="key">
+                *
+            </div>
+        </div>
+
+
+        <!-- 3rd row of key options -->
+        <div class="row">
+            <div class="key">
+                4
+            </div>
+            <div class="key">
+                5
+            </div>
+            <div class="key">
+                6
+            </div>
+            <div class="key">
+                +
+            </div>
+        </div>
+
+
+        <!-- 4th row of key options -->
+        <div class="row">
+            <div class="key">
+                7
+            </div>
+            <div class="key">
+                8
+            </div>
+            <div class="key">
+                9
+            </div>
+            <div class="key">
+                -
+            </div>
+        </div>
+
+
+        <!-- 5th row of key options -->
+        <div class="row">
+            <div class="key">
+                .
+            </div>
+            <div class="key">
+                0
+            </div>
+            <div class="key" style="width: 200px;">
+                =
+            </div>
+        </div>
+
+
+    </div><!-- [END] Calculator Grid -->
+
+
+
+    <script>
+        function keyPressed(keyElement) {
+        console.log("a key is pressed");
+
+        var keyValue = keyElement.innerHTML.trim();
+        var messageElement = document.getElementById("message");
+        var messageString = messageElement.innerHTML.trim();
+
+
+        var equationElement = document.getElementById("current-equation");
+        var eqnString = equationElement.innerHTML.trim();
+
+
+
+        console.log(messageString);
+
+        console.log(keyValue);
+
+
+        messageElement.innerHTML = "";
+        messageString = "";
+        
+
+
+
+        switch (keyValue){
+        case ("AC"):
+            messageElement.innerHTML = "";
+            equationElement.innerHTML = "";
+            break;
+
+        case ("DEL"):
+            equationElement.innerHTML = eqnString.slice(0, -1);
+            break;
+
+        case ("="):
+            if (eqnString === ""){
+                messageElement.innerHTML = "Nothing to calculate"
+                break;
+            }
+            if ("/*+-.".includes(eqnString.charAt(eqnString.length-1))){
+                messageElement.innerHTML = "Invalid Input";
+                break;
+            }
+            messageElement.innerHTML = "Calculation result is here"
+            equationElement.innerHTML = eval(eqnString);
+            break;
+        case ("."):
+            if (eqnString === ""){
+                messageElement.innerHTML = "Invalid Input"
+                break;
+            }
+            if ("0123456789".includes(eqnString.charAt(eqnString.length-1))){
+
+
+                var isValid = true;
+
+                for (i=eqnString.length-1; i>=0; i--){
+                    if ("0123456789".includes(eqnString.charAt(i))){
+                        continue;
+                    }
+                    else if ("/*+-".includes(eqnString.charAt(i))){
+                        isValid = true;
+                        break;
+                    }
+                    else if (eqnString.charAt(i) === "."){
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (isValid){
+                    equationElement.innerHTML = eqnString + ".";
+                    break;
+                }
+                else {
+                    messageElement.innerHTML = "Invalid Input";
+                    break;
+                }
+            }
+            else {
+                messageElement.innerHTML = "Invalid Input";
+                break;
+            }
+
+        default:
+
+            if ("/*+-".includes(keyValue)){
+                if (eqnString === "" || eqnString.charAt(eqnString.length-1) === "."){
+                    messageElement.innerHTML = "Invalid Input"
+                    break;
+                }
+
+                if ("/*+-".includes(eqnString.charAt(eqnString.length-1))){
+                    console.log(eqnString.charAt(eqnString.length-1));
+                    equationElement.innerHTML = eqnString.slice(0,-1) + keyValue;
+                    break;
+                }  
+            }
+
+            if (eqnString.charAt(eqnString.length-1) === "0"){
+                var is2ndValid = false;
+
+                for (i=eqnString.length-1; i>=0; i--){
+                    if ("123456789".includes(eqnString.charAt(i))){
+                        is2ndValid = true;
+                        break;
+                    }
+                    else if ("/*+-".includes(eqnString.charAt(i))){
+                        is2ndValid = false;
+                        break;
+                    }
+                    else if (eqnString.charAt(i) === "."){
+                        is2ndValid = true;
+                        break;
+                    }
+                }
+
+                if (!is2ndValid){
+                equationElement.innerHTML = eqnString.slice(0,-1) + keyValue;
+                break; 
+                }
+                else{
+                    equationElement.innerHTML += keyValue;
+                    break;
+                }
+            }
+
+            equationElement.innerHTML += keyValue;
+        
+        
+    }
+
+        
+        
+        
+
+
+        console.log("finished key pressed function");
+    }
+    </script>
+
+    <script>
+        var keyElements = document.getElementsByClassName("key");
+
+        for (keyElement of keyElements){
+            keyElement.addEventListener("click", function(){
+                keyPressed(this);
+            });
+        }
+    </script>
+    
+</body>
+</html>
