@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GIM bank</title>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -11,395 +11,452 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <!-- website icon-->
-    <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
-        type = "image/x-icon">
+    <link
+      rel="icon"
+      href="https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg"
+      type="image/x-icon"
+    />
 
     <!-- vue 3 cdn-->
     <script src="https://unpkg.com/vue@next"></script>
 
     <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Shippori+Antique&display=swap');
+      @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Shippori+Antique&display=swap");
 
-        button{
-            font-family: 'Press Start 2P', cursive;
-        }
+      button {
+        font-family: "Press Start 2P", cursive;
+      }
 
-        td img:hover {
-            transform: scale(1.2);
-        }
+      td img:hover {
+        transform: scale(1.2);
+      }
 
+      #loading {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 1;
+        background-color: #fff;
+        z-index: 99;
+      }
 
+      #loading-image {
+        position: absolute;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        left: 0;
+      }
 
-#loading {
-    position: fixed;
-    display: block;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    text-align: center;
-    opacity: 1;
-    background-color: #fff;
-    z-index: 99;
-}
-
-#loading-image {
-  position: absolute;
-  z-index: 100;
-  width: 100%;
-  height: 100%;
-  left: 0;
-}
-
-.loadingtext {
-    margin: 0;
-    z-index: 101;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-
-
+      .loadingtext {
+        margin: 0;
+        z-index: 101;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- loading -->
-    <div id="loading" style="margin-top: 53px;">
-        <span class="loadingtext text-info" style="top: 150px;">best viewed on computer with Google Chrome</span>
-        <h1 id="mainloadingtext" class="loadingtext text-danger">GIM Bank page<br>loading... please wait</h1>
-        <h2 class="loadingtext text-primary" style="margin-top: 200px;">you may want to check out while waiting:<br>
-            <a href="http://linkedin.com/in/piplup" target="_blank">linkedin</a></h2>
+    <div id="loading" style="margin-top: 53px">
+      <span class="loadingtext text-info" style="top: 150px"
+        >best viewed on computer with Google Chrome</span
+      >
+      <h1 id="mainloadingtext" class="loadingtext text-danger">
+        GIM Bank page<br />loading... please wait
+      </h1>
+      <h2 class="loadingtext text-primary" style="margin-top: 200px">
+        you may want to check out while waiting:<br />
+        <a href="http://linkedin.com/in/piplup" target="_blank">linkedin</a>
+      </h2>
 
-        <img id="loading-image" src="resources/bg3.gif" alt="Loading..." />
+      <img id="loading-image" src="resources/bg3.gif" alt="Loading..." />
     </div>
-    
+
     <!-- nav bar-->
 
-    <nav class="navbar fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd; padding: 5px;">
-        <a class="navbar-brand" style="margin-left: 10px;"><img src="https://cdn.discordapp.com/attachments/818102115058450474/887315665273368596/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav
+      class="navbar fixed-top navbar-expand-sm navbar-light"
+      style="background-color: #e3f2fd; padding: 5px"
+    >
+      <a class="navbar-brand" style="margin-left: 10px"
+        ><img
+          src="https://cdn.discordapp.com/attachments/818102115058450474/887315665273368596/pipbw.gif"
+          style="opacity: 0.8; height: 30px"
+      /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link active">GIM bank</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="mapPage.html">Leaflet map</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="schoolWorks.html">SMU journey</a>
-                </li>
-            </ul>
+      </button>
 
-        </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active">GIM bank</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="mapPage.html">Leaflet map</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="schoolWorks.html">SMU journey</a>
+          </li>
+        </ul>
+      </div>
     </nav>
     <!-- end of nav bar -->
 
-    <div id="app" style="margin-top: 53px;">
+    <div id="app" style="margin-top: 53px">
+      <h1 class="text-info">Description:</h1>
+      <ul class="ul">
+        <h2 class="text-danger">
+          Oldschool Runescape (20 year old Java game) Group Ironman (GIM) bank,
+          piplupOwo's group
+        </h2>
+        <ol>
+          <li>Runelite (runescape client) Export bank data as JSON</li>
+          <li>
+            Update to my firebase through the collapsible update menu with the
+            JSON generated
+          </li>
+          <li>
+            Website to parse all the data of 5 team members and consolidate
+          </li>
+          <li>
+            now we can all see what we collectively have nicely (with in game
+            icons) :)
+          </li>
+          <li class="text-danger">
+            Try out the <a href="#search">filter function</a>, it mimics the
+            bank search function in game. (try searching stuff like "fire" or
+            "cape")
+          </li>
+        </ol>
+      </ul>
 
-
-        <h1 class="text-info">Description: </h1>
-        <ul class="ul">
-            <h2 class="text-danger">Oldschool Runescape (20 year old Java game) Group Ironman (GIM) bank, piplupOwo's group</h2>
-            <ol>
-                <li>Runelite (runescape client) Export bank data as JSON</li>
-                <li>Update to my firebase through the collapsible update menu with the JSON generated</li>
-                <li>Website to parse all the data of 5 team members and consolidate</li>
-                <li>now we can all see what we collectively have nicely (with in game icons) :)</li>
-                <li class="text-danger">Try out the <a href="#search">filter function</a>, it mimics the bank search function in game. (try searching stuff like "fire" or "cape")</li>
-            </ol>
-
-        </ul>
-
-        <div class="collapse" id="collapseExample" style="margin-left:25%;"><br><br><br>
-            <p>GIM bank, if you do not want to update your bank just click refresh the group bank.</p>
-            <p>Please try not to spam, my database has limit.</p>
-
-    
-            <input type="text" id="user" placeholder="rubiak">
-            <input type="password" id="pw" placeholder="pokemon">
-            <input type="text" id="bankInput" placeholder="json file">
-            <button id="updateButton">update bank</button>
-
-            <br> <br>
-            <button class="btn btn-success" style="margin-left:50px;" id="refreshBank">Refresh the group bank</button>
-            
-        </div>
-
-
-        <p> <br><br><br>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-left:25%;">
-              Click to open / hide update bank menu
-            </button>
+      <div class="collapse" id="collapseExample" style="margin-left: 25%">
+        <br /><br /><br />
+        <p>
+          GIM bank, if you do not want to update your bank just click refresh
+          the group bank.
         </p>
+        <p>Please try not to spam, my database has limit.</p>
 
+        <input type="text" id="user" placeholder="rubiak" />
+        <input type="password" id="pw" placeholder="pokemon" />
+        <input type="text" id="bankInput" placeholder="json file" />
+        <button id="updateButton">update bank</button>
 
+        <br />
+        <br />
+        <button
+          class="btn btn-success"
+          style="margin-left: 50px"
+          id="refreshBank"
+        >
+          Refresh the group bank
+        </button>
+      </div>
 
+      <p>
+        <br /><br /><br />
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+          style="margin-left: 25%"
+        >
+          Click to open / hide update bank menu
+        </button>
+      </p>
 
+      <p style="margin-left: 50px">Status message:</p>
+      <div id="status" style="margin-left: 50px"></div>
+      <br /><br />
 
-        
-        <p style="margin-left: 50px;">Status message: </p>
-        <div id="status" style="margin-left: 50px;"></div><br><br>
+      <div id="searchbox" hidden="true" style="padding-left: 50px">
+        <h2 class="text-primary" style="display: inline">Filter:</h2>
+        <input
+          type="text"
+          id="search"
+          placeholder="Search"
+          v-model="search"
+          v-on:change="updateSearch"
+          style="margin-left: 20px; scroll-margin-top: 60px"
+        />
+        <span class="text-primary" style="margin-left: 10px"
+          >try searching "cape" or "fire"</span
+        >
+      </div>
 
-        <div id="searchbox" hidden=true style="padding-left:50px;">
-        <h2 class="text-primary" style="display:inline;">Filter:</h2>
-        <input type="text" id="search" placeholder="Search" v-model="search" v-on:change="updateSearch" style="margin-left: 20px; scroll-margin-top: 60px;"> <span class="text-primary" style="margin-left:10px;">try searching "cape" or "fire"</span>
-    
-        </div>
-
-        <div id="result"></div>
-        <div id="hiddenprogress" hidden>0</div>
-
+      <div id="result"></div>
+      <div id="hiddenprogress" hidden>0</div>
     </div>
 
-
-
     <script type="module">
-
-
-    //vue
-    const app = {
+      //vue
+      const app = {
         data() {
-            return {
-            search: ''
-            }
+          return {
+            search: "",
+          };
         },
         methods: {
-            reverseMessage() {
-            this.message = this.message
-                .split('')
-                .reverse()
-                .join('')
-            }
-
-
+          reverseMessage() {
+            this.message = this.message.split("").reverse().join("");
+          },
         },
         computed: {
-            updateSearch() {
-                console.log(this.search)
+          updateSearch() {
+            console.log(this.search);
 
-                try{
-                    for (let i = 0; i<itemList.length; i++) {
-                        if (itemList[i].toLowerCase().includes(this.search.toLowerCase())){
-                            itemInSearch[i] = true;
+            try {
+              for (let i = 0; i < itemList.length; i++) {
+                if (
+                  itemList[i].toLowerCase().includes(this.search.toLowerCase())
+                ) {
+                  itemInSearch[i] = true;
+                } else {
+                  itemInSearch[i] = false;
+                }
+              }
 
-                        }
-                        else{
-                            itemInSearch[i] = false;
+              getResult();
 
-                        }
-                    }
+              //console.log("updatesearch end")
+            } catch {}
+          },
+        },
+      };
 
-                    
-                    getResult();
-                    
-                    
-                    //console.log("updatesearch end")
-                }catch{}
-            }
-        }
-        }
+      Vue.createApp(app).mount("#app");
 
-        Vue.createApp(app).mount('#app')
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-    
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
         apiKey: "AIzaSyCkYoOvPp2LDG06cfzQm-E3sLhYhmFUk68",
         authDomain: "mygithubpage-593a3.firebaseapp.com",
         databaseURL: "https://mygithubpage-593a3-default-rtdb.firebaseio.com",
         projectId: "mygithubpage-593a3",
         storageBucket: "mygithubpage-593a3.appspot.com",
         messagingSenderId: "876181149776",
-        appId: "1:876181149776:web:9b49e50d7ca839c395d955"
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+        appId: "1:876181149776:web:9b49e50d7ca839c395d955",
+      };
 
-    var database = firebase.database();
-        function writeUserData(userId, pw, bank) {
-            firebase.database().ref('users/' + userId).set({
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      var database = firebase.database();
+      function writeUserData(userId, pw, bank) {
+        firebase
+          .database()
+          .ref("users/" + userId)
+          .set({
             username: userId,
             pw: pw,
-            bank : bank
-        });
-        }
+            bank: bank,
+          });
+      }
 
+      //writeUserData("rubiak", "piplup", []);
+      //writeUserData("alpoopi", "pikachu", []);
+      //writeUserData("versix", "torchic", []);
+      //writeUserData("zacster", "eevee", []);
+      //writeUserData("cheshire", "cubone", []);
+      document
+        .getElementById("updateButton")
+        .addEventListener("click", updateBank);
+      document
+        .getElementById("refreshBank")
+        .addEventListener("click", refreshBank);
 
-    //writeUserData("rubiak", "piplup", []);
-    //writeUserData("alpoopi", "pikachu", []);
-    //writeUserData("versix", "torchic", []);
-    //writeUserData("zacster", "eevee", []);
-    //writeUserData("cheshire", "cubone", []);
-    document.getElementById("updateButton").addEventListener("click", updateBank);
-    document.getElementById("refreshBank").addEventListener("click", refreshBank);
+      var itemList = [];
+      var itemInfoList = [];
+      var item_idList = [];
+      var itemInSearch = [];
+      var qtyList = [];
+      var bankStatus = false;
 
-    var itemList = [];
-    var itemInfoList = [];
-    var item_idList = [];
-    var itemInSearch = [];
-    var qtyList = [];
-    var bankStatus = false;
-
-
-
-    function checkBank(userId){
-
+      function checkBank(userId) {
         const dbRef = firebase.database().ref();
-        dbRef.child("users").child(userId).get().then((snapshot) => {
-        if (snapshot.exists()) {
-            //console.log(snapshot.val());
+        dbRef
+          .child("users")
+          .child(userId)
+          .get()
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              //console.log(snapshot.val());
 
-            var bankArray = snapshot.val().bank
-            //console.log(bankArray);
-            for (var bankitem of bankArray){
+              var bankArray = snapshot.val().bank;
+              //console.log(bankArray);
+              for (var bankitem of bankArray) {
                 //console.log(bankitem);
                 if (itemList.includes(bankitem.name)) {
-                    var itemIndex = itemList.indexOf(bankitem.name);
-                    itemInfoList[itemIndex] += bankitem.quantity;
-                    switch(userId) {
-                        case "rubiak":
-                            qtyList[itemIndex][0] += bankitem.quantity;
-                            break;
-                        case "alpoopi":
-                            qtyList[itemIndex][1] += bankitem.quantity;
-                            break;
-                        case "versix":
-                            qtyList[itemIndex][2] += bankitem.quantity;
-                            break;
-                        case "zacster":
-                            qtyList[itemIndex][3] += bankitem.quantity;
-                            break;
-                        case "cheshire":
-                            qtyList[itemIndex][4] += bankitem.quantity;
-                            break;
-                    }
-                }
-                else {
-                    itemList.push(bankitem.name);
-                    itemInfoList.push(bankitem.quantity);
-                    item_idList.push(bankitem.id);
-                    itemInSearch.push(true);
+                  var itemIndex = itemList.indexOf(bankitem.name);
+                  itemInfoList[itemIndex] += bankitem.quantity;
+                  switch (userId) {
+                    case "rubiak":
+                      qtyList[itemIndex][0] += bankitem.quantity;
+                      break;
+                    case "alpoopi":
+                      qtyList[itemIndex][1] += bankitem.quantity;
+                      break;
+                    case "versix":
+                      qtyList[itemIndex][2] += bankitem.quantity;
+                      break;
+                    case "zacster":
+                      qtyList[itemIndex][3] += bankitem.quantity;
+                      break;
+                    case "cheshire":
+                      qtyList[itemIndex][4] += bankitem.quantity;
+                      break;
+                  }
+                } else {
+                  itemList.push(bankitem.name);
+                  itemInfoList.push(bankitem.quantity);
+                  item_idList.push(bankitem.id);
+                  itemInSearch.push(true);
 
-                    switch(userId) {
-                        case "rubiak":
-                            qtyList.push([bankitem.quantity,0,0,0,0])
-                            break;
-                        case "alpoopi":
-                            qtyList.push([0,bankitem.quantity,0,0,0])
-                            break;
-                        case "versix":
-                            qtyList.push([0,0,bankitem.quantity,0,0])
-                            break;
-                        case "zacster":
-                            qtyList.push([0,0,0,bankitem.quantity,0])
-                            break;
-                        case "cheshire":
-                            qtyList.push([0,0,0,0,bankitem.quantity])
-                            break;
-                        
-                    }
-                    
+                  switch (userId) {
+                    case "rubiak":
+                      qtyList.push([bankitem.quantity, 0, 0, 0, 0]);
+                      break;
+                    case "alpoopi":
+                      qtyList.push([0, bankitem.quantity, 0, 0, 0]);
+                      break;
+                    case "versix":
+                      qtyList.push([0, 0, bankitem.quantity, 0, 0]);
+                      break;
+                    case "zacster":
+                      qtyList.push([0, 0, 0, bankitem.quantity, 0]);
+                      break;
+                    case "cheshire":
+                      qtyList.push([0, 0, 0, 0, bankitem.quantity]);
+                      break;
+                  }
                 }
+              }
+
+              //console.log(itemList);
+              //console.log(itemInfoList);
+              //getResult();
+              document.getElementById("hiddenprogress").innerHTML += 1;
+            } else {
+              //console.log("No data available");
+              document.getElementById("status").innerHTML = "Error occurred";
+              document.getElementById("hiddenprogress").innerHTML += 1;
             }
-
-            //console.log(itemList);
-            //console.log(itemInfoList);
-            //getResult();
+          })
+          .catch((error) => {
+            console.error(error);
             document.getElementById("hiddenprogress").innerHTML += 1;
+          });
+      }
 
-        } else {
-            //console.log("No data available");
-            document.getElementById("status").innerHTML = "Error occurred";
-            document.getElementById("hiddenprogress").innerHTML += 1;
-        }
-        }).catch((error) => {
-        console.error(error);
-        document.getElementById("hiddenprogress").innerHTML += 1;
-        });
-    }
-
-    
-
-    function updateBank(){
+      function updateBank() {
         var user = document.getElementById("user").value;
         var pw = document.getElementById("pw").value;
         var userId = user;
-        
 
         const dbRef = firebase.database().ref();
-        dbRef.child("users").child(userId).get().then((snapshot) => {
-        if (snapshot.exists()) {
-
-            //console.log(snapshot.val());
-            if (snapshot.val().pw !== pw){
+        dbRef
+          .child("users")
+          .child(userId)
+          .get()
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              //console.log(snapshot.val());
+              if (snapshot.val().pw !== pw) {
                 //console.log("different password!");
-                document.getElementById("status").innerHTML = "password not matched";
+                document.getElementById("status").innerHTML =
+                  "password not matched";
                 return;
+              }
+
+              var bankInput = document.getElementById("bankInput").value;
+              var bankInputJson = JSON.parse(bankInput);
+
+              writeUserData(user, pw, bankInputJson);
+
+              document.getElementById("status").innerHTML =
+                "updated your bank! ^w^";
+
+              //getResult();
+            } else {
+              console.log("No data available");
+              document.getElementById("status").innerHTML = "Error occurred";
             }
+          })
+          .catch((error) => {
+            console.error(error);
+            document.getElementById("status").innerHTML =
+              "not a valid JSON file!";
+          });
+      }
 
-            var bankInput = document.getElementById("bankInput").value;
-            var bankInputJson = JSON.parse(bankInput);
-
-            writeUserData(user, pw, bankInputJson);
-
-            document.getElementById("status").innerHTML = "updated your bank! ^w^";
-
-
-        //getResult();
-
-    } else {
-        console.log("No data available");
-        document.getElementById("status").innerHTML = "Error occurred";
-    }
-    }).catch((error) => {
-    console.error(error);
-    document.getElementById("status").innerHTML = "not a valid JSON file!";
-    });
-
-
-    }
-
-
-    function getResult(){
+      function getResult() {
         //console.log(itemList);
         //console.log(itemInfoList);
 
         var output_string = "<ul class='list-group-flush'>";
 
+        for (let i = 0; i < itemList.length; i++) {
+          //console.log(i);
+          var itemName = itemList[i];
+          var itemQuantity = itemInfoList[i];
+          let item_id = item_idList[i];
+          let qtys = qtyList[i];
 
-        for (let i = 0; i<itemList.length; i++) {
-            //console.log(i);
-            var itemName = itemList[i];
-            var itemQuantity = itemInfoList[i];
-            let item_id = item_idList[i];
-            let qtys = qtyList[i];
+          if (!itemInSearch[i]) {
+            continue;
+          }
 
-            if (!itemInSearch[i]){
-                continue;
-            }
-
-            output_string += `<li class='list-group-item'>
+          output_string += `<li class='list-group-item'>
                 <table class="table table-bordered" style="table-layout: fixed; text-align: center;">
                     <tr>
                         <th>${itemName}</th>
@@ -422,42 +479,39 @@
                     
                 </table>
                 </li>`;
-
         }
-
 
         output_string += "</ul>";
 
         //console.log(output_string);
         document.getElementById("result").innerHTML = output_string;
+      }
 
-    }
-
-    function checkStatus(){
+      function checkStatus() {
         var status = document.getElementById("hiddenprogress").innerHTML;
         if (status !== "11111") {
-            // not complete
-            setTimeout(checkStatus, 1000);
-        }
-        else{
-            // completed
-            bankStatus = true;
-            getResult();
-            document.getElementById("searchbox").hidden = false;
-            console.log(document.getElementById("hiddenprogress").innerHTML);
-            document.getElementById("refreshBank").disabled = false;
+          // not complete
+          setTimeout(checkStatus, 1000);
+        } else {
+          // completed
+          bankStatus = true;
+          getResult();
+          document.getElementById("searchbox").hidden = false;
+          console.log(document.getElementById("hiddenprogress").innerHTML);
+          document.getElementById("refreshBank").disabled = false;
 
-            document.getElementById("status").innerHTML = "Refreshed bank. This is what the group has: ";
-            $("#mainloadingtext").text("GIM bank page almost done loading... :)");
-            window.scrollTo(0, 0);
-            setTimeout(function() {
-                $('#loading').hide();
-                $("body").css("overflow", "auto");
-            }, 3000);
+          document.getElementById("status").innerHTML =
+            "Refreshed bank. This is what the group has: ";
+          $("#mainloadingtext").text("GIM bank page almost done loading... :)");
+          window.scrollTo(0, 0);
+          setTimeout(function () {
+            $("#loading").hide();
+            $("body").css("overflow", "auto");
+          }, 3000);
         }
-    }
+      }
 
-    function refreshBank(){
+      function refreshBank() {
         document.getElementById("hiddenprogress").innerHTML = "";
         document.getElementById("result").innerHTML = "";
 
@@ -468,7 +522,6 @@
         qtyList = [];
         bankStatus = false;
 
-
         checkBank("rubiak");
         checkBank("alpoopi");
         checkBank("versix");
@@ -477,39 +530,29 @@
 
         document.getElementById("searchbox").hidden = true;
         document.getElementById("refreshBank").disabled = true;
-        document.getElementById("status").innerHTML = "Refreshing bank... Please standby";
+        document.getElementById("status").innerHTML =
+          "Refreshing bank... Please standby";
         window.scrollTo(0, 0);
 
         $("body").css("overflow", "hidden");
         window.scrollTo(0, 0);
-        $('#loading').show();
+        $("#loading").show();
         checkStatus();
-        
-    }
-    
-    
+      }
 
-
-
-
-    refreshBank();
+      refreshBank();
     </script>
 
-<!-- loading website jquery -->
-<script>
-    //scroll to top
-    window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-    }
+    <!-- loading website jquery -->
+    <script>
+      //scroll to top
+      window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+      };
 
-    
-
-    window.scrollTo(0, 0);
-    $("body").css("overflow", "hidden");
-    window.scrollTo(0, 0);
-
-</script>
-
-
-</body>
+      window.scrollTo(0, 0);
+      $("body").css("overflow", "hidden");
+      window.scrollTo(0, 0);
+    </script>
+  </body>
 </html>
