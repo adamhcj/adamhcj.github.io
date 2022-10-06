@@ -38705,7 +38705,7 @@ A.f_("collision");--s.gq5().RG
 A.a(s.gq5().x1,"scoreText").sdW(0,"Score: "+s.gq5().RG)},
 pD(a){A.f_("Tapped!")
 A.agK().ea(0,new A.QQ("audio/pip.wav"))
-this.to.sld(0,-6e4*this.x1)
+this.to.sld(0,-3.4/this.x1)
 return!0}}
 A.IL.prototype={
 ah(a,b){this.CZ(0,b)},
