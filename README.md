@@ -6,7 +6,7 @@
 <ul>
   <li>HTML</li>
   <li>Javascript</li>
-  <li>Firebase</li>
+  <li>Firebase (for GIM bank page and flutter flappypip highscores)</li>
   <li>Flutter</li>
   <li>React</li>
   <li>Backend for react app (Corporate Pass Application, my school project about java) is java spring with postgresql</li>
