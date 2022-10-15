@@ -2,6 +2,16 @@
 <h1><a href="https://piplupowo.github.io/">https://piplupOwo.github.io</a></h1>
 <p>my fun casual website :) I am still learning and improving :)</p>
 
+<h1>Tech Stack:</h1>
+<ul>
+  <li>HTML</li>
+  <li>Javascript</li>
+  <li>Firebase</li>
+  <li>Flutter</li>
+  <li>React</li>
+  <li>Backend for react app (Corporate Pass Application, my school project about java) is java spring with postgresql</li>
+</ul>
+
 <h1>loading screen: </h1>
 <br>
 <img src="https://github.com/piplupOwo/piplupOwo.github.io/blob/main/resources/bg3.gif?raw=true" />
