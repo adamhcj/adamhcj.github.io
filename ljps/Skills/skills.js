@@ -1,9 +1,6 @@
 console.log("skills.js load!");
 const backendDomain = "https://ljps.herokuapp.com";
 
-var course_name = "";
-var this_holder = ""; //to hold "this" variable in axios, 
-//basically a global variable so that the json object can be accessed outside of the axios function scope
 const app1 = Vue.createApp({
   data() {
     return {
@@ -15,8 +12,9 @@ const app1 = Vue.createApp({
       message: "",
       skills: "", // Placeholder for now it is to hold all the skills coming from the back end
       courseSkills: [], //this will contain the list of courses mapped to the current skill (aka courses that can help you obtain this skill)
-      courses:[], //this will contain all the courses 
-      selectionInput: "" //this will contain the user selecton input from the course drop down list 
+      courses: [], //this will contain all the courses
+      selectionInput: "", //this will contain the user selecton input from the course drop down list
+      cSkillID: "", //this will contain the current skill ID that we are going to update
     };
   },
   methods: {
@@ -138,9 +136,10 @@ const app1 = Vue.createApp({
     },
 
     retrieve(id) {
+      this.cSkillID = id;
       //We will try to obtain the current skill name , desc & if any course skill mapping exists
-      url = `${backendDomain}/skill/` + id
-      courseUrl = `${backendDomain}/course`
+      url = `${backendDomain}/skill/` + id;
+      courseUrl = `${backendDomain}/course`;
 
       //This is to get the current courseskills mapping
       axios
@@ -169,12 +168,12 @@ const app1 = Vue.createApp({
         .get(courseUrl)
         .then((response) => {
           // process response.data object
-          console.log(response.data.data.courses)
-          this.courses = response.data.data.courses
+          console.log(response.data.data.courses);
+          this.courses = response.data.data.courses;
         })
         .catch((error) => {
           // process error object
-          console.log(response.data)
+          console.log(response.data);
         });
     },
 
@@ -182,12 +181,84 @@ const app1 = Vue.createApp({
       // this is to remove the skills in our this.courseSkills based on the users input
       this.courseSkills.splice(id, 1);
     },
-    add(){
+    add() {
       //this is to add to our current course selection list this.courseSkills
-      this.courseSkills.push(this.selectionInput)
+      if (
+        this.selectionInput != "" &&
+        !this.courseSkills.includes(this.selectionInput)
+      ) {
+        this.courseSkills.push(this.selectionInput);
+      }
     },
-    update() {//this will handle the submission of changes to the backend
+    update() {
+      if(this.courseSkills.length !=0 && this.skillDesc !="" && this.skillName !=""){
+      //disable the update button so that they dont spam requests
+      this.disabled= true
+      //this will handle the submission of changes to the backend
+      sUrl = `${backendDomain}/skill/` + this.cSkillID;
+      csUrl = `${backendDomain}/skill/` + this.cSkillID + "/courseskills";
+      let selection = [];
+      for (let index = 0; index < this.courseSkills.length; index++) {
+        selection.push({ course_id: this.courseSkills[index].split("-")[0] });
+      }
+      console.log(selection);
 
+      //first we will update the skill name & description
+      axios
+        .put(sUrl, {
+          skill_desc: this.skillDesc,
+          skill_name: this.skillName,
+        })
+        .then(function (response) {
+          console.log(response);
+          console.log(response.status);
+          // Now we will update the courseskills selection
+          axios
+            .put(csUrl, {
+              courseskills: selection,
+            })
+            .then(function (response) {
+              console.log(response);
+              console.log(response.status);
+              console.log("update response:" + response.data.code);
+              stat = response.data.code;
+              if (stat) {
+                Swal.fire({
+                  title: "Updated!",
+                  text: "Skill has been updated.",
+                  icon: "success",
+                  allowOutsideClick: false,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.disabled = false;
+                    //refresh the current page
+                    location.reload();
+                  }
+                });
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Oops Something Went Wrong!",
+          });
+        });
+      }
+      else{
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Please ensure that Skill Name & Description are not empty and Course selection must have at least one skill!",
+        });
+        //renable the update button
+        this.disabled = false
+      }
     },
   },
   created() {
@@ -242,7 +313,7 @@ const app1 = Vue.createApp({
         console.log(error.response.status);
         //When skills database is empty
         if (error.response.status == 404) {
-          this.message = "<p> There is currently no skills available </p>";
+          this.message = "<p> There is currently no skills created </p>";
         }
       });
   },
