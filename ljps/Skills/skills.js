@@ -1,5 +1,5 @@
 console.log("skills.js load!");
-const backendDomain = "http://localhost:5000";
+const backendDomain = "https://ljps.herokuapp.com";
 
 var course_name = "";
 var this_holder = ""; //to hold "this" variable in axios, 

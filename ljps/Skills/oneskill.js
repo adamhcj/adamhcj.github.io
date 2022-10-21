@@ -1,5 +1,5 @@
 console.log("oneskill.js load!");
-const backendDomain = "http://localhost:5000";
+const backendDomain = "https://ljps.herokuapp.com";
 
 // get skill_id from get parameter
 const urlParams = new URLSearchParams(window.location.search);
