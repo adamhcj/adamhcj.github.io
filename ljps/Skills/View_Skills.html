@@ -112,7 +112,9 @@
         <div class="col" v-if="skills.length > 0" v-for="skill in skills">
           <div class="card shadow-sm d-flex flex-column ">
             <div class="card-body">
+              <a v-bind:href="'../Skills/View_OneSkill.html?skill_id=' + skill.skill_id">
               <h5 class="card-title">{{skill.skill_name}}</h5>
+            </a>
             <p class="card-text">{{skill.skill_desc}}</p>
             <h2>Courses granting this skill:</h2>
             <ul>
