@@ -16,7 +16,7 @@
 
 <h1>pipstory: </h1>
 <br>
-![bg5](https://user-images.githubusercontent.com/82926705/205488775-a590e6d1-5b67-4e2c-bf78-6efc6f30dbae.gif)
+<img src="https://github.com/piplupOwo/piplupOwo.github.io/blob/main/resources/bg5.gif?raw=true" />
 
 
 
