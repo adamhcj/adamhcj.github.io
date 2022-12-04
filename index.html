@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <!-- sweet alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
 
     <style>
@@ -144,10 +146,13 @@
             <a class="nav-link active" href="">Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="html/gim.html">GIM bank</a>
+                <a class="nav-link" href="pipstory">pipstory game (Flutter)</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="flappypipweb">flappy piplup game (Flutter)</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="html/gim.html">GIM bank</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="html/mapPage.html">Leaflet map</a>
@@ -186,7 +191,7 @@
 
                             <h1 class="display-4 text-primary">Hello, welcome! ^w^</h1>
                             <p class="lead text-info">I am a boy. I like computers :)</p>
-                            <p class="text-info">this is just a fun casual website using pure html (static webpage limitation hosted using github-pages), i am still learning and improving. :)</p>
+                            <p class="text-info">this is just a fun casual website</p>
                             <hr class="my-4">
                             <div id="telegramSend">
                                 <p class="text-info">Message you want to send to my telegram (anonymous). <br><h2 class="text-success">Say Hello! :)</h2></p>
@@ -261,9 +266,24 @@
 <script src="js/index.js"></script>
 
 <script>
+    // sweet alert confirming if want to try new game pipstory
+    swal({
+        title: "Pipstory",
+        text: "Do you want to try Pipstory? (a new Flutter game I am working on)",
+        icon: "info",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            window.location.href = "pipstory";
+        } else {
+            swal("Ok! Please enjoy your day :)");
+        }
+    });
 
-    const bgList = [2,3,4,5];
-    const gifList = ["bg3", "bg4"]
+    const bgList = [2,3,4,5,6,7];
+    const gifList = ["bg3", "bg4", "bg5", "bg6"];
 
 
     function changeintroBG(targetBG){
