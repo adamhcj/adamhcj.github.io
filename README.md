@@ -16,6 +16,7 @@
 
 <h1>pipstory: </h1>
 <br>
+<p>developed using flutter flame package</p>
 <img src="https://github.com/piplupOwo/piplupOwo.github.io/blob/main/resources/bg5.gif?raw=true" />
 
 
