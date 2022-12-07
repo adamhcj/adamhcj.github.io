@@ -16,6 +16,7 @@
 
 <h1>pipstory: </h1>
 <br>
+<p>developed using flutter flame package</p>
 <img src="https://github.com/piplupOwo/piplupOwo.github.io/blob/main/resources/bg5.gif?raw=true" />
 
 
@@ -27,7 +28,3 @@
 ![image](https://user-images.githubusercontent.com/82926705/194711190-a6ecbfae-526a-41dc-a007-d7870546689a.png)
 
 <br>
-<h1>Flappy Piplup game using flutter</h1>
-<p>firebase integration for highscores, flutter flame package used for game. Tap the music button for nice music, and tap the main piplup to hear "piplup" and to jump</p>
-
-![image](https://user-images.githubusercontent.com/82926705/194711326-55adc91d-f199-4f74-9486-0210c084bfcc.png)
