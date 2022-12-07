@@ -8,13 +8,17 @@
   <li>Javascript</li>
   <li>Firebase (for GIM bank page and flutter flappypip highscores)</li>
   <li>Flutter</li>
-  <li>React</li>
-  <li>Backend for react app (Corporate Pass Application, my school project about java) is java spring with postgresql</li>
 </ul>
 
 <h1>loading screen: </h1>
 <br>
 <img src="https://github.com/piplupOwo/piplupOwo.github.io/blob/main/resources/bg3.gif?raw=true" />
+
+<h1>pipstory: </h1>
+<br>
+<img src="https://github.com/piplupOwo/piplupOwo.github.io/blob/main/resources/bg5.gif?raw=true" />
+
+
 
 <br>
 <h1>Oldschool Runescape Group Ironman(GIM) Bank tracking</h1>
