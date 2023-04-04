@@ -32218,7 +32218,7 @@ return A.z(A.cq("bgsungei.jpg"),$async$M)
 case 5:q.R8=c
 h=$.Rk
 s=6
-return A.z(q.eq("pipidle",40),$async$M)
+return A.z(q.eq("pipidle",10),$async$M)
 case 6:h.b=c
 h=$.Rm
 s=7
@@ -32654,7 +32654,7 @@ Ff(a,b){var s=0,r=A.D(t.x),q,p,o,n,m,l
 var $async$eq=A.E(function(c,d){if(c===1)return A.A(d,r)
 while(true)switch(s){case 0:m=J.ha(b,t.S)
 for(p=0;p<b;p=o){o=p+1
-m[p]=o}n=a==="pipidle"?2:0.5
+m[p]=o}n=a==="pipidle"?1.5:0.5
 if(a==="pipattack")n=0.1
 l=A
 s=3
