@@ -23,6 +23,7 @@
 <br>
 <p>React Frontend, Go Backend</p>
 <p>Repo: https://github.com/piplupOwo/GoPiplup</p>
+
 ![image](https://github.com/piplupOwo/piplupOwo.github.io/assets/82926705/a5fdccc4-cadb-4eeb-9966-a1504d0632ec)
 
 <br>
