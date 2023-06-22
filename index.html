@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>piplup ^w^</title>
+    <title>Adamhcj</title>
 
 
     <script src="axios/axios.min.js"></script>
 
     <!-- website icon-->
-    <link rel = "icon" href = "https://cdn.discordapp.com/attachments/818102115058450474/906656589589676112/pip_pix.jpg" 
+    <link rel = "icon" href = "resources/pip1.png" 
         type = "image/x-icon">
 
     <!-- Bootstrap CSS -->
@@ -113,6 +113,25 @@
         border: black solid 1px;
     }
 
+    #faq-cursor-static::after{
+        content: '';
+        border-right: 2px solid black;
+        height: 1em;
+    }
+
+    #faq-cursor-dynamic::after{
+        content: '';
+        border-right: 2px solid black;
+        height: 1em;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink{
+        0%{opacity: 0;}
+        50%{opacity: 1;}
+        100%{opacity: 0;}
+    }
+
     </style>
 
     <!-- falling objects-->
@@ -127,7 +146,7 @@
         <span class="loadingtext text-info" style="top: 150px;">best viewed on computer with Google Chrome</span>
         <h1 id="mainloadingtext" class="loadingtext text-danger">Home Page<br>loading... please wait</h1>
         <h2 class="loadingtext text-primary" style="margin-top: 200px;">you may want to check out while waiting:<br>
-            <a href="http://linkedin.com/in/piplup" target="_blank">linkedin</a></h2>
+            <a href="http://linkedin.com/in/adamhcj" target="_blank">linkedin</a></h2>
 
         
     </div>
@@ -176,7 +195,7 @@
 
         
                 <section id="intro" style="height: 100vh;" class="text-light">
-
+                    
 
                     <div id="introJumbo" class="jumbotron jumbotron-fluid" style="height: 100%">
                         <img id="introBG1" src="resources/bg2.png">
@@ -191,23 +210,162 @@
 
                         <div style="padding: 50px;">
 
-                            <h1 class="display-4 text-primary">Hello, welcome! ^w^</h1>
+                            <h1 class="display-4 text-primary">Hi</h1><!-- 
                             <hr class="my-4">
                             <div id="telegramSend">
                                 <p class="text-primary">Message you want to send to my telegram (anonymous). <br><h2 class="text-success">Say Hello! :)</h2></p>
                                 <div id="output"></div>
                                 <input id="telegramMessage" type="text" placeholder="text message">
                                 <div id="telegramSendButton" class="btn btn-danger" style="margin-left:10px;">send</div>
-                                <div id="telegramStatus" class="text-primary"></div>
+                                <div id="telegramStatus" class="text-primary"></div> -->
 
 
                         </div>
                     </div>
 
                 </section>
+                
 
-                <section id="middle" style="background-color: rgb(209, 237, 255); padding-top:10px;">
+                <section id="middle" style="background-color: rgb(209, 237, 255); padding:20px;">
+                    <div id="faq-container" style="min-height:200px;">
+                        <h1 class="display-4 text-primary">FAQ</h1>
+                        <select id="faq-select" class="form-select form-select-lg mb-3">
+                            <option>What is your favourite pokemon?</option>
+                            <option>Tell me more about your experiences.</option>
+                            <option>Which personal projects are your favourites?</option>
+                        </select>
+                        <button id="faq-button" class="btn btn-primary">Ask</button>
+                        
+                        <sub style="position: relative; bottom: 0px;">Note: Hyperlinks in the answer will work only after message has been fully generated.</sub>
+                        <br>
+                        <br>
+                        <span id="faq-msg"></span>
+                        <span id="faq-cursor-static" style="display: none;"></span>
+                        <span id="faq-cursor-dynamic" style="display: none;"></span>
+                        <br>
+                        <span id="faq-holder" style="display: none;"></span>
+                        <br><br><br>
+                        <script>
+                            async function clearHolder(answer){
+                                var enterInterval = 12;
+                                var deleteInterval = 4; 
+                                var faqholder = document.getElementById("faq-holder");
+                                var faqmsg = document.getElementById("faq-msg");
+                                faqholder.innerHTML = "";
+                                
+                                document.getElementById("faq-cursor-static").style.display = "inline";
+                                document.getElementById("faq-cursor-dynamic").style.display = "none";
+                                while (faqmsg.innerHTML.length > 0) {
+                                    if (faqmsg.innerHTML.slice(-1) == ">") {
+                                        // if last 4 characters are <br>, remove <br> from faq-msg
+                                        if (faqmsg.innerHTML.slice(-4) == "<br>"){
+                                            faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -4);
+                                            continue
+                                        }
 
+                                        // if last 4 characters are </a>
+                                        if (faqmsg.innerHTML.slice(-4) == "</a>"){
+                                            // if last 5th character is not >, then just cut that character
+                                            if (faqmsg.innerHTML.charAt(-5) != ">") {
+                                                faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -5);
+                                                await new Promise(r => setTimeout(r, deleteInterval));
+                                                continue
+                                            }
+                                            else {
+                                                // if last 5th character is >, then cut the whole </a>
+                                                faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -4);
+                                                // cut whole anchor tag
+                                                while (faqmsg.innerHTML.charAt(-1) != "<") {
+                                                    faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -1);
+
+                                                }
+                                                faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -1);
+                                                continue
+                                            }
+                                        }
+                                    }
+
+                                    // clear faqmsg by removing each character
+                                    faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -1);
+                                    // wait 50ms
+                                    await new Promise(r => setTimeout(r, deleteInterval));
+                                }
+                                document.getElementById("faq-cursor-static").style.display = "none";
+                                document.getElementById("faq-cursor-dynamic").style.display = "inline";
+                                await new Promise(r => setTimeout(r, 1500));
+                                document.getElementById("faq-button").disabled = false;
+                                faqholder.innerHTML = answer;
+                                document.getElementById("faq-cursor-dynamic").style.display = "none";
+                                document.getElementById("faq-cursor-static").style.display = "inline";
+                                while (faqholder.innerHTML.length > 0) {
+                                    // if <br>, add <br> to faq-msg
+                                    if (faqholder.innerHTML.charAt(0) == "<" && faqholder.innerHTML.slice(0, 4) == "<br>"){
+                                        faqmsg.innerHTML += faqholder.innerHTML.slice(0, 4);
+                                        faqholder.innerHTML = faqholder.innerHTML.slice(4);
+                                        continue
+                                    }
+                                    // if <a.. then add <a..></a>
+                                    if (faqholder.innerHTML.charAt(0) == "<" && faqholder.innerHTML.slice(0, 2) == "<a"){
+                                        let link = faqholder.innerHTML.slice(faqholder.innerHTML.indexOf(">") + 1, faqholder.innerHTML.indexOf("</a>"));
+                                        faqmsg.innerHTML += faqholder.innerHTML.slice(0, faqholder.innerHTML.indexOf(">") + 1) + "</a>";
+                                        faqholder.innerHTML = faqholder.innerHTML.slice(faqholder.innerHTML.indexOf("</a>") + 4);
+                                        // for each char in link, add to faq-msg from -4 index
+                                        for (let i = 0; i < link.length; i++){
+                                            faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -4) + link.charAt(i) + "</a>";
+                                            await new Promise(r => setTimeout(r, enterInterval));
+                                        }
+                                        continue
+                                    }
+                                    // add each character to faq-msg
+                                    faqmsg.innerHTML += faqholder.innerHTML.charAt(0);
+                                    faqholder.innerHTML = faqholder.innerHTML.slice(1);
+                                    // wait 50ms
+                                    await new Promise(r => setTimeout(r, enterInterval));
+                                }
+                                document.getElementById("faq-cursor-static").style.display = "none";
+                                document.getElementById("faq-cursor-dynamic").style.display = "none";
+                            }
+                            document.getElementById("faq-button").addEventListener("click", function(){
+                                var question = document.getElementById("faq-select").value;
+                                var answer = "";
+                                if (question == "What is your favourite pokemon?"){
+                                    answer = "Piplup!";
+                                }
+                                else if (question == "Which personal projects are your favourites?"){
+                                    answer = `For now, the projects which I had the most fun and memorable time working on are GoPiplup and PipStory,
+                                    <br> as well as this FAQ that you are using!
+                                    <br><br><a target="_blank" href="https://github.com/piplupOwo/GoPiplup">GoPiplup</a> is a web application built using React for the frontend and Go for the backend.
+                                    <br>It scrapes details of events from sites such as Gardens by the Bay and Nparks using Go.
+                                    <br>You may try it out on the 2nd item in the navbar, or here: <a target="_blank" href="https://piplupowo.github.io/GoPiplup">GoPiplup</a>.
+                                    <br><br><a target="_blank" href="https://github.com/piplupOwo/pipstory">PipStory</a> is a cross-platform game built using Flutter with the Flame package.
+                                    <br>It is a simple game where you control a cute piplup to collect rare candies
+                                    <br>You may try it out on the 3rd item in the navbar, or here: <a target="_blank" href="https://piplupowo.github.io/pipstory">PipStory</a>.
+                                    `;
+                                }
+                                else if (question == "Tell me more about your experiences."){
+                                    answer = `
+                                    I am currently a year 3 student in <a target="_blank" href="https://scis.smu.edu.sg/")">SMU School of Computing and Information Systems</a>, majoring in <a target="_blank" href="https://scis.smu.edu.sg/bsc-information-systems">Information Systems</a>, with a <a target="_blank" href="https://scis.smu.edu.sg/undergraduate/beyond/integrated-postgraduate/mscomputing">Local Fast Track Scholarship</a> to pursue <a target="_blank" href="https://scis.smu.edu.sg/programmes/MScomputing/overview">Master of Science in Computing</a>.
+                                    <br>My expected graduation date is Dec 2024, with degree of Bachelor of Science (Information Systems) and Master of Science in Computing.
+                                    <br><br>
+                                    My most recent internship which I am currently still working at, is at <a target="_blank" href="https://www.accenture.com/sg-en">Accenture</a> for six months, working full time for first 3 months during summer, and part time of 4 days per week for the next 3 months during school term where I would have to go back to school for lessons on 1 day per week.
+                                    <br>I am working as a full stack developer, working on multiple projects with several developers. Coding frameworks and languages are mainly React, Javascript and Python.
+                                    <br>I also worked with Tableau Public which is used to be embedded in React App to provide useful dashboards to visualise data in the web application.
+                                    <br>Besides that, I also did DevOps, like setting up CI/CD pipelines using github webhook and bash script in VM provided by AWS EC2.
+                                    <br><br>My previous internship was at <a target="_blank" href="https://www.singstat.gov.sg/">singstat</a> for 3 months during summer, working as a full stack developer to deliver a python web application that is able to generate reports based on user input, like aggregate by what the user specifies.
+                                    <br>I used IPywidgets to create a user interface for the python application, pandas to manipulate data and xlwings to generate nicely formatted excel reports.
+                                    <br><br>I was also a Teaching Assistant at SMU for Introduction to Programming (IS111) for 2 Semesters during my Year 2. It is a course that introduces Python and basic programming concepts that all incoming IS freshmen have to take.
+                                    <br>I enjoyed collaborating with professors, other teaching assistants and students to explore new ways to teach and learn programming.
+                                    `
+                                }
+        
+                                // set ask button to disabled for 1s
+                                document.getElementById("faq-button").disabled = true;
+                                clearHolder(answer);
+                            });
+                            
+                        </script>
+                    </div>
+                    <h1 class="display-4 text-primary">Projects</h1>
                     <ul class="list-group"> 
                         <p class="text-info" style="font-size:xx-large;">React and Golang:</p>
                         <li class="list-group-item"><h1 class="text-danger">GoPiplup</h1>
@@ -252,11 +410,8 @@
                                 <li>play some music / sound clips (like memes)</li>
                             </ul>
                             <img src="resources/discordb.png" class="imageExample"><br><br></li>
-                        <li class="list-group-item"><h1 class="text-danger">Telegram (messaging platform) bot to send me message</h1>
-                            <ul>
-                                <li>this website's telegram bot is using javascript</li>
-                            </ul>
-                            <img src="resources/teleb.png" class="imageExample"><br><br><br><h1 class="text-danger">monitoring uptime of services with telegram! how convenient</h1>
+                        <li class="list-group-item">
+                            <h1 class="text-danger">monitoring uptime of services with telegram! how convenient</h1>
                             <ul>
                                 <li>experimented with telegram bot on python to perform various tasks (like notification coupled with monitoring of website response)</li>
                             </ul>
@@ -368,6 +523,10 @@
     setTimeout(function() {
         $('#loading').hide();
         $("body").css("overflow-y", "auto");
+        // simulate a change in faq-select to Tell me more about your experiences.
+        var event = new Event('click');
+        document.getElementById("faq-select").value = "Tell me more about your experiences.";
+        document.getElementById("faq-button").dispatchEvent(event);
     }, 3000);
     }) 
 </script>
