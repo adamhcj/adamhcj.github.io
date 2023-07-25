@@ -1,5 +1,5 @@
 # Hobby Personal Website, hosted using github-pages, showcasing some hobby projects and JavaScript
-<h1><a href="https://piplupowo.github.io/">https://piplupOwo.github.io</a></h1>
+<h1><a href="https://adamhcj.github.io/">https://adamhcj.github.io</a></h1>
 <p>my fun casual website :) I am still learning and improving :)</p>
 
 <h1>Tech Stack:</h1>
