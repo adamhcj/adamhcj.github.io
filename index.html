@@ -21,6 +21,9 @@
     
 
     <style>
+* {
+cursor: none;
+}
     <!--loading style-->
 
 #loading {
@@ -126,6 +129,19 @@
         animation: blink 1s infinite;
     }
 
+    #speech-cursor-static::after{
+        content: '';
+        border-right: 2px solid white;
+        height: 1em;
+    }
+
+    #speech-cursor-dynamic::after{
+        content: '';
+        border-right: 2px solid white;
+        height: 1em;
+        animation: blink 1s infinite;
+    }
+
     @keyframes blink{
         0%{opacity: 0;}
         50%{opacity: 1;}
@@ -138,7 +154,144 @@
     <!-- <link href="css/fallingobjects.css" rel="stylesheet"> -->
 
 </head>
-<body class="game">
+<body>
+    <div id='follow'
+        style='position: fixed; z-index: 1000000; border: 0px solid black; pointer-events: none'>
+    <img src="resources/mousecursor.png" style="width: 20px; position:relative; left: -11px; top: 10px;">
+    <img src="resources/pipbw.gif" style="width: 30px; position:relative; left: -8px; top: 0px;">
+    <div id="cursorspeech"
+    style="
+    position: relative;
+    left: 55px;
+    top: -40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: rgba(25, 45, 226, 0.856);
+    color: white;
+    ">
+    <span id="speech-msg"></span>
+    <span id="speech-cursor-static" style="display: none;"></span>
+    <span id="speech-cursor-dynamic" style="display: none;"></span>
+    <br>
+    <span id="speech-holder" style="display: none;">123</span>
+    <span id="speech-latest-answer" style="display: none;"></span>
+    <script>
+        var preventDuplicate = false;
+        
+        async function clearSpeechHolder(answer, recall=false){
+            if (recall === false) {
+                document.getElementById("speech-latest-answer").innerHTML = answer;
+            }
+
+            if (answer != document.getElementById("speech-latest-answer").innerHTML) {
+                return;
+            }
+
+            if (answer == document.getElementById("speech-msg").innerHTML) {
+                return;
+            }
+
+            if (preventDuplicate === true) {
+                setTimeout(function() {
+                    clearSpeechHolder(answer, true);
+                }, 100);
+                return;
+            }
+
+            preventDuplicate = true;
+
+            
+            var enterInterval = 6;
+            var deleteInterval = 1; 
+            var speechholder = document.getElementById("speech-holder");
+            var speechmsg = document.getElementById("speech-msg");
+            
+            
+            document.getElementById("speech-cursor-static").style.display = "inline";
+            document.getElementById("speech-cursor-dynamic").style.display = "none";
+
+            while (speechmsg.innerHTML.length > 0) {
+                if (speechmsg.innerHTML.slice(-1) == ">") {
+                    // if last 4 characters are <br>, remove <br> from speech-msg
+                    if (speechmsg.innerHTML.slice(-4) == "<br>"){
+                        speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -4);
+                        continue
+                    }
+
+                    // if last 4 characters are </a>
+                    if (speechmsg.innerHTML.slice(-4) == "</a>"){
+                        // if last 5th character is not >, then just cut that character
+                        if (speechmsg.innerHTML.charAt(-5) != ">") {
+                            speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -5);
+                            await new Promise(r => setTimeout(r, deleteInterval));
+                            continue
+                        }
+                        else {
+                            // if last 5th character is >, then cut the whole </a>
+                            speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -4);
+                            // cut whole anchor tag
+                            while (speechmsg.innerHTML.charAt(-1) != "<") {
+                                speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -1);
+
+                            }
+                            speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -1);
+                            continue
+                        }
+                    }
+                }
+
+                // clear speechmsg by removing each character
+                speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -1);
+                // wait 50ms
+                await new Promise(r => setTimeout(r, deleteInterval));
+            }
+            document.getElementById("speech-cursor-static").style.display = "none";
+            document.getElementById("speech-cursor-dynamic").style.display = "inline";
+
+            
+            document.getElementById("speech-cursor-dynamic").style.display = "none";
+            document.getElementById("speech-cursor-static").style.display = "inline";
+            speechmsg.innerHTML = "";
+            speechholder.innerHTML = answer;
+
+            while (speechholder.innerHTML.length > 0) {
+                if (document.getElementById("speech-latest-answer").innerHTML != answer) {
+                    break;
+                }
+                // if <br>, add <br> to speech-msg
+                if (speechholder.innerHTML.charAt(0) == "<" && speechholder.innerHTML.slice(0, 4) == "<br>"){
+                    speechmsg.innerHTML += speechholder.innerHTML.slice(0, 4);
+                    speechholder.innerHTML = speechholder.innerHTML.slice(4);
+                    continue
+                }
+                // if <a.. then add <a..></a>
+                if (speechholder.innerHTML.charAt(0) == "<" && speechholder.innerHTML.slice(0, 2) == "<a"){
+                    let link = speechholder.innerHTML.slice(speechholder.innerHTML.indexOf(">") + 1, speechholder.innerHTML.indexOf("</a>"));
+                    speechmsg.innerHTML += speechholder.innerHTML.slice(0, speechholder.innerHTML.indexOf(">") + 1) + "</a>";
+                    speechholder.innerHTML = speechholder.innerHTML.slice(speechholder.innerHTML.indexOf("</a>") + 4);
+                    // for each char in link, add to speech-msg from -4 index
+                    for (let i = 0; i < link.length; i++){
+                        speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -4) + link.charAt(i) + "</a>";
+                        await new Promise(r => setTimeout(r, enterInterval));
+                    }
+                    continue
+                }
+                // add each character to speech-msg
+                speechmsg.innerHTML += speechholder.innerHTML.charAt(0);
+                speechholder.innerHTML = speechholder.innerHTML.slice(1);
+                // wait 50ms
+                await new Promise(r => setTimeout(r, enterInterval));
+            }
+            document.getElementById("speech-cursor-static").style.display = "none";
+            document.getElementById("speech-cursor-dynamic").style.display = "inline";
+
+            preventDuplicate = false;
+        }
+        </script>
+    
+    </div>
+    </div>
     <!-- loading -->
     <div id="loading">
         <img id="loading-image" src="resources/blank.png" alt="Loading..." style="z-index: 99;"/>
@@ -154,20 +307,29 @@
     <!-- nav bar-->
 
     <nav class="navbar fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd; padding: 5px;">
-        <a class="navbar-brand" style="margin-left: 10px;"><img src="https://cdn.discordapp.com/attachments/818102115058450474/887315665273368596/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
+        <a class="navbar-brand" style="margin-left: 10px;"><img src="resources/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <li 
+            onpointerenter="clearSpeechHolder('You are already at home!')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
             <a class="nav-link active" href="">Home</a>
             </li>
-            <li class="nav-item">
+            <li 
+            onpointerenter="clearSpeechHolder('Click to try out GoPiplup, a web application built using React and Go!<br>It shows you events available in Singapore with scraped data from various sites like Gardens by the Bay and Nparks.')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
             <a class="nav-link" href="GoPiplup">GoPiplup</a>
             </li>
-            <li class="nav-item">
+            <li 
+            onpointerenter="clearSpeechHolder('Click to try out PipStory')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
                 <a class="nav-link" href="pipstory">PipStory</a>
             </li>
             <li class="nav-item">
@@ -447,21 +609,28 @@
 <script src="js/index.js"></script>
 
 <script>
-    // sweet alert confirming if want to try new game pipstory
-    swal({
-        title: "Pipstory",
-        text: "Do you want to try Pipstory? (a new Flutter game I am working on)",
-        icon: "info",
-        buttons: true,
-        dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-            window.location.href = "pipstory";
-        } else {
-            swal("Ok! Please enjoy your day :)");
-        }
+    document.addEventListener('mousemove', function(e) {
+      let circle = document.getElementById('follow');
+      let left = e.x;
+      let top = e.y;
+      circle.style.left = left + 10 + 'px';
+      circle.style.top = top - 20 + 'px';
     });
+    // sweet alert confirming if want to try new game pipstory
+    // swal({
+    //     title: "Pipstory",
+    //     text: "Do you want to try Pipstory? (a new Flutter game I am working on)",
+    //     icon: "info",
+    //     buttons: true,
+    //     dangerMode: true,
+    // })
+    // .then((willDelete) => {
+    //     if (willDelete) {
+    //         window.location.href = "pipstory";
+    //     } else {
+    //         swal("Ok! Please enjoy your day :)");
+    //     }
+    // });
 
     const bgList = [2,3,4,5,6,7];
     const gifList = ["bg3", "bg4", "bg5", "bg6"];
@@ -514,7 +683,7 @@
     }
 
     
-
+    clearSpeechHolder("Loading... please wait")
     window.scrollTo(0, 0);
     $("body").css("overflow", "hidden");
     $(window).on('load', function () {
@@ -527,8 +696,39 @@
         var event = new Event('click');
         document.getElementById("faq-select").value = "Tell me more about your experiences.";
         document.getElementById("faq-button").dispatchEvent(event);
+        clearSpeechHolder("Hello! Welcome to my site");
+
+        setTimeout(function() {
+            if (document.getElementById("speech-msg").innerHTML == "Hello! Welcome to my site") {
+                clearSpeechHolder("");
+            }
+        }, 5000);
+
     }, 3000);
     }) 
+
+    var idleMessages = [
+        "Piplup is cute!",
+        "Piplup!",
+        "Hi, how are you doing?",
+        "I like MapleStory!",
+        "You rock!",
+        "Hope you are doing well!",
+        "I am a penguin!",
+    ]
+
+    setInterval(function() {
+        if (document.getElementById("speech-msg").innerHTML == "") {
+            clearSpeechHolder(idleMessages[Math.floor(Math.random() * idleMessages.length)]);
+        }
+        setTimeout(function() {
+            if (idleMessages.includes(document.getElementById("speech-msg").innerHTML)) {
+                clearSpeechHolder("");
+            }
+        }, 1500);
+    }, 5000);
+
+    
 </script>
 
 <!-- <script src="js/fallingobjects.js"></script> -->

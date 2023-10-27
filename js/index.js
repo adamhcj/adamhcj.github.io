@@ -1,5 +1,5 @@
-var sendButton = document.getElementById("telegramSendButton");
-sendButton.addEventListener("click", sendMessage);
+// var sendButton = document.getElementById("telegramSendButton");
+// sendButton.addEventListener("click", sendMessage);
 
 var sendCooldown = false;
 
