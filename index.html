@@ -22,9 +22,8 @@
 
     <style>
 * {
-cursor: none;
+    cursor: none;
 }
-    <!--loading style-->
 
 #loading {
     position: fixed;
@@ -277,6 +276,15 @@ cursor: none;
                     }
                     continue
                 }
+                // if <...> then add <...></...>
+                if (speechholder.innerHTML.charAt(0) == "<" && speechholder.innerHTML.charAt(1) != "/"){
+                    let tag = speechholder.innerHTML.slice(0, speechholder.innerHTML.indexOf(">") + 1);
+                    let closingtag = "</" + tag.slice(1);
+
+                    speechmsg.innerHTML += speechholder.innerHTML.slice(0, speechholder.innerHTML.indexOf(closingtag) + closingtag.length);
+                    speechholder.innerHTML = speechholder.innerHTML.slice(speechholder.innerHTML.indexOf(closingtag) + closingtag.length);
+                    continue
+                }
                 // add each character to speech-msg
                 speechmsg.innerHTML += speechholder.innerHTML.charAt(0);
                 speechholder.innerHTML = speechholder.innerHTML.slice(1);
@@ -307,7 +315,10 @@ cursor: none;
     <!-- nav bar-->
 
     <nav class="navbar fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd; padding: 5px;">
-        <a class="navbar-brand" style="margin-left: 10px;"><img src="resources/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
+        <a 
+        onpointerenter="clearSpeechHolder('yes? i am here!')"
+        onpointerleave="clearSpeechHolder('')"
+        class="navbar-brand" style="margin-left: 10px;"><img src="resources/pipbw.gif" style="opacity: 0.8; height: 30px;" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -332,16 +343,28 @@ cursor: none;
             class="nav-item">
                 <a class="nav-link" href="pipstory">PipStory</a>
             </li>
-            <li class="nav-item">
+            <li 
+            onpointerenter="clearSpeechHolder('Click to try out PipBound, my favourite game!')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
                 <a class="nav-link" href="pipbound">PipBound</a>
             </li>
-            <li class="nav-item">
+            <li 
+            onpointerenter="clearSpeechHolder('Click to explore our Oldschool Runescape Group Ironman<br>Bank, basically my team\'s bank in game!')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
             <a class="nav-link" href="html/gim.html">GIM bank</a>
             </li>
-            <li class="nav-item">
+            <li 
+            onpointerenter="clearSpeechHolder('Click to explore my leaflet map')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
                 <a class="nav-link" href="html/mapPage.html">Leaflet map</a>
             </li>
-            <li class="nav-item">
+            <li 
+            onpointerenter="clearSpeechHolder('Click to see my SMU journey!')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
                 <a class="nav-link" href="html/schoolWorks.html">SMU journey</a>
             </li>
         </ul>
@@ -396,9 +419,12 @@ cursor: none;
                             <option>Tell me more about your experiences.</option>
                             <option>Which personal projects are your favourites?</option>
                         </select>
-                        <button id="faq-button" class="btn btn-primary">Ask</button>
+                        <button 
+                        onpointerenter='clearSpeechHolder("Ask question!")'
+                        onpointerleave="clearSpeechHolder('')"
+                        id="faq-button" class="btn btn-primary">Ask</button>
                         
-                        <sub style="position: relative; bottom: 0px;">Note: Hyperlinks in the answer will work only after message has been fully generated.</sub>
+                        <!-- <sub style="position: relative; bottom: 0px;">Note: Hyperlinks in the answer will work only after message has been fully generated.</sub> -->
                         <br>
                         <br>
                         <span id="faq-msg"></span>
@@ -409,49 +435,17 @@ cursor: none;
                         <br><br><br>
                         <script>
                             async function clearHolder(answer){
-                                var enterInterval = 6;
-                                var deleteInterval = 1; 
+                                var enterfaqInterval = 0;
+                                var deletefaqInterval = 0; 
                                 var faqholder = document.getElementById("faq-holder");
                                 var faqmsg = document.getElementById("faq-msg");
                                 faqholder.innerHTML = "";
                                 
                                 document.getElementById("faq-cursor-static").style.display = "inline";
                                 document.getElementById("faq-cursor-dynamic").style.display = "none";
-                                while (faqmsg.innerHTML.length > 0) {
-                                    if (faqmsg.innerHTML.slice(-1) == ">") {
-                                        // if last 4 characters are <br>, remove <br> from faq-msg
-                                        if (faqmsg.innerHTML.slice(-4) == "<br>"){
-                                            faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -4);
-                                            continue
-                                        }
+                                
+                                faqmsg.innerHTML = "";
 
-                                        // if last 4 characters are </a>
-                                        if (faqmsg.innerHTML.slice(-4) == "</a>"){
-                                            // if last 5th character is not >, then just cut that character
-                                            if (faqmsg.innerHTML.charAt(-5) != ">") {
-                                                faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -5);
-                                                await new Promise(r => setTimeout(r, deleteInterval));
-                                                continue
-                                            }
-                                            else {
-                                                // if last 5th character is >, then cut the whole </a>
-                                                faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -4);
-                                                // cut whole anchor tag
-                                                while (faqmsg.innerHTML.charAt(-1) != "<") {
-                                                    faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -1);
-
-                                                }
-                                                faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -1);
-                                                continue
-                                            }
-                                        }
-                                    }
-
-                                    // clear faqmsg by removing each character
-                                    faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -1);
-                                    // wait 50ms
-                                    await new Promise(r => setTimeout(r, deleteInterval));
-                                }
                                 document.getElementById("faq-cursor-static").style.display = "none";
                                 document.getElementById("faq-cursor-dynamic").style.display = "inline";
                                 await new Promise(r => setTimeout(r, 1500));
@@ -459,31 +453,10 @@ cursor: none;
                                 faqholder.innerHTML = answer;
                                 document.getElementById("faq-cursor-dynamic").style.display = "none";
                                 document.getElementById("faq-cursor-static").style.display = "inline";
-                                while (faqholder.innerHTML.length > 0) {
-                                    // if <br>, add <br> to faq-msg
-                                    if (faqholder.innerHTML.charAt(0) == "<" && faqholder.innerHTML.slice(0, 4) == "<br>"){
-                                        faqmsg.innerHTML += faqholder.innerHTML.slice(0, 4);
-                                        faqholder.innerHTML = faqholder.innerHTML.slice(4);
-                                        continue
-                                    }
-                                    // if <a.. then add <a..></a>
-                                    if (faqholder.innerHTML.charAt(0) == "<" && faqholder.innerHTML.slice(0, 2) == "<a"){
-                                        let link = faqholder.innerHTML.slice(faqholder.innerHTML.indexOf(">") + 1, faqholder.innerHTML.indexOf("</a>"));
-                                        faqmsg.innerHTML += faqholder.innerHTML.slice(0, faqholder.innerHTML.indexOf(">") + 1) + "</a>";
-                                        faqholder.innerHTML = faqholder.innerHTML.slice(faqholder.innerHTML.indexOf("</a>") + 4);
-                                        // for each char in link, add to faq-msg from -4 index
-                                        for (let i = 0; i < link.length; i++){
-                                            faqmsg.innerHTML = faqmsg.innerHTML.slice(0, -4) + link.charAt(i) + "</a>";
-                                            await new Promise(r => setTimeout(r, enterInterval));
-                                        }
-                                        continue
-                                    }
-                                    // add each character to faq-msg
-                                    faqmsg.innerHTML += faqholder.innerHTML.charAt(0);
-                                    faqholder.innerHTML = faqholder.innerHTML.slice(1);
-                                    // wait 50ms
-                                    await new Promise(r => setTimeout(r, enterInterval));
-                                }
+                                
+                                faqmsg.innerHTML = answer;
+                                faqholder.innerHTML = "";
+
                                 document.getElementById("faq-cursor-static").style.display = "none";
                                 document.getElementById("faq-cursor-dynamic").style.display = "none";
                             }
@@ -494,28 +467,68 @@ cursor: none;
                                     answer = "Piplup!";
                                 }
                                 else if (question == "Which personal projects are your favourites?"){
-                                    answer = `For now, the projects which I had the most fun and memorable time working on are GoPiplup and PipStory,
-                                    <br> as well as this FAQ that you are using!
-                                    <br><br><a target="_blank" href="https://github.com/adamhcj/GoPiplup">GoPiplup</a> is a web application built using React for the frontend and Go for the backend.
+                                    answer = `For now, the projects which I had the most fun and memorable time working on are PipBound, PipStory,
+                                    <br> and this website's tooltip effects and animations.
+                                    <br><br><a 
+                                    onpointerenter="clearSpeechHolder('Click to go to GoPiplup github repo!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    target="_blank" href="https://github.com/adamhcj/GoPiplup">GoPiplup</a> is a web application built using React for the frontend and Go for the backend.
                                     <br>It scrapes details of events from sites such as Gardens by the Bay and Nparks using Go.
-                                    <br>You may try it out on the 2nd item in the navbar, or here: <a target="_blank" href="https://adamhcj.github.io/GoPiplup">GoPiplup</a>.
-                                    <br><br><a target="_blank" href="https://github.com/adamhcj/pipstory">PipStory</a> is a cross-platform game built using Flutter with the Flame package.
+                                    <br>You may try it out on the 2nd item in the navbar, or here: <a 
+                                    onpointerenter="clearSpeechHolder('Click to see the deployed GoPiplup!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    target="_blank" href="https://adamhcj.github.io/GoPiplup">GoPiplup</a>.
+                                    <br><br><a 
+                                    onpointerenter="clearSpeechHolder('Click to go to PipStory github repo!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    target="_blank" href="https://github.com/adamhcj/pipstory">PipStory</a> is a cross-platform game built using Flutter with the Flame package.
                                     <br>It is a simple game where you control a cute piplup to collect rare candies
-                                    <br>You may try it out on the 3rd item in the navbar, or here: <a target="_blank" href="https://adamhcj.github.io/pipstory">PipStory</a>.
+                                    <br>You may try it out on the 3rd item in the navbar, or here: <a 
+                                    onpointerenter="clearSpeechHolder('Click to go to the deployed PipStory!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    target="_blank" href="https://adamhcj.github.io/pipstory">PipStory</a>.
                                     `;
                                 }
                                 else if (question == "Tell me more about your experiences."){
                                     answer = `
-                                    I am currently a year 4 student in <a target="_blank" href="https://scis.smu.edu.sg/")">SMU School of Computing and Information Systems</a>, majoring in <a target="_blank" href="https://scis.smu.edu.sg/bsc-information-systems">Information Systems</a>, with a <a target="_blank" href="https://scis.smu.edu.sg/undergraduate/beyond/integrated-postgraduate/mscomputing">Local Fast Track Scholarship</a> to pursue <a target="_blank" href="https://scis.smu.edu.sg/programmes/MScomputing/overview">Master of Science in Computing</a>.
-                                    <br>My expected graduation date is Dec 2024, with degree of Bachelor of Science (Information Systems) and Master of Science in Computing.
+                                    I am currently a year 4 student in <a 
+                                    target="_blank" 
+                                    onpointerenter="clearSpeechHolder('Click to go to SMU SCIS page!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    href="https://scis.smu.edu.sg/">SMU School of Computing and Information Systems</a>, majoring in <a 
+                                    target="_blank" 
+                                    onpointerenter="clearSpeechHolder('Click to view Information Systems<br>Undergraduate degree!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    href="https://scis.smu.edu.sg/bsc-information-systems">Information Systems</a>, with a <a 
+                                    target="_blank"
+                                    onpointerenter="clearSpeechHolder('Click to go to SMU SCIS Local Fast Track Scholarship page!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    href="https://scis.smu.edu.sg/undergraduate/beyond/integrated-postgraduate/mscomputing">Local Fast Track Scholarship</a> to pursue <a 
+                                    target="_blank" 
+                                    onpointerenter="clearSpeechHolder('Click to go to SMU Master of Science in Computing page!')"
+                                    onpointerleave="clearSpeechHolder('')" 
+                                    href="https://scis.smu.edu.sg/programmes/MScomputing/overview">Master of Science in Computing</a>.
+                                    <br>My expected <span
+                                    onpointerenter='clearSpeechHolder("Yay!! graduation soon!")'
+                                    onpointerleave="clearSpeechHolder('')"
+                                    >graduation date is Dec 2024</span>, with degree of Bachelor of Science (Information Systems) and Master of Science in Computing.
                                     <br><br>
-                                    My most recent internship which I am currently still working at, is at <a target="_blank" href="https://www.accenture.com/sg-en">Accenture</a> for six months, working full time for first 3 months during summer, and part time of 4 days per week for the next 3 months during school term where I would have to go back to school for lessons on 1 day per week.
+                                    My most recent internship which I am currently still working at, is at <a target="_blank" 
+                                    onpointerenter='clearSpeechHolder("I learned a lot from Accenture!")'
+                                    onpointerleave="clearSpeechHolder('')"
+                                    href="https://www.accenture.com/sg-en">Accenture</a> for six months, working full time for first 3 months during summer, and part time of 4 days per week for the next 3 months during school term where I would have to go back to school for lessons on 1 day per week.
                                     <br>I am working as a full stack developer, working on multiple projects with several developers. Coding frameworks and languages are mainly React, Javascript and Python.
                                     <br>I also worked with Tableau Public which is used to be embedded in React App to provide useful dashboards to visualise data in the web application.
                                     <br>Besides that, I also did DevOps, like setting up CI/CD pipelines using github webhook and bash script in VM provided by AWS EC2.
-                                    <br><br>My previous internship was at <a target="_blank" href="https://www.singstat.gov.sg/">singstat</a> for 3 months during summer, working as a full stack developer to deliver a python web application that is able to generate reports based on user input, like aggregate by what the user specifies.
+                                    <br><br>My previous internship was at <a target="_blank"
+                                    onpointerenter='clearSpeechHolder("Nice office location in Funan! I could see the Supreme Court from my seat!")'
+                                    onpointerleave="clearSpeechHolder('')"
+                                    href="https://www.singstat.gov.sg/">singstat</a> for 3 months during summer, working as a full stack developer to deliver a python web application that is able to generate reports based on user input, like aggregate by what the user specifies.
                                     <br>I used IPywidgets to create a user interface for the python application, pandas to manipulate data and xlwings to generate nicely formatted excel reports.
-                                    <br><br>I was also a Teaching Assistant at SMU for Introduction to Programming (IS111) for 2 Semesters during my Year 2. It is a course that introduces Python and basic programming concepts that all incoming IS freshmen have to take.
+                                    <br><br><span
+                                    onpointerenter='clearSpeechHolder("I enjoyed being TA for IS111 even though it was a lot of work,<br>helping students with python programming and also learning in the process!")'
+                                    onpointerleave="clearSpeechHolder('')"
+                                    >I was also a Teaching Assistant at SMU for Introduction to Programming (IS111) for 2 Semesters during my Year 2. </span>It is a course that introduces Python and basic programming concepts that all incoming IS freshmen have to take.
                                     <br>I enjoyed collaborating with professors, other teaching assistants and students to explore new ways to teach and learn programming.
                                     `
                                 }
@@ -532,7 +545,10 @@ cursor: none;
                         <p class="text-info" style="font-size:xx-large;">React and Golang:</p>
                         <li class="list-group-item"><h1 class="text-danger">GoPiplup</h1>
                             <ul>
-                                <li><a target="_blank" href="https://github.com/adamhcj/GoPiplup">https://github.com/adamhcj/GoPiplup</a></li>
+                                <li><a 
+                                    onpointerenter='clearSpeechHolder("Click to go to GoPiplup github repo!")'
+                                    onpointerleave="clearSpeechHolder('')"
+                                    target="_blank" href="https://github.com/adamhcj/GoPiplup">https://github.com/adamhcj/GoPiplup</a></li>
                                 <li>React Frontend, Go Backend</li>
                                 <li>Go backend scrapes live data from various sites like Gardens by the Bay and Nparks</li>
                                 <li>Try it out on the 2nd item in the navbar</li>
@@ -545,7 +561,13 @@ cursor: none;
                                 <li>try it out on the 3rd item on the navbar!</li>
                                 <li>Cross-platform, works on Web, Ios and Android</li>
                             </ul>
-                            <img src="resources/bg5.gif" class="imageExample"><img src="resources/bg6.gif" class="imageExample">
+                            <img 
+                            onpointerenter='clearSpeechHolder("Maplestory and Pokemon combined!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/bg5.gif" class="imageExample"><img 
+                            onpointerenter='clearSpeechHolder("Maplestory and Pokemon combined!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/bg6.gif" class="imageExample">
                             <h1 class="text-danger">pipbound (with flutter flame package)</h1>
                             <ul>
                                 <li>extension project from pipstory! new features and type of gameplay</li>
@@ -553,10 +575,16 @@ cursor: none;
                                 <li>reusing my own previously done code to showcase different ideologies</li>
                                 <li>try it out on the 4th item on the navbar!</li>
                             </ul>
-                            <img src="resources/bg4.gif" class="imageExample">
+                            <img 
+                            onpointerenter='clearSpeechHolder("just like GunBound :)")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/bg4.gif" class="imageExample">
                         </li>
                     
-                        <p class="text-info" style="font-size:xx-large;">Python:</p>
+                        <p 
+                        onpointerenter='clearSpeechHolder("Yay!! Python!!")'
+                        onpointerleave="clearSpeechHolder('')"
+                        class="text-info" style="font-size:xx-large;">Python:</p>
                         <li class="list-group-item"><h1 class="text-danger">Scribblio (drawing game) draw using python</h1>
                             <ul>
                                 <li>two parts:<ol>
@@ -564,21 +592,33 @@ cursor: none;
                                     <li>iterate the array to click on spots</li>
                                 </ol></li>
                             </ul>
-                            <img src="resources/bg2.png" class="imageExample"><img src="resources/skribblpenguin.png" class="imageExample"></li>
+                            <img 
+                            onpointerenter='clearSpeechHolder("Draw piplup in scribbl.io game or any other drawing game!<br>I tried it in discord drawing game and it worked too!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/bg2.png" class="imageExample"><img 
+                            onpointerenter='clearSpeechHolder("This is actually drawn by my python script, clicking many dots!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/skribblpenguin.png" class="imageExample"></li>
                         <li class="list-group-item"><h1 class="text-danger">piplupOwo Discord (voice chatting platform) bot</h1>
                             <ul>
                                 <li>There are actual users using it in a server :)</li>
                                 <li>google text to speech for shy / people in the library / spoilt mic people in discord channels (bot will speak)</li>
                                 <li>play some music / sound clips (like memes)</li>
                             </ul>
-                            <img src="resources/discordb.png" class="imageExample"><br><br></li>
+                            <img 
+                            onpointerenter='clearSpeechHolder("This bot brought a lot of fun but sadly I do not have time to maintain it :(")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/discordb.png" class="imageExample"><br><br></li>
                         <li class="list-group-item">
                             <h1 class="text-danger">monitoring uptime of services with telegram! how convenient</h1>
                             <ul>
                                 <li>experimented with telegram bot on python to perform various tasks (like notification coupled with monitoring of website response)</li>
                             </ul>
 
-                            <br><img src="resources/uptime.png" class="imageExample"> </li>
+                            <br><img 
+                            onpointerenter='clearSpeechHolder("Mostly experimental, but it works!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/uptime.png" class="imageExample"> </li>
                     </ul>
                     <br><br>
                     <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Java:</p>
@@ -589,13 +629,19 @@ cursor: none;
                                 <li>(discontinued) makes game more fun with stuff like disco mode (dangerous tiles are lit up)</li>
                             </ul>
 
-                            <br><img src="https://github.com/piplupOwo/piplup/raw/master/resources/smallerdiscophosani.gif?raw=true" class="imageExample"><br><br><br>TOB hardmode pools
+                            <br><img 
+                            onpointerenter='clearSpeechHolder("Colourful!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="https://github.com/piplupOwo/piplup/raw/master/resources/smallerdiscophosani.gif?raw=true" class="imageExample"><br><br><br>TOB hardmode pools
                             
                             <ul>
                                 <li>draws colourful lines to demarcate groups of spots designated for each player</li>
                             </ul>
 
-                            <br><img src="resources/tobpools.png" class="imageExample"></li>
+                            <br><img 
+                            onpointerenter='clearSpeechHolder("The lines are drawn by my plugin!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/tobpools.png" class="imageExample"></li>
                             
 
                     </ul>
@@ -616,6 +662,7 @@ cursor: none;
       circle.style.left = left + 10 + 'px';
       circle.style.top = top - 20 + 'px';
     });
+    document.dispatchEvent(new Event('mousemove'));
     // sweet alert confirming if want to try new game pipstory
     // swal({
     //     title: "Pipstory",
@@ -699,7 +746,7 @@ cursor: none;
         clearSpeechHolder("Hello! Welcome to my site");
 
         setTimeout(function() {
-            if (document.getElementById("speech-msg").innerHTML == "Hello! Welcome to my site") {
+            if (document.getElementById("speech-msg").innerHTML == "Hello! Welcome to my site<br>I would be helping you out as you navigate and hover around the site.") {
                 clearSpeechHolder("");
             }
         }, 5000);
@@ -712,7 +759,6 @@ cursor: none;
         "Piplup!",
         "Hi, how are you doing?",
         "I like MapleStory!",
-        "You rock!",
         "Hope you are doing well!",
         "I am a penguin!",
     ]
@@ -725,8 +771,8 @@ cursor: none;
             if (idleMessages.includes(document.getElementById("speech-msg").innerHTML)) {
                 clearSpeechHolder("");
             }
-        }, 1500);
-    }, 5000);
+        }, 2000);
+    }, 10000);
 
     
 </script>

@@ -155,9 +155,180 @@
         width: 100%;
         font-size: small;
       }
+
+      * {
+    cursor: none;
+    }
+
+      #speech-cursor-static::after{
+        content: '';
+        border-right: 2px solid white;
+        height: 1em;
+    }
+
+    #speech-cursor-dynamic::after{
+        content: '';
+        border-right: 2px solid white;
+        height: 1em;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink{
+        0%{opacity: 0;}
+        50%{opacity: 1;}
+        100%{opacity: 0;}
+    }
     </style>
   </head>
-  <body class="game">
+  <body>
+    <div id='follow'
+    style='position: fixed; z-index: 1000000; border: 0px solid black; pointer-events: none'>
+    <img src="../resources/mousecursor.png" style="width: 20px; position:relative; left: -11px; top: 10px;">
+    <img src="../resources/pipbw.gif" style="width: 30px; position:relative; left: -8px; top: 0px;">
+    <div id="cursorspeech"
+    style="
+    position: relative;
+    left: 55px;
+    top: -40px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: rgba(25, 45, 226, 0.856);
+    color: white;
+    ">
+    <span id="speech-msg"></span>
+    <span id="speech-cursor-static" style="display: none;"></span>
+    <span id="speech-cursor-dynamic" style="display: none;"></span>
+    <br>
+    <span id="speech-holder" style="display: none;">123</span>
+    <span id="speech-latest-answer" style="display: none;"></span>
+    <script>
+        var preventDuplicate = false;
+
+        document.addEventListener('mousemove', function(e) {
+          let circle = document.getElementById('follow');
+          let left = e.x;
+          let top = e.y;
+          circle.style.left = left + 10 + 'px';
+          circle.style.top = top - 20 + 'px';
+        });
+
+        document.dispatchEvent(new Event('mousemove'));
+        
+        async function clearSpeechHolder(answer, recall=false){
+            if (recall === false) {
+                document.getElementById("speech-latest-answer").innerHTML = answer;
+            }
+
+            if (answer != document.getElementById("speech-latest-answer").innerHTML) {
+                return;
+            }
+
+            if (answer == document.getElementById("speech-msg").innerHTML) {
+                return;
+            }
+
+            if (preventDuplicate === true) {
+                setTimeout(function() {
+                    clearSpeechHolder(answer, true);
+                }, 100);
+                return;
+            }
+
+            preventDuplicate = true;
+
+            
+            var enterInterval = 6;
+            var deleteInterval = 1; 
+            var speechholder = document.getElementById("speech-holder");
+            var speechmsg = document.getElementById("speech-msg");
+            
+            
+            document.getElementById("speech-cursor-static").style.display = "inline";
+            document.getElementById("speech-cursor-dynamic").style.display = "none";
+
+            while (speechmsg.innerHTML.length > 0) {
+                if (speechmsg.innerHTML.slice(-1) == ">") {
+                    // if last 4 characters are <br>, remove <br> from speech-msg
+                    if (speechmsg.innerHTML.slice(-4) == "<br>"){
+                        speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -4);
+                        continue
+                    }
+
+                    // if last 4 characters are </a>
+                    if (speechmsg.innerHTML.slice(-4) == "</a>"){
+                        // if last 5th character is not >, then just cut that character
+                        if (speechmsg.innerHTML.charAt(-5) != ">") {
+                            speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -5);
+                            await new Promise(r => setTimeout(r, deleteInterval));
+                            continue
+                        }
+                        else {
+                            // if last 5th character is >, then cut the whole </a>
+                            speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -4);
+                            // cut whole anchor tag
+                            while (speechmsg.innerHTML.charAt(-1) != "<") {
+                                speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -1);
+
+                            }
+                            speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -1);
+                            continue
+                        }
+                    }
+                }
+
+                // clear speechmsg by removing each character
+                speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -1);
+                // wait 50ms
+                await new Promise(r => setTimeout(r, deleteInterval));
+            }
+            document.getElementById("speech-cursor-static").style.display = "none";
+            document.getElementById("speech-cursor-dynamic").style.display = "inline";
+
+            
+            document.getElementById("speech-cursor-dynamic").style.display = "none";
+            document.getElementById("speech-cursor-static").style.display = "inline";
+            speechmsg.innerHTML = "";
+            speechholder.innerHTML = answer;
+
+            while (speechholder.innerHTML.length > 0) {
+                if (document.getElementById("speech-latest-answer").innerHTML != answer) {
+                    break;
+                }
+                // if <br>, add <br> to speech-msg
+                if (speechholder.innerHTML.charAt(0) == "<" && speechholder.innerHTML.slice(0, 4) == "<br>"){
+                    speechmsg.innerHTML += speechholder.innerHTML.slice(0, 4);
+                    speechholder.innerHTML = speechholder.innerHTML.slice(4);
+                    continue
+                }
+                // if <a.. then add <a..></a>
+                if (speechholder.innerHTML.charAt(0) == "<" && speechholder.innerHTML.slice(0, 2) == "<a"){
+                    let link = speechholder.innerHTML.slice(speechholder.innerHTML.indexOf(">") + 1, speechholder.innerHTML.indexOf("</a>"));
+                    speechmsg.innerHTML += speechholder.innerHTML.slice(0, speechholder.innerHTML.indexOf(">") + 1) + "</a>";
+                    speechholder.innerHTML = speechholder.innerHTML.slice(speechholder.innerHTML.indexOf("</a>") + 4);
+                    // for each char in link, add to speech-msg from -4 index
+                    for (let i = 0; i < link.length; i++){
+                        speechmsg.innerHTML = speechmsg.innerHTML.slice(0, -4) + link.charAt(i) + "</a>";
+                        await new Promise(r => setTimeout(r, enterInterval));
+                    }
+                    continue
+                }
+                // add each character to speech-msg
+                speechmsg.innerHTML += speechholder.innerHTML.charAt(0);
+                speechholder.innerHTML = speechholder.innerHTML.slice(1);
+                // wait 50ms
+                await new Promise(r => setTimeout(r, enterInterval));
+            }
+            document.getElementById("speech-cursor-static").style.display = "none";
+            document.getElementById("speech-cursor-dynamic").style.display = "inline";
+
+            preventDuplicate = false;
+        }
+        </script>
+
+    </div>
+    </div>
+
     <!-- loading -->
     <div id="loading">
       <img
@@ -204,25 +375,46 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
+          <li
+          onpointerenter="clearSpeechHolder('Go to the Home page!')"
+          onpointerleave="clearSpeechHolder('')"
+          class="nav-item">
             <a class="nav-link" href="../index.html">Home</a>
           </li>
-          <li class="nav-item">
+          <li 
+          onpointerenter="clearSpeechHolder('Click to try out GoPiplup, a web application built using React and Go!<br>It shows you events available in Singapore with scraped data from various sites like Gardens by the Bay and Nparks.')"
+          onpointerleave="clearSpeechHolder('')"
+          class="nav-item">
             <a class="nav-link" href="../GoPiplup">GoPiplup</a>
           </li>
-          <li class="nav-item">
+          <li 
+          onpointerenter="clearSpeechHolder('Click to try out PipStory')"
+          onpointerleave="clearSpeechHolder('')"
+          class="nav-item">
             <a class="nav-link" href="../pipstory">PipStory</a>
           </li>
-          <li class="nav-item">
+          <li 
+          onpointerenter="clearSpeechHolder('Click to try out PipBound, my favourite game!')"
+          onpointerleave="clearSpeechHolder('')"
+          class="nav-item">
             <a class="nav-link" href="../pipbound">PipBound</a>
           </li>
-          <li class="nav-item">
+          <li 
+          onpointerenter="clearSpeechHolder('Click to explore our Oldschool Runescape Group Ironman<br>Bank, basically my team\'s bank in game!')"
+          onpointerleave="clearSpeechHolder('')"
+          class="nav-item">
             <a class="nav-link" href="gim.html">GIM bank</a>
           </li>
-          <li class="nav-item">
+          <li 
+          onpointerenter="clearSpeechHolder('Click to explore my leaflet map')"
+          onpointerleave="clearSpeechHolder('')"
+          class="nav-item">
             <a class="nav-link" href="mapPage.html">Leaflet map</a>
           </li>
-          <li class="nav-item">
+          <li 
+          onpointerenter="clearSpeechHolder('You are already here!')"
+          onpointerleave="clearSpeechHolder('')"
+          class="nav-item">
             <a class="nav-link active" href="schoolWorks.html">SMU journey</a>
           </li>
         </ul>
@@ -245,12 +437,18 @@
     <br /><br />
 
     <div class="semester">
-      <h1 class="text-primary">
+      <h1 
+      onpointerenter='clearSpeechHolder("Online classes due to COVID-19")'
+      onpointerleave="clearSpeechHolder('')"
+      class="text-primary">
         Year 1 Semester 1 (Aug 2020 - Dec 2020) (fully online)
       </h1>
       <h2 class="text-info">5 mods, all preassigned :')</h2>
       <ul class="modList">
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Philosophical mod, Global vs Local")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR3001 Big Questions
           <ul>
             <li>
@@ -285,7 +483,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("E&S; econs, market, monopoly, profit")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR2100 Economics and Society
           <ul>
             <li>Understanding certain fundamental economics in the Society</li>
@@ -300,7 +501,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Discontinued mod, replaced by IS114")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS110 Information Systems and Innovation
           <ul>
             <li>Wide overview of Information Systems with many case studies</li>
@@ -322,7 +526,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Yay! Python!")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS111 Introduction to Programming
           <ul>
             <li>Python coding! :))</li>
@@ -335,7 +542,10 @@
             <li>Challenging coding lab tests and paper Final Exam</li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Writing and reasoning, business like")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR1100 Writing and Reasoning
           <ul>
             <li>Formal report writing :')</li>
@@ -357,7 +567,10 @@
       </h1>
       <h2 class="text-info">4 mods</h2>
       <ul class="modList">
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Computational thinking :) python project :)")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR-IS1702 Computational Thinking
           <ul>
             <li>
@@ -384,7 +597,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Relational Database")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS112 Data Management
           <ul>
             <li>
@@ -400,7 +616,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Leadership and Team Building")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR1301 Leadership and Team Building (SMU-X)
           <ul>
             <li>
@@ -417,7 +636,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("PHP X_X")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS113 Web Application Development 1
           <ul>
             <li>PHP</li>
@@ -428,14 +650,20 @@
     </div>
 
     <div class="semester">
-      <h1 class="text-primary">
+      <h1 class="text-primary"
+      onpointerenter='clearSpeechHolder("Y2S1")'
+      onpointerleave="clearSpeechHolder('')"
+      >
         Year 2 Semester 1 (Aug 2021 - Dec 2021) (fully online)
       </h1>
       <h2 class="text-info">
         5 mods, 5 projects, 5 finals, + TA commitments :'(
       </h2>
       <ul class="modList">
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("BPAS, lots of models")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS210 Business Process Analysis & Solutioning
           <ul>
             <li>
@@ -447,7 +675,10 @@
             <li>Signavio Academic Business Process Management Tools</li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("UI/UX, Figma, AB Testing")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS211 Interaction Design and Prototyping
           <ul>
             <li>User Interface / User Experience Design Module</li>
@@ -462,7 +693,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Did not have time to study :(")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR-STAT1202 Introductory Statistics
           <ul>
             <li>Statistics</li>
@@ -471,7 +705,10 @@
             <li>Hypothesis testings</li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Very useful excel skills")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR1305 Spreadsheet Modeling and Analytics
           <ul>
             <li>Excel, Excel Macro</li>
@@ -482,7 +719,10 @@
             <li>Cell Fixing</li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("WA2")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS216 Web Application Development 2
           <ul>
             <li>JavaScript</li>
@@ -501,7 +741,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("yay! python :)")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           (TA) IS111 Introduction to Programming
           <ul>
             <li>
@@ -527,7 +770,10 @@
         4 mods, still recovering from previous Semester :')
       </h2>
       <ul class="modList">
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("AF, Python, Tableau, Clustering")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS217 Analytics Foundation
           <ul>
             <li>
@@ -551,7 +797,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("DBTT")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS215 Digital Business - Technologies and Transformation
           <ul>
             <li>Digitisation, Digitalisation, Digital Transformation</li>
@@ -586,7 +835,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("ESD; docker")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS213 Enterprise Solution Development
           <ul>
             <li>Monolithic vs Microservices architecture</li>
@@ -613,7 +865,10 @@
             <li>API Gateway: KONG</li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("ESM; jira")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS214 Enterprise Solution Management
           <ul>
             <li>Management; IT Support team</li>
@@ -634,7 +889,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("yay! python :)")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           (TA) Introduction to Programming
           <ul>
             <li>Second Semester of IS111 TA</li>
@@ -657,7 +915,10 @@
         4 mods
       </h2>
       <ul class="modList">
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("DMBA; EDA, Data Pre-processing, Dimensionality Reduction, Naive Bayes, Classification Models, Ensemble Methods")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS424 Data Mining and Business Analytics
           <ul>
             <li>
@@ -683,7 +944,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("MLA; Forward / Backward Propagation, Perceptron, Neural Network")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS460 Machine Learning & Applications
           <ul>
             <li>Types of machine learning; Regression; classification; neural network; </li>
@@ -707,7 +971,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("OOP")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS442 Object Oriented Programming
           <ul>
             <li>Java</li>
@@ -732,7 +999,10 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("SPM; scrum sprints")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           IS212 Software Project Management
           <ul>
             <li>Agile software development; Study of how traditional methods are not suitable for ever-changing requirements of software development</li>
@@ -790,7 +1060,10 @@
           </ul>
         </li>
 
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("はじめまして。わたしは アダム です。どうぞ よろしく おねがいします。")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           LJ5001 Japanese Language Level 1 (3 AUs)
           <ul>
             <li>
@@ -806,7 +1079,10 @@
         </li>
 
         <li>
-          ES0001 The Physical Environments of Singapore (3 AUs)
+          <span
+          onpointerenter='clearSpeechHolder("Many field trips!")'
+          onpointerleave="clearSpeechHolder('')"
+          >ES0001 The Physical Environments of Singapore (3 AUs)</span>
           <ul>
             <li>A module with Asian School of the Environment (ASE) :)</li>
             <li>
@@ -815,18 +1091,48 @@
             <li>Igneous Rocks, Gombak Gabbro, El-nino La-nina, Indian Ocean Dipole, Wilson cycle, Primary and Secondary Forests, Pioneer Species, Agricultural crops; Coastal Forests; Mangrove species; Sonneratia, Avicennia, Rhizophora, Bruguiera; and many more...</li>
             <li>Field trips every week: </li>
             <ol>
-              <li>1. Little Guilin (Granite Quarry)<br/>
+              <li
+              onpointerenter='clearSpeechHolder("Beautiful place!")'
+              onpointerleave="clearSpeechHolder('')"
+              >1. Little Guilin (Granite Quarry)<br/>
                 <img src="../resources/littleguilin.jpg" style="height: 300px;">
               </li>
-              <li>2. Shenton Way</li>
-              <li>3. Labrador Park (heavy rained and we stopped halfway)</li>
-              <li>4. Meteorological Service Singapore at Changi Airport</li>
-              <li>5. Telok Blangah Hill Park n Henderson Waves</li>
-              <li>6. Botanic Gardens</li>
-              <li>7. Windsor Nature Park</li>
-              <li>8. Sungei Buloh Wetland Reserve</li>
-              <li>9. Toa Payoa Town Centre</li>
-              <li>10. Snorkelling at Keppel Bay (water was v salty)<br/>
+              <li
+              onpointerenter='clearSpeechHolder("Interesting place! It used to be coastal but land reclamation made it inland.")'
+              onpointerleave="clearSpeechHolder('')"
+              >2. Shenton Way</li>
+              <li
+              onpointerenter='clearSpeechHolder("Heavy rain :(")'
+              onpointerleave="clearSpeechHolder('')"
+              >3. Labrador Park (heavy rained and we stopped halfway)</li>
+              <li
+              onpointerenter='clearSpeechHolder("Weather forecast station! I got to see the tools and many computers used to monitor weather.")'
+              onpointerleave="clearSpeechHolder('')"
+              >4. Meteorological Service Singapore at Changi Airport</li>
+              <li
+              onpointerenter='clearSpeechHolder("Nice, was very hot.")'
+              onpointerleave="clearSpeechHolder('')"
+              >5. Telok Blangah Hill Park n Henderson Waves</li>
+              <li
+              onpointerenter='clearSpeechHolder("Learned about primary and secondary forests, and pioneer species.<br>Dipterocarps were found here! (primary forest)")'
+              onpointerleave="clearSpeechHolder('')"
+              >6. Botanic Gardens</li>
+              <li
+              onpointerenter='clearSpeechHolder("Agricultural crops were seen! Rubber trees were seen!")'
+              onpointerleave="clearSpeechHolder('')"
+              >7. Windsor Nature Park</li>
+              <li
+              onpointerenter='clearSpeechHolder("I learned about mangrove species, like Avicennia, Rhizophora, Bruguiera and Sonneratia!<br>Closer to the sea, Sonneratia is found (the one with pencil-like roots)")'
+              onpointerleave="clearSpeechHolder('')"
+              >8. Sungei Buloh Wetland Reserve</li>
+              <li
+              onpointerenter='clearSpeechHolder("HDB town planning, modern day technology in residential!")'
+              onpointerleave="clearSpeechHolder('')"
+              >9. Toa Payoa Town Centre</li>
+              <li
+              onpointerenter='clearSpeechHolder("Snorkelling in Singapore!!<br>water very salty :(")'
+              onpointerleave="clearSpeechHolder('')"
+              >10. Snorkelling at Keppel Bay (water was v salty)<br/>
                 <img src="../resources/sgcoral.jpg" style="height: 300px;">
               </li>
             </ol>
@@ -841,11 +1147,17 @@
       <h1 class="text-primary">
         Year 4 Semester 1 (Aug 2023 - Nov 2023)
       </h1>
-      <h2 class="text-info">
+      <h2 
+      onpointerenter='clearSpeechHolder("Learned a lot during my internship with Accenture!")'
+      onpointerleave="clearSpeechHolder('')"
+      class="text-info">
         Work Study Internship with Accenture (2 CUs), + 2 mods
       </h2>
       <ul class="modList">
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("Ethics! Prof Daniel Seah is amazing")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           COR3301 Ethics and Social Responsibility
           <ul>
             <li>
@@ -855,23 +1167,32 @@
               Legal obligation and Moral obligation
             </li>
             <li>
-              ...
+              Utilitarianism, Deontology, Aristotle's Virtue Ethics, Kant's Categorical Imperative, Rawl's Veil of Ignorance
+            </li>
+            <li>
+              Many interesting concepts 
             </li>
 
           </ul>
         </li>
 
-        <li>
+        <li
+        onpointerenter='clearSpeechHolder("ITSA! Learned a lot. Heavy workload.")'
+        onpointerleave="clearSpeechHolder('')"
+        >
           CS301 IT Solution Architecture
           <ul>
             <li>
               Architectural Significant Requirements, Functional vs Non-Functional requirements
             </li>
             <li>
-              ...
+              Sequence diagram, AWS Architecture Diagram
             </li>
             <li>
-              ...
+              Performance, Scalability, Availability, Security, Maintainability, Reliability, Usability, Interoperability, Portability
+            </li>
+            <li>
+              AWS Solutions Architect Associate Certification
             </li>
           </ul>
         </li>
@@ -891,6 +1212,7 @@
       };
 
       window.scrollTo(0, 0);
+      clearSpeechHolder("Loading... please wait")
       $("body").css("overflow", "hidden");
       $(window).on("load", function () {
         window.scrollTo(0, 0);
@@ -898,6 +1220,13 @@
         setTimeout(function () {
           $("#loading").hide();
           $("body").css("overflow-y", "auto");
+          clearSpeechHolder("Hello! Welcome to my SMU Journey<br>I will be sharing more as you hover over the modules!");
+
+          setTimeout(function() {
+              if (document.getElementById("speech-msg").innerHTML == "Hello! Welcome to my SMU Journey<br>I will be sharing more as you hover over the modules!") {
+                  clearSpeechHolder("");
+              }
+          }, 6000);
         }, 3000);
       });
     </script>
