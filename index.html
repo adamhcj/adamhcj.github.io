@@ -307,7 +307,9 @@
         <span class="loadingtext text-info" style="top: 150px;">best viewed on computer with Google Chrome</span>
         <h1 id="mainloadingtext" class="loadingtext text-danger">Home Page<br>loading... please wait</h1>
         <h2 class="loadingtext text-primary" style="margin-top: 200px;">you may want to check out while waiting:<br>
-            <a href="http://linkedin.com/in/adamhcj" target="_blank">linkedin</a></h2>
+            <a href="http://linkedin.com/in/adamhcj" target="_blank">Linkedin</a><br>
+            <a href="https://github.com/adamhcj" target="_blank">Github</a>
+        </h2>
 
         
     </div>
@@ -332,10 +334,10 @@
             <a class="nav-link active" href="">Home</a>
             </li>
             <li 
-            onpointerenter="clearSpeechHolder('Click to try out GoPiplup, a web application built using React and Go!<br>It shows you events available in Singapore with scraped data from various sites like Gardens by the Bay and Nparks.')"
+            onpointerenter="clearSpeechHolder('Click to view my osrs clan stats, which is logged by my runelite plugin into Google Sheets and displayed in Next.js app accessible here.')"
             onpointerleave="clearSpeechHolder('')"
             class="nav-item">
-            <a class="nav-link" href="GoPiplup">GoPiplup</a>
+            <a class="nav-link" href="/piposrstracker/dashboard">PipOsrsTracker</a>
             </li>
             <li 
             onpointerenter="clearSpeechHolder('Click to try out PipStory')"
@@ -395,7 +397,9 @@
 
                         <div style="padding: 50px;">
 
-                            <h1 class="display-4 text-primary">Hi</h1><!-- 
+                            <h1 class="display-4 text-primary">Hi</h1>
+                            <h1 class="display-4 text-primary"><a href="https://github.com/adamhcj">Github</a></h1>
+                            <!-- 
                             <hr class="my-4">
                             <div id="telegramSend">
                                 <p class="text-primary">Message you want to send to my telegram (anonymous). <br><h2 class="text-success">Say Hello! :)</h2></p>
@@ -470,15 +474,6 @@
                                     answer = `For now, the projects which I had the most fun and memorable time working on are PipBound, PipStory,
                                     <br> and this website's tooltip effects and animations.
                                     <br><br><a 
-                                    onpointerenter="clearSpeechHolder('Click to go to GoPiplup github repo!')"
-                                    onpointerleave="clearSpeechHolder('')"
-                                    target="_blank" href="https://github.com/adamhcj/GoPiplup">GoPiplup</a> is a web application built using React for the frontend and Go for the backend.
-                                    <br>It scrapes details of events from sites such as Gardens by the Bay and Nparks using Go.
-                                    <br>You may try it out on the 2nd item in the navbar, or here: <a 
-                                    onpointerenter="clearSpeechHolder('Click to see the deployed GoPiplup!')"
-                                    onpointerleave="clearSpeechHolder('')"
-                                    target="_blank" href="https://adamhcj.github.io/GoPiplup">GoPiplup</a>.
-                                    <br><br><a 
                                     onpointerenter="clearSpeechHolder('Click to go to PipStory github repo!')"
                                     onpointerleave="clearSpeechHolder('')"
                                     target="_blank" href="https://github.com/adamhcj/pipstory">PipStory</a> is a cross-platform game built using Flutter with the Flame package.
@@ -491,7 +486,11 @@
                                 }
                                 else if (question == "Tell me more about your experiences."){
                                     answer = `
-                                    I am currently a year 4 student in <a 
+                                    I am currently a software engineer intern at <a 
+                                    target="_blank" 
+                                    onpointerenter="clearSpeechHolder('Amazing place, click to go to Autodesk page!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    href="https://www.autodesk.com/sg">Autodesk</a> and year 4 student in <a 
                                     target="_blank" 
                                     onpointerenter="clearSpeechHolder('Click to go to SMU SCIS page!')"
                                     onpointerleave="clearSpeechHolder('')"
@@ -513,14 +512,19 @@
                                     onpointerleave="clearSpeechHolder('')"
                                     >graduation date is Dec 2024</span>, with degree of Bachelor of Science (Information Systems) and Master of Science in Computing.
                                     <br><br>
-                                    My most recent internship which I am currently still working at, is at <a target="_blank" 
-                                    onpointerenter='clearSpeechHolder("I learned a lot from Accenture!")'
+                                    My internship ends in Dec 2024 too.
+                                    I am learning a lot in Autodesk, doing wide array of stuff as a software engineer intern, including developing full-stack next.js app, containerizing and pushing to ECR, and pulling it in EC2, developing microservices with Node.js and getting them deployed on AWS Lambda with serverless framework, Lambda is connected to SQS, DynamoDB and Snowflake. I also did Python which is triggered in Jenkins periodically. I also participated in Scrum process, experiencing sprint planning and grooming, daily standup, sprint review and retrospective. <br>
+                                    The culture here is amazing and I am learning a lot from other Autodeskers.
+                                    <br>
+                                    
+                                    My previous internship was at <a target="_blank" 
+                                    onpointerenter='clearSpeechHolder("nice place Accenture!")'
                                     onpointerleave="clearSpeechHolder('')"
                                     href="https://www.accenture.com/sg-en">Accenture</a> for six months, working full time for first 3 months during summer, and part time of 4 days per week for the next 3 months during school term where I would have to go back to school for lessons on 1 day per week.
                                     <br>I am working as a full stack developer, working on multiple projects with several developers. Coding frameworks and languages are mainly React, Javascript and Python.
                                     <br>I also worked with Tableau Public which is used to be embedded in React App to provide useful dashboards to visualise data in the web application.
                                     <br>Besides that, I also did DevOps, like setting up CI/CD pipelines using github webhook and bash script in VM provided by AWS EC2.
-                                    <br><br>My previous internship was at <a target="_blank"
+                                    <br><br>The internship before this was at <a target="_blank"
                                     onpointerenter='clearSpeechHolder("Nice office location in Funan! I could see the Supreme Court from my seat!")'
                                     onpointerleave="clearSpeechHolder('')"
                                     href="https://www.singstat.gov.sg/">singstat</a> for 3 months during summer, working as a full stack developer to deliver a python web application that is able to generate reports based on user input, like aggregate by what the user specifies.
@@ -542,18 +546,6 @@
                     </div>
                     <h1 class="display-4 text-primary">Projects</h1>
                     <ul class="list-group"> 
-                        <p class="text-info" style="font-size:xx-large;">React and Golang:</p>
-                        <li class="list-group-item"><h1 class="text-danger">GoPiplup</h1>
-                            <ul>
-                                <li><a 
-                                    onpointerenter='clearSpeechHolder("Click to go to GoPiplup github repo!")'
-                                    onpointerleave="clearSpeechHolder('')"
-                                    target="_blank" href="https://github.com/adamhcj/GoPiplup">https://github.com/adamhcj/GoPiplup</a></li>
-                                <li>React Frontend, Go Backend</li>
-                                <li>Go backend scrapes live data from various sites like Gardens by the Bay and Nparks</li>
-                                <li>Try it out on the 2nd item in the navbar</li>
-                            </ul>
-                        </li>
 
                         <p class="text-info" style="font-size:xx-large;">Flutter:</p>
                         <li class="list-group-item"><h1 class="text-danger">pipstory (with flutter flame package)</h1>
