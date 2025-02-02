@@ -334,12 +334,6 @@
             <a class="nav-link active" href="">Home</a>
             </li>
             <li 
-            onpointerenter="clearSpeechHolder('Click to view my osrs clan stats, which is logged by my runelite plugin into Google Sheets and displayed in Next.js app accessible here.')"
-            onpointerleave="clearSpeechHolder('')"
-            class="nav-item">
-            <a class="nav-link" href="/piposrstracker/dashboard">PipOsrsTracker</a>
-            </li>
-            <li 
             onpointerenter="clearSpeechHolder('Click to try out PipStory')"
             onpointerleave="clearSpeechHolder('')"
             class="nav-item">
@@ -352,11 +346,17 @@
                 <a class="nav-link" href="pipbound">PipBound</a>
             </li>
             <li 
+            onpointerenter="clearSpeechHolder('Click to view my osrs clan stats, which is logged by my runelite plugin into Google Sheets and displayed in Next.js app accessible here.')"
+            onpointerleave="clearSpeechHolder('')"
+            class="nav-item">
+            <a class="nav-link" href="/piposrstracker/dashboard">PipOsrsTracker</a>
+            </li>
+            <!-- <li 
             onpointerenter="clearSpeechHolder('Click to explore our Oldschool Runescape Group Ironman<br>Bank, basically my team\'s bank in game!')"
             onpointerleave="clearSpeechHolder('')"
             class="nav-item">
             <a class="nav-link" href="html/gim.html">GIM bank</a>
-            </li>
+            </li> -->
             <li 
             onpointerenter="clearSpeechHolder('Click to explore my leaflet map')"
             onpointerleave="clearSpeechHolder('')"
@@ -490,11 +490,7 @@
                                 }
                                 else if (question == "Tell me more about your experiences."){
                                     answer = `
-                                    I am currently a software engineer intern at <a 
-                                    target="_blank" 
-                                    onpointerenter="clearSpeechHolder('Amazing place, click to go to Autodesk page!')"
-                                    onpointerleave="clearSpeechHolder('')"
-                                    href="https://www.autodesk.com/sg">Autodesk</a> and year 4 student in <a 
+                                    I am a fresh graduate from <a 
                                     target="_blank" 
                                     onpointerenter="clearSpeechHolder('Click to go to SMU SCIS page!')"
                                     onpointerleave="clearSpeechHolder('')"
@@ -510,28 +506,31 @@
                                     target="_blank" 
                                     onpointerenter="clearSpeechHolder('Click to go to SMU Master of Science in Computing page!')"
                                     onpointerleave="clearSpeechHolder('')" 
-                                    href="https://scis.smu.edu.sg/programmes/MScomputing/overview">Master of Science in Computing</a>.
-                                    <br>My expected <span
-                                    onpointerenter='clearSpeechHolder("Yay!! graduation soon!")'
+                                    href="https://scis.smu.edu.sg/programmes/MScomputing/overview">Master of Science in Computing</a>. <span
+                                    onpointerenter='clearSpeechHolder("Yay!!! ^w^")'
                                     onpointerleave="clearSpeechHolder('')"
-                                    >graduation date is Dec 2024</span>, with degree of Bachelor of Science (Information Systems) and Master of Science in Computing.
+                                    >I fully graduated in Jan 2025.</span> 
+                                    I was a software engineer intern at <a 
+                                    target="_blank" 
+                                    onpointerenter="clearSpeechHolder('Amazing place, click to go to Autodesk page!')"
+                                    onpointerleave="clearSpeechHolder('')"
+                                    href="https://www.autodesk.com/sg">Autodesk</a>.
+                                    My internship recently ended in Dec 2024.
+                                    I had learned a lot in Autodesk, did wide array of stuff as a software engineer intern, including developing full-stack next.js app, containerizing and pushing to ECR, and pulling it in EC2, developing microservices with Node.js and getting them deployed on AWS Lambda with serverless framework, Lambda is connected to SQS, DynamoDB and Snowflake. I also did Python which is triggered in Jenkins periodically. I also participated in Scrum process, experiencing sprint planning and grooming, daily standup, sprint review and retrospective.
+                                    The culture there was amazing and I learned a lot from other Autodeskers.
                                     <br><br>
-                                    My internship ends in Dec 2024 too.
-                                    I am learning a lot in Autodesk, doing wide array of stuff as a software engineer intern, including developing full-stack next.js app, containerizing and pushing to ECR, and pulling it in EC2, developing microservices with Node.js and getting them deployed on AWS Lambda with serverless framework, Lambda is connected to SQS, DynamoDB and Snowflake. I also did Python which is triggered in Jenkins periodically. I also participated in Scrum process, experiencing sprint planning and grooming, daily standup, sprint review and retrospective. <br>
-                                    The culture here is amazing and I am learning a lot from other Autodeskers.
-                                    <br>
                                     
                                     My previous internship was at <a target="_blank" 
                                     onpointerenter='clearSpeechHolder("nice place Accenture!")'
                                     onpointerleave="clearSpeechHolder('')"
                                     href="https://www.accenture.com/sg-en">Accenture</a> for six months, working full time for first 3 months during summer, and part time of 4 days per week for the next 3 months during school term where I would have to go back to school for lessons on 1 day per week.
-                                    <br>I am working as a full stack developer, working on multiple projects with several developers. Coding frameworks and languages are mainly React, Javascript and Python.
+                                    <br>I was a Business Analyst, analysing business needs and engineering software for them. I had worked on multiple projects with several developers. Coding frameworks and languages were mainly React, Javascript, Java and Python.
                                     <br>I also worked with Tableau Public which is used to be embedded in React App to provide useful dashboards to visualise data in the web application.
                                     <br>Besides that, I also did DevOps, like setting up CI/CD pipelines using github webhook and bash script in VM provided by AWS EC2.
-                                    <br><br>The internship before this was at <a target="_blank"
+                                    <br><br>The internship before that was at <a target="_blank"
                                     onpointerenter='clearSpeechHolder("Nice office location in Funan! I could see the Supreme Court from my seat!")'
                                     onpointerleave="clearSpeechHolder('')"
-                                    href="https://www.singstat.gov.sg/">singstat</a> for 3 months during summer, working as a full stack developer to deliver a python web application that is able to generate reports based on user input, like aggregate by what the user specifies.
+                                    href="https://www.singstat.gov.sg/">singstat</a> for 3 months during summer, working as a code developer to deliver a python web application that is able to generate reports based on user input, like aggregate by what the user specifies.
                                     <br>I used IPywidgets to create a user interface for the python application, pandas to manipulate data and xlwings to generate nicely formatted excel reports.
                                     <br><br><span
                                     onpointerenter='clearSpeechHolder("I enjoyed being TA for IS111 even though it was a lot of work,<br>helping students with python programming and also learning in the process!")'
@@ -548,7 +547,7 @@
                             
                         </script>
                     </div>
-                    <h1 class="display-4 text-primary">Projects</h1>
+                    <h1 class="display-4 text-primary">Some hobby projects</h1>
                     <ul class="list-group"> 
 
                         <p class="text-info" style="font-size:xx-large;">Flutter:</p>
@@ -597,12 +596,14 @@
                             src="resources/skribblpenguin.png" class="imageExample"></li>
                         <li class="list-group-item"><h1 class="text-danger">piplupOwo Discord (voice chatting platform) bot</h1>
                             <ul>
-                                <li>There are actual users using it in a server :)</li>
+                                <li>Currently hosted in my AWS EC2 t2.micro instance</li>
+                                <li>previously running on replit for free, with constant pings using UptimeRobot to keep the bot alive. However there were many issues like being rate-limited by discord API, possibly due to many other discord bots running from replit's servers.</li>
+                                <li>There are actual users using it in a discord server :)</li>
                                 <li>google text to speech for shy / people in the library / spoilt mic people in discord channels (bot will speak)</li>
                                 <li>play some music / sound clips (like memes)</li>
                             </ul>
                             <img 
-                            onpointerenter='clearSpeechHolder("This bot brought a lot of fun but sadly I do not have time to maintain it :(")'
+                            onpointerenter='clearSpeechHolder("This bot brought a lot of fun!!")'
                             onpointerleave="clearSpeechHolder('')"
                             src="resources/discordb.png" class="imageExample"><br><br></li>
                         <li class="list-group-item">
@@ -619,7 +620,19 @@
                     <br><br>
                     <ul class="list-group"> <p class="text-info" style="font-size:xx-large;">Java:</p>
                         
-                        <li class="list-group-item"><h1 class="text-danger">Oldschool Runescape (20 year old Java game) client (OPRS) plugin</h1>
+                        <li class="list-group-item"><h1 class="text-danger">Oldschool Runescape Runelite plugin</h1>
+                            
+                            <ul>
+                                <li>Runelite is an open-source Java client for Oldschool Runescape</li>
+                            </ul>
+
+                            <br>🐧 <a href="https://github.com/adamhcj/chatpiplup"
+                            onpointerenter='clearSpeechHolder("Go to chatpiplup github repository!")'
+                            onpointerleave="clearSpeechHolder('')"
+                            >chatpiplup</a>: LLM responses in game chat<br><img 
+                            onpointerenter='clearSpeechHolder("Java sends chat messages to Python backend which sends to Ollama for LLM responses.")'
+                            onpointerleave="clearSpeechHolder('')"
+                            src="resources/chatpip.png" class="imageExample"><br><br><br>
                             
                             <ul>
                                 <li>(discontinued) makes game more fun with stuff like disco mode (dangerous tiles are lit up)</li>
